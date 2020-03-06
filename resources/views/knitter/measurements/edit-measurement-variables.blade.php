@@ -395,8 +395,14 @@
           },
           success : function(res){
             if(res.status == 'success'){
+               var pro = localStorage.getItem('project');
+               if(pro){
+                  setTimeout(function(){ window.location.assign('{{url("knitter/project-library")}}') },2000);
+               }else{
+                  setTimeout(function(){ window.location.assign('{{url("knitter/measurements")}}') },2000);
+               }
             //Notifi('fa-check','Success','Measurement variables updated successfully.','success');
-            setTimeout(function(){ window.location.assign('{{url("knitter/measurements")}}') },2000)
+            
             }else{
                Notifi('fa-times','Fail','Unable to add Measurement variable, Try again after some time.','danger')
             }

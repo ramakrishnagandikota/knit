@@ -98,6 +98,83 @@
       </div>
   </div>
 </div>
+
+
+
+  <div class="modal fade" id="child-Modal" role="dialog">
+                <div class="modal-dialog modal-md">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                          <h5 class="modal-title">Confirmation</h5>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p></p>
+                           <p class="text-center"> <img class="img-fluid" src="{{asset('resources/assets/files/assets/images/delete.png') }}" alt="Theme-Logo" /></p>
+                           <h6 class="text-center">Do You really want to Delete selected Profile ?</h6>
+                           <p></p>
+                    </div>
+                    <div class="modal-footer">
+                            <button class="btn waves-effect waves-light btn-primary theme-outline-btn" data-dismiss="modal">Cancel</button>
+                            <button type="button" data-id="0" class="btn btn-danger delete-card" data-dismiss="modal">Delete</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+        <!--Child Modal Ends here-->
+
+             <!-- Modal -->
+             <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog modal-md">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                          <h5 class="modal-title">Measurement Details</h5>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+  <form class="form-horizontal m-t-10" id="insert-measurements">
+  @csrf
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Name</label>
+      <div class="col-sm-10">
+        <input placeholder="Name" type="text" name="measurement_name" id="measurement_name" class="form-control">
+         <span class="measurement_name"></span>
+      </div>
+    </div>
+    
+    <input type="hidden" name="image1" value="" id="imageurl">
+      </form>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger cancel-btn" data-dismiss="modal">Cancel</button>
+         <button type="submit" id="submit" class="btn btn-success submit-btn" data-toggle="modal">Next</button>
+    </div>
+    </div>
+                
+                  </div>
+                </div>
+
+
+ <div class="row users-card justify-content-center m-t-10">
+
+
+                   <input type="hidden" id="del_id" value="0">     
+
+
+                   <div class="col-lg-12 col-xl-12 col-md-9 hide" id="nomeasurements">
+            <div class="card custom-card skew-card">
+                    <div class="user-content card-bg m-l-40 m-r-40 m-b-40">
+                            <img src="{{asset('resources/assets/files/assets/images/arrow.png') }}" id="arrow-img"> 
+                        <h3 class="m-t-40 text-muted">Let's create your first measurement profile!</h3>
+                        <h4 class="text-muted m-t-10 m-b-30">We'll take your measurements and get you ready to generate a custom pattern!</h4>
+                    </div>
+                
+            </div>
+        </div>                        
+                                    <!-- Round card end -->
+          </div>
 @endsection
 
 @section('footerscript')
@@ -146,7 +223,13 @@
 
 <script type="text/javascript">
   $(function(){
-	  
+
+    var pro = localStorage.getItem('project');
+   // alert(pro);
+    if(pro){
+      window.location.assign('{{url("knitter/project-library")}}');
+    }
+    
 
     $(document).on('click','.getId',function(){
 

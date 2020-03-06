@@ -180,7 +180,7 @@
                     measurement profiles yet.
                     </h3>
                     <h6 class="m-t-30 m-b-40 f-w-400">You must have a measurement profile to generate custom patterns.<br> Or, if you are creating an external or non-custom pattern, click continue.</h6>
-                    <button type="submit" class="btn btn-success theme-btn" data-toggle="modal"><a class="custom-link" href="EditMeasurement.html">Add measurement profile</a></button>
+                    <button type="submit" class="btn btn-success theme-btn" data-toggle="modal"><a class="custom-link" href="{{url('knitter/measurements')}}">Add measurement profile</a></button>
                     <button type="button" class="btn btn-danger theme-outline-btn" data-dismiss="modal">&nbsp;&nbsp;Continue anyway&nbsp;&nbsp;</button>
             </div>
           
@@ -601,6 +601,14 @@ $(document).on('click','#save',function(e){
       $(".checkme").addClass('hide');
     }
 
+    }else{
+      var measurement = $("#sel1").val();
+      if(measurement == 0){
+        $(".measurement_profile").removeClass('hide');
+        er+=cnt+1;
+      }else{
+        $(".measurement_profile").addClass('hide');
+      }
     }
 
     
@@ -644,6 +652,13 @@ $(document).on('click','#save',function(e){
            setTimeout(function(){ $(".loading").hide(); },1500);
         }
     });
+});
+
+
+$(document).on('click','.custom-link',function(){
+    localStorage.removeItem('project');
+    var project = true;
+    localStorage.setItem('project',project);
 });
     });
 

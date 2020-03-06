@@ -496,13 +496,14 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <select class="form-control" name="measurement_profile" id="sel1">
-                                    <option value="0">Select measurement profile</option>
+                                    <option value="0">Select measurement profile<span class="red">*</span></option>
                                     @if($measurements->count() > 0)
                                         @foreach($measurements as $ms)
                                             <option value="{{$ms->id}}">For {{$ms->m_title}}</option>
                                         @endforeach
                                     @endif
                                 </select>
+                                <span class="red measurement_profile hide">Please select measurement profile</span>
                                 </div>
                             </div>
                         </div>

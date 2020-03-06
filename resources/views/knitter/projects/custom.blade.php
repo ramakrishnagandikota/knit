@@ -493,7 +493,7 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <label class="col-form-label">
-                                Measurement profile
+                                Measurement profile<span class="red">*</span>
                             </label>
                             <div class="row">
                                 <div class="col-md-12">
@@ -505,6 +505,7 @@
                                         @endforeach
                                     @endif
                                 </select>
+                                <span class="red measurement_profile hide">Please select measurement profile</span>
                                 </div>
                             </div>
                         </div>

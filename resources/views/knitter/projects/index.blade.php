@@ -292,6 +292,7 @@
 
 <script type="text/javascript">
 	$(function(){
+    localStorage.removeItem('project');
 		$(document).on('click','.moveToArchive',function(){
 			var id = $(this).attr('data-id');
 
