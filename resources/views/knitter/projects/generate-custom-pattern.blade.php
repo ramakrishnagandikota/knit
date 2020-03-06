@@ -275,7 +275,7 @@
         </label>
         <div class="row">
             <div class="col-md-12">
-                <label class="col-form-label m-l-15">For {{ucfirst($measurements->m_title)}}</label>
+                <label class="col-form-label m-l-15">For {{ $measurements->m_title ? ucfirst($measurements->m_title) : '' }}</label>
             </div>
         </div>
     </div>
@@ -422,7 +422,7 @@
 <!--New Accordion Starts here-->
 <div class="row">
    
-{!! $pdf->content !!}
+{!! $cont !!}
 
 </div>
 <!--New Accordion Ends here-->

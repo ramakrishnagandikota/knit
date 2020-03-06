@@ -388,7 +388,7 @@
 <!--New Accordion Starts here-->
 <div class="row">
 
-{!! $pdf->content !!}
+{!! $cont !!}
 
 </div>
 <!--New Accordion Ends here-->

@@ -628,8 +628,48 @@ class ProjectController extends Controller
 
     //$mid = $project->measurement_profile;
 
+    $filename = storage_path('Peekaboo Cabled Sweater Variables.xlsx');
 
-    return view('knitter.projects.generate-noncustom-pattern',compact('project','project_images','project_yarn','project_needle','stitch_gauge','row_gauge','measurements','project_notes','product','pdf'));
+            $str = '';
+
+            //$ss = DB::table('pattern_pdf')->where('product_id',58)->first();
+
+            $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($filename);
+            //$worksheet = $spreadsheet->getActiveSheet();
+            $worksheet = $spreadsheet->getSheetByName('KnitVariables');
+
+            $rows = $worksheet->rangeToArray(
+                'B2:B112',     // The worksheet range that we want to retrieve
+                NULL,        // Value that should be returned for empty cells
+                TRUE,        // Should formulas be calculated (the equivalent of getCalculatedValue() for each cell)
+                TRUE,        // Should values be formatted (the equivalent of getFormattedValue() for each cell)
+                TRUE         // Should the array be indexed by cell row and cell column
+            );
+
+
+$rows1 = $worksheet->rangeToArray(
+                'C2:C112',     // The worksheet range that we want to retrieve
+                NULL,        // Value that should be returned for empty cells
+                TRUE,        // Should formulas be calculated (the equivalent of getCalculatedValue() for each cell)
+                TRUE,        // Should values be formatted (the equivalent of getFormattedValue() for each cell)
+                TRUE         // Should the array be indexed by cell row and cell column
+            );
+
+
+            $i=2;
+    foreach ($rows as $row) {
+
+        //echo $rows1[$i]['C']."<br>";
+
+    $pdf->content=str_replace('[['.$row['B'].']]',$rows1[$i]['C'],$pdf->content);
+        $i++;
+    }   
+
+
+    $cont = $pdf->content;
+
+
+    return view('knitter.projects.generate-noncustom-pattern',compact('project','project_images','project_yarn','project_needle','stitch_gauge','row_gauge','measurements','project_notes','product','pdf','cont'));
     }
 
     function generate_custom_pattern(Request $request){
@@ -651,6 +691,47 @@ class ProjectController extends Controller
     $pdm = ProjectsDesignerMeasurements::where('project_id',$project->id)->get();
     $pdf = ProductPdf::where('product_id',$project->product_id)->first();
 
-    return view('knitter.projects.generate-custom-pattern',compact('project','project_images','project_yarn','project_needle','stitch_gauge','row_gauge','measurements','project_notes','product','pdf','pdm','filename'));
+    $filename = storage_path('Peekaboo Cabled Sweater Variables.xlsx');
+
+            $str = '';
+
+            //$ss = DB::table('pattern_pdf')->where('product_id',58)->first();
+
+            $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($filename);
+            //$worksheet = $spreadsheet->getActiveSheet();
+            $worksheet = $spreadsheet->getSheetByName('KnitVariables');
+
+            $rows = $worksheet->rangeToArray(
+                'B2:B112',     // The worksheet range that we want to retrieve
+                NULL,        // Value that should be returned for empty cells
+                TRUE,        // Should formulas be calculated (the equivalent of getCalculatedValue() for each cell)
+                TRUE,        // Should values be formatted (the equivalent of getFormattedValue() for each cell)
+                TRUE         // Should the array be indexed by cell row and cell column
+            );
+
+
+$rows1 = $worksheet->rangeToArray(
+                'C2:C112',     // The worksheet range that we want to retrieve
+                NULL,        // Value that should be returned for empty cells
+                TRUE,        // Should formulas be calculated (the equivalent of getCalculatedValue() for each cell)
+                TRUE,        // Should values be formatted (the equivalent of getFormattedValue() for each cell)
+                TRUE         // Should the array be indexed by cell row and cell column
+            );
+
+
+            $i=2;
+    foreach ($rows as $row) {
+
+        //echo $rows1[$i]['C']."<br>";
+
+    $pdf->content=str_replace('[['.$row['B'].']]',$rows1[$i]['C'],$pdf->content);
+        $i++;
+    }   
+
+
+    $cont = $pdf->content;
+            //exit;
+
+    return view('knitter.projects.generate-custom-pattern',compact('project','project_images','project_yarn','project_needle','stitch_gauge','row_gauge','measurements','project_notes','product','pdf','pdm','filename','cont'));
     }
 }
