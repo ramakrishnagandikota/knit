@@ -166,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `invoices` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table knitfit.invoices: ~6 rows (approximately)
 DELETE FROM `invoices`;
@@ -178,7 +178,8 @@ INSERT INTO `invoices` (`id`, `user_id`, `subscription_id`, `sub_type`, `is_recu
 	(4, 1, 2, 'Yearly', 1, '1583403618', 'Yearly Subscription', 1, 2.99, 0, NULL, NULL, 'EC-6XT92834CT824263F', NULL, NULL, 'Payment cancled by user', NULL, NULL, NULL, '2020-03-05 10:20:18', '2020-03-05 10:20:18'),
 	(5, 1, 2, 'Yearly', 1, '1583404055', 'Yearly Subscription', 1, 2.99, 0, NULL, NULL, 'EC-0BB68383TE803950E', NULL, NULL, 'Payment cancled by user', NULL, NULL, NULL, '2020-03-05 10:27:35', '2020-03-05 10:27:35'),
 	(6, 1, 2, 'Monthly', 0, '1583405160', 'Monthly Subscription #6 Invoice', 1, 2.99, 0, NULL, 'L8FLPP3NH66ZN', 'EC-3J643931BR5489203', '2020-03-05T10:46:00Z', 'c23b28d05cc9a', 'Success', '', '', '{"TOKEN":"EC-3J643931BR5489203","SUCCESSPAGEREDIRECTREQUESTED":"false","TIMESTAMP":"2020-03-05T10:46:00Z","CORRELATIONID":"c23b28d05cc9a","ACK":"Success","VERSION":"123","BUILD":"54268142","INSURANCEOPTIONSELECTED":"false","SHIPPINGOPTIONISDEFAULT":"false","PAYMENTINFO_0_TRANSACTIONID":"25125929WG6683239","PAYMENTINFO_0_TRANSACTIONTYPE":"cart","PAYMENTINFO_0_PAYMENTTYPE":"instant","PAYMENTINFO_0_ORDERTIME":"2020-03-05T10:45:58Z","PAYMENTINFO_0_AMT":"2.99","PAYMENTINFO_0_FEEAMT":"0.39","PAYMENTINFO_0_TAXAMT":"0.00","PAYMENTINFO_0_CURRENCYCODE":"USD","PAYMENTINFO_0_PAYMENTSTATUS":"Pending","PAYMENTINFO_0_PENDINGREASON":"paymentreview","PAYMENTINFO_0_REASONCODE":"None","PAYMENTINFO_0_PROTECTIONELIGIBILITY":"Ineligible","PAYMENTINFO_0_PROTECTIONELIGIBILITYTYPE":"None","PAYMENTINFO_0_SELLERPAYPALACCOUNTID":"ramagkrishna91-facilitator@gmail.com","PAYMENTINFO_0_SECUREMERCHANTACCOUNTID":"XCB83XW6EKKHN","PAYMENTINFO_0_ERRORCODE":"0","PAYMENTINFO_0_ACK":"Success"}', '2020-03-05 10:46:00', '2020-03-05 10:46:00'),
-	(7, 18, 2, 'Yearly', 1, '1583405901', 'Yearly Subscription #7 Invoice', 1, 2.99, 1, NULL, 'L8FLPP3NH66ZN', 'EC-4R790641N7399792L', '2020-03-05T10:58:20Z', '95b91846f62d5', 'Success', 'I-2KPB0A5SJN5S', 'ActiveProfile', '{"PROFILEID":"I-2KPB0A5SJN5S","PROFILESTATUS":"ActiveProfile","TIMESTAMP":"2020-03-05T10:58:20Z","CORRELATIONID":"95b91846f62d5","ACK":"Success","VERSION":"123","BUILD":"53816603"}', '2020-03-05 10:58:21', '2020-03-05 10:58:21');
+	(7, 18, 2, 'Yearly', 1, '1583405901', 'Yearly Subscription #7 Invoice', 1, 2.99, 1, NULL, 'L8FLPP3NH66ZN', 'EC-4R790641N7399792L', '2020-03-05T10:58:20Z', '95b91846f62d5', 'Success', 'I-2KPB0A5SJN5S', 'ActiveProfile', '{"PROFILEID":"I-2KPB0A5SJN5S","PROFILESTATUS":"ActiveProfile","TIMESTAMP":"2020-03-05T10:58:20Z","CORRELATIONID":"95b91846f62d5","ACK":"Success","VERSION":"123","BUILD":"53816603"}', '2020-03-05 10:58:21', '2020-03-05 10:58:21'),
+	(8, 1, 2, 'Monthly', 0, '1583756584', 'Monthly Subscription #8 Invoice', 1, 2.99, 0, NULL, '4EGV3RZ6FPQZ6', 'EC-5CM61363FM671510A', '2020-03-09T12:23:04Z', '3bfa881b929e5', 'Success', '', '', '{"TOKEN":"EC-5CM61363FM671510A","SUCCESSPAGEREDIRECTREQUESTED":"false","TIMESTAMP":"2020-03-09T12:23:04Z","CORRELATIONID":"3bfa881b929e5","ACK":"Success","VERSION":"123","BUILD":"54296257","INSURANCEOPTIONSELECTED":"false","SHIPPINGOPTIONISDEFAULT":"false","PAYMENTINFO_0_TRANSACTIONID":"4TP90294XK785334U","PAYMENTINFO_0_TRANSACTIONTYPE":"cart","PAYMENTINFO_0_PAYMENTTYPE":"instant","PAYMENTINFO_0_ORDERTIME":"2020-03-09T12:23:02Z","PAYMENTINFO_0_AMT":"2.99","PAYMENTINFO_0_FEEAMT":"0.42","PAYMENTINFO_0_TAXAMT":"0.00","PAYMENTINFO_0_CURRENCYCODE":"USD","PAYMENTINFO_0_PAYMENTSTATUS":"Pending","PAYMENTINFO_0_PENDINGREASON":"paymentreview","PAYMENTINFO_0_REASONCODE":"None","PAYMENTINFO_0_PROTECTIONELIGIBILITY":"Ineligible","PAYMENTINFO_0_PROTECTIONELIGIBILITYTYPE":"None","PAYMENTINFO_0_SELLERPAYPALACCOUNTID":"ramagkrishna91-facilitator@gmail.com","PAYMENTINFO_0_SECUREMERCHANTACCOUNTID":"XCB83XW6EKKHN","PAYMENTINFO_0_ERRORCODE":"0","PAYMENTINFO_0_ACK":"Success"}', '2020-03-09 12:23:04', '2020-03-09 12:23:04');
 /*!40000 ALTER TABLE `invoices` ENABLE KEYS */;
 
 -- Dumping structure for table knitfit.ipn_status
@@ -537,7 +538,9 @@ DROP TABLE IF EXISTS `products`;
 CREATE TABLE IF NOT EXISTS `products` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
+  `pid` text,
   `product_name` varchar(100) DEFAULT NULL,
+  `slug` longtext,
   `short_description` text,
   `product_description` longtext,
   `skill_level` varchar(100) DEFAULT NULL,
@@ -572,13 +575,163 @@ CREATE TABLE IF NOT EXISTS `products` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `category_id` (`category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=152 DEFAULT CHARSET=latin1;
 
--- Dumping data for table knitfit.products: ~1 rows (approximately)
+-- Dumping data for table knitfit.products: ~151 rows (approximately)
 DELETE FROM `products`;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` (`id`, `user_id`, `product_name`, `short_description`, `product_description`, `skill_level`, `category_id`, `sku`, `attribute_set`, `product_type`, `is_custom`, `design_type`, `product_go_live_date`, `status`, `price`, `sale_price`, `sale_price_start_date`, `sale_price_end_date`, `related_products`, `recommended_yarn`, `recommended_fiber_type`, `recommended_yarn_weight`, `recommended_needle_size`, `additional_tools`, `designer_recommended_uom`, `designer_recommended_ease_in`, `designer_recommended_ease_cm`, `recommended_stitch_gauge_in`, `recommended_stitch_gauge_cm`, `recommended_row_gauge_in`, `recommended_row_gauge_cm`, `created_at`, `updated_at`, `ipaddress`) VALUES
-	(1, NULL, 'Peakaboo Cables sweater', 'short description', 'Long description', 'easy', 1, 'kfk0001', NULL, NULL, 1, NULL, '2020-02-16', 1, 10, NULL, NULL, NULL, NULL, 'wool', 'wool', '100', '10', 'not required', NULL, '2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `products` (`id`, `user_id`, `pid`, `product_name`, `slug`, `short_description`, `product_description`, `skill_level`, `category_id`, `sku`, `attribute_set`, `product_type`, `is_custom`, `design_type`, `product_go_live_date`, `status`, `price`, `sale_price`, `sale_price_start_date`, `sale_price_end_date`, `related_products`, `recommended_yarn`, `recommended_fiber_type`, `recommended_yarn_weight`, `recommended_needle_size`, `additional_tools`, `designer_recommended_uom`, `designer_recommended_ease_in`, `designer_recommended_ease_cm`, `recommended_stitch_gauge_in`, `recommended_stitch_gauge_cm`, `recommended_row_gauge_in`, `recommended_row_gauge_cm`, `created_at`, `updated_at`, `ipaddress`) VALUES
+	(1, NULL, 'c4ca4238a0b923820dcc509a6f75849b', 'Peakaboo Cables sweater', 'peakaboo-cables-sweater', 'short description', 'Long description', 'easy', 1, 'kfk0001', NULL, NULL, 1, NULL, '2020-02-16', 1, 332, 508, NULL, NULL, NULL, 'wool', 'wool', '100', '10', 'not required', NULL, '2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(2, 1, 'c81e728d9d4c2f636f067f89cc14862c', 'Product Name 0', 'product-name-0', 'Product short description 0', 'Product short description 0', 'easy', 1, 'SKU-00000', 'attribute set', 'product type', 1, 1, NULL, 1, 226, 496, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(3, 1, 'eccbc87e4b5ce2fe28308fd9f2a7baf3', 'Product Name 1', 'product-name-1', 'Product short description 1', 'Product short description 1', 'easy', 1, 'SKU-00001', 'attribute set', 'product type', 1, 1, NULL, 1, 842, 199, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(4, 1, 'a87ff679a2f3e71d9181a67b7542122c', 'Product Name 2', 'product-name-2', 'Product short description 2', 'Product short description 2', 'easy', 1, 'SKU-00002', 'attribute set', 'product type', 1, 1, NULL, 1, 722, 991, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(5, 1, 'e4da3b7fbbce2345d7772b0674a318d5', 'Product Name 3', 'product-name-3', 'Product short description 3', 'Product short description 3', 'easy', 1, 'SKU-00003', 'attribute set', 'product type', 1, 1, NULL, 1, 591, 329, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(6, 1, '1679091c5a880faf6fb5e6087eb1b2dc', 'Product Name 4', 'product-name-4', 'Product short description 4', 'Product short description 4', 'easy', 1, 'SKU-00004', 'attribute set', 'product type', 1, 1, NULL, 1, 902, 565, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(7, 1, '8f14e45fceea167a5a36dedd4bea2543', 'Product Name 5', 'product-name-5', 'Product short description 5', 'Product short description 5', 'easy', 1, 'SKU-00005', 'attribute set', 'product type', 1, 1, NULL, 1, 885, 253, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(8, 1, 'c9f0f895fb98ab9159f51fd0297e236d', 'Product Name 6', 'product-name-6', 'Product short description 6', 'Product short description 6', 'easy', 1, 'SKU-00006', 'attribute set', 'product type', 1, 1, NULL, 1, 255, 930, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(9, 1, '45c48cce2e2d7fbdea1afc51c7c6ad26', 'Product Name 7', 'product-name-7', 'Product short description 7', 'Product short description 7', 'easy', 1, 'SKU-00007', 'attribute set', 'product type', 1, 1, NULL, 1, 352, 758, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(10, 1, 'd3d9446802a44259755d38e6d163e820', 'Product Name 8', 'product-name-8', 'Product short description 8', 'Product short description 8', 'easy', 1, 'SKU-00008', 'attribute set', 'product type', 1, 1, NULL, 1, 183, 643, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(11, 1, '6512bd43d9caa6e02c990b0a82652dca', 'Product Name 9', 'product-name-9', 'Product short description 9', 'Product short description 9', 'easy', 1, 'SKU-00009', 'attribute set', 'product type', 1, 1, NULL, 1, 348, 832, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(12, 1, 'c20ad4d76fe97759aa27a0c99bff6710', 'Product Name 10', 'product-name-10', 'Product short description 10', 'Product short description 10', 'easy', 1, 'SKU-000010', 'attribute set', 'product type', 1, 1, NULL, 1, 650, 269, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(13, 1, 'c51ce410c124a10e0db5e4b97fc2af39', 'Product Name 11', 'product-name-11', 'Product short description 11', 'Product short description 11', 'easy', 1, 'SKU-000011', 'attribute set', 'product type', 1, 1, NULL, 1, 172, 256, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(14, 1, 'aab3238922bcc25a6f606eb525ffdc56', 'Product Name 12', 'product-name-12', 'Product short description 12', 'Product short description 12', 'easy', 1, 'SKU-000012', 'attribute set', 'product type', 1, 1, NULL, 1, 399, 495, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(15, 1, '9bf31c7ff062936a96d3c8bd1f8f2ff3', 'Product Name 13', 'product-name-13', 'Product short description 13', 'Product short description 13', 'easy', 1, 'SKU-000013', 'attribute set', 'product type', 1, 1, NULL, 1, 314, 118, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(16, 1, 'c74d97b01eae257e44aa9d5bade97baf', 'Product Name 14', 'product-name-14', 'Product short description 14', 'Product short description 14', 'easy', 1, 'SKU-000014', 'attribute set', 'product type', 1, 1, NULL, 1, 365, 871, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(17, 1, '70efdf2ec9b086079795c442636b55fb', 'Product Name 15', 'product-name-15', 'Product short description 15', 'Product short description 15', 'easy', 1, 'SKU-000015', 'attribute set', 'product type', 1, 1, NULL, 1, 969, 993, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(18, 1, '6f4922f45568161a8cdf4ad2299f6d23', 'Product Name 16', 'product-name-16', 'Product short description 16', 'Product short description 16', 'easy', 1, 'SKU-000016', 'attribute set', 'product type', 1, 1, NULL, 1, 704, 405, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(19, 1, '1f0e3dad99908345f7439f8ffabdffc4', 'Product Name 17', 'product-name-17', 'Product short description 17', 'Product short description 17', 'easy', 1, 'SKU-000017', 'attribute set', 'product type', 1, 1, NULL, 1, 711, 813, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(20, 1, '98f13708210194c475687be6106a3b84', 'Product Name 18', 'product-name-18', 'Product short description 18', 'Product short description 18', 'easy', 1, 'SKU-000018', 'attribute set', 'product type', 1, 1, NULL, 1, 599, 197, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(21, 1, '3c59dc048e8850243be8079a5c74d079', 'Product Name 19', 'product-name-19', 'Product short description 19', 'Product short description 19', 'easy', 1, 'SKU-000019', 'attribute set', 'product type', 1, 1, NULL, 1, 817, 956, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(22, 1, 'b6d767d2f8ed5d21a44b0e5886680cb9', 'Product Name 20', 'product-name-20', 'Product short description 20', 'Product short description 20', 'easy', 1, 'SKU-000020', 'attribute set', 'product type', 1, 1, NULL, 1, 948, 807, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(23, 1, '37693cfc748049e45d87b8c7d8b9aacd', 'Product Name 21', 'product-name-21', 'Product short description 21', 'Product short description 21', 'easy', 1, 'SKU-000021', 'attribute set', 'product type', 1, 1, NULL, 1, 819, 356, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(24, 1, '1ff1de774005f8da13f42943881c655f', 'Product Name 22', 'product-name-22', 'Product short description 22', 'Product short description 22', 'easy', 1, 'SKU-000022', 'attribute set', 'product type', 1, 1, NULL, 1, 417, 769, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(25, 1, '8e296a067a37563370ded05f5a3bf3ec', 'Product Name 23', 'product-name-23', 'Product short description 23', 'Product short description 23', 'easy', 1, 'SKU-000023', 'attribute set', 'product type', 1, 1, NULL, 1, 196, 291, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(26, 1, '4e732ced3463d06de0ca9a15b6153677', 'Product Name 24', 'product-name-24', 'Product short description 24', 'Product short description 24', 'easy', 1, 'SKU-000024', 'attribute set', 'product type', 1, 1, NULL, 1, 178, 257, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(27, 1, '02e74f10e0327ad868d138f2b4fdd6f0', 'Product Name 25', 'product-name-25', 'Product short description 25', 'Product short description 25', 'easy', 1, 'SKU-000025', 'attribute set', 'product type', 1, 1, NULL, 1, 274, 426, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(28, 1, '33e75ff09dd601bbe69f351039152189', 'Product Name 26', 'product-name-26', 'Product short description 26', 'Product short description 26', 'easy', 1, 'SKU-000026', 'attribute set', 'product type', 1, 1, NULL, 1, 236, 557, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(29, 1, '6ea9ab1baa0efb9e19094440c317e21b', 'Product Name 27', 'product-name-27', 'Product short description 27', 'Product short description 27', 'easy', 1, 'SKU-000027', 'attribute set', 'product type', 1, 1, NULL, 1, 885, 789, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(30, 1, '34173cb38f07f89ddbebc2ac9128303f', 'Product Name 28', 'product-name-28', 'Product short description 28', 'Product short description 28', 'easy', 1, 'SKU-000028', 'attribute set', 'product type', 1, 1, NULL, 1, 123, 238, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(31, 1, 'c16a5320fa475530d9583c34fd356ef5', 'Product Name 29', 'product-name-29', 'Product short description 29', 'Product short description 29', 'easy', 1, 'SKU-000029', 'attribute set', 'product type', 1, 1, NULL, 1, 775, 979, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(32, 1, '6364d3f0f495b6ab9dcf8d3b5c6e0b01', 'Product Name 30', 'product-name-30', 'Product short description 30', 'Product short description 30', 'easy', 1, 'SKU-000030', 'attribute set', 'product type', 1, 1, NULL, 1, 881, 660, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(33, 1, '182be0c5cdcd5072bb1864cdee4d3d6e', 'Product Name 31', 'product-name-31', 'Product short description 31', 'Product short description 31', 'easy', 1, 'SKU-000031', 'attribute set', 'product type', 1, 1, NULL, 1, 758, 704, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(34, 1, 'e369853df766fa44e1ed0ff613f563bd', 'Product Name 32', 'product-name-32', 'Product short description 32', 'Product short description 32', 'easy', 1, 'SKU-000032', 'attribute set', 'product type', 1, 1, NULL, 1, 446, 595, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(35, 1, '1c383cd30b7c298ab50293adfecb7b18', 'Product Name 33', 'product-name-33', 'Product short description 33', 'Product short description 33', 'easy', 1, 'SKU-000033', 'attribute set', 'product type', 1, 1, NULL, 1, 738, 579, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(36, 1, '19ca14e7ea6328a42e0eb13d585e4c22', 'Product Name 34', 'product-name-34', 'Product short description 34', 'Product short description 34', 'easy', 1, 'SKU-000034', 'attribute set', 'product type', 1, 1, NULL, 1, 515, 551, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(37, 1, 'a5bfc9e07964f8dddeb95fc584cd965d', 'Product Name 35', 'product-name-35', 'Product short description 35', 'Product short description 35', 'easy', 1, 'SKU-000035', 'attribute set', 'product type', 1, 1, NULL, 1, 729, 398, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(38, 1, 'a5771bce93e200c36f7cd9dfd0e5deaa', 'Product Name 36', 'product-name-36', 'Product short description 36', 'Product short description 36', 'easy', 1, 'SKU-000036', 'attribute set', 'product type', 1, 1, NULL, 1, 107, 570, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(39, 1, 'd67d8ab4f4c10bf22aa353e27879133c', 'Product Name 37', 'product-name-37', 'Product short description 37', 'Product short description 37', 'easy', 1, 'SKU-000037', 'attribute set', 'product type', 1, 1, NULL, 1, 480, 471, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(40, 1, 'd645920e395fedad7bbbed0eca3fe2e0', 'Product Name 38', 'product-name-38', 'Product short description 38', 'Product short description 38', 'easy', 1, 'SKU-000038', 'attribute set', 'product type', 1, 1, NULL, 1, 679, 723, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(41, 1, '3416a75f4cea9109507cacd8e2f2aefc', 'Product Name 39', 'product-name-39', 'Product short description 39', 'Product short description 39', 'easy', 1, 'SKU-000039', 'attribute set', 'product type', 1, 1, NULL, 1, 296, 713, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(42, 1, 'a1d0c6e83f027327d8461063f4ac58a6', 'Product Name 40', 'product-name-40', 'Product short description 40', 'Product short description 40', 'easy', 1, 'SKU-000040', 'attribute set', 'product type', 1, 1, NULL, 1, 939, 322, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(43, 1, '17e62166fc8586dfa4d1bc0e1742c08b', 'Product Name 41', 'product-name-41', 'Product short description 41', 'Product short description 41', 'easy', 1, 'SKU-000041', 'attribute set', 'product type', 1, 1, NULL, 1, 599, 347, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(44, 1, 'f7177163c833dff4b38fc8d2872f1ec6', 'Product Name 42', 'product-name-42', 'Product short description 42', 'Product short description 42', 'easy', 1, 'SKU-000042', 'attribute set', 'product type', 1, 1, NULL, 1, 186, 229, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(45, 1, '6c8349cc7260ae62e3b1396831a8398f', 'Product Name 43', 'product-name-43', 'Product short description 43', 'Product short description 43', 'easy', 1, 'SKU-000043', 'attribute set', 'product type', 1, 1, NULL, 1, 884, 909, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(46, 1, 'd9d4f495e875a2e075a1a4a6e1b9770f', 'Product Name 44', 'product-name-44', 'Product short description 44', 'Product short description 44', 'easy', 1, 'SKU-000044', 'attribute set', 'product type', 1, 1, NULL, 1, 176, 813, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(47, 1, '67c6a1e7ce56d3d6fa748ab6d9af3fd7', 'Product Name 45', 'product-name-45', 'Product short description 45', 'Product short description 45', 'easy', 1, 'SKU-000045', 'attribute set', 'product type', 1, 1, NULL, 1, 132, 797, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(48, 1, '642e92efb79421734881b53e1e1b18b6', 'Product Name 46', 'product-name-46', 'Product short description 46', 'Product short description 46', 'easy', 1, 'SKU-000046', 'attribute set', 'product type', 1, 1, NULL, 1, 417, 905, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(49, 1, 'f457c545a9ded88f18ecee47145a72c0', 'Product Name 47', 'product-name-47', 'Product short description 47', 'Product short description 47', 'easy', 1, 'SKU-000047', 'attribute set', 'product type', 1, 1, NULL, 1, 529, 206, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(50, 1, 'c0c7c76d30bd3dcaefc96f40275bdc0a', 'Product Name 48', 'product-name-48', 'Product short description 48', 'Product short description 48', 'easy', 1, 'SKU-000048', 'attribute set', 'product type', 1, 1, NULL, 1, 498, 469, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(51, 1, '2838023a778dfaecdc212708f721b788', 'Product Name 49', 'product-name-49', 'Product short description 49', 'Product short description 49', 'easy', 1, 'SKU-000049', 'attribute set', 'product type', 1, 1, NULL, 1, 227, 778, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(52, 1, '9a1158154dfa42caddbd0694a4e9bdc8', 'Product Name 50', 'product-name-50', 'Product short description 50', 'Product short description 50', 'easy', 1, 'SKU-000050', 'attribute set', 'product type', 1, 1, NULL, 1, 105, 256, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(53, 1, 'd82c8d1619ad8176d665453cfb2e55f0', 'Product Name 51', 'product-name-51', 'Product short description 51', 'Product short description 51', 'easy', 1, 'SKU-000051', 'attribute set', 'product type', 1, 1, NULL, 1, 762, 263, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(54, 1, 'a684eceee76fc522773286a895bc8436', 'Product Name 52', 'product-name-52', 'Product short description 52', 'Product short description 52', 'easy', 1, 'SKU-000052', 'attribute set', 'product type', 1, 1, NULL, 1, 173, 952, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(55, 1, 'b53b3a3d6ab90ce0268229151c9bde11', 'Product Name 53', 'product-name-53', 'Product short description 53', 'Product short description 53', 'easy', 1, 'SKU-000053', 'attribute set', 'product type', 1, 1, NULL, 1, 884, 772, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(56, 1, '9f61408e3afb633e50cdf1b20de6f466', 'Product Name 54', 'product-name-54', 'Product short description 54', 'Product short description 54', 'easy', 1, 'SKU-000054', 'attribute set', 'product type', 1, 1, NULL, 1, 488, 666, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(57, 1, '72b32a1f754ba1c09b3695e0cb6cde7f', 'Product Name 55', 'product-name-55', 'Product short description 55', 'Product short description 55', 'easy', 1, 'SKU-000055', 'attribute set', 'product type', 1, 1, NULL, 1, 838, 541, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(58, 1, '66f041e16a60928b05a7e228a89c3799', 'Product Name 56', 'product-name-56', 'Product short description 56', 'Product short description 56', 'easy', 1, 'SKU-000056', 'attribute set', 'product type', 1, 1, NULL, 1, 907, 794, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(59, 1, '093f65e080a295f8076b1c5722a46aa2', 'Product Name 57', 'product-name-57', 'Product short description 57', 'Product short description 57', 'easy', 1, 'SKU-000057', 'attribute set', 'product type', 1, 1, NULL, 1, 795, 693, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(60, 1, '072b030ba126b2f4b2374f342be9ed44', 'Product Name 58', 'product-name-58', 'Product short description 58', 'Product short description 58', 'easy', 1, 'SKU-000058', 'attribute set', 'product type', 1, 1, NULL, 1, 346, 562, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(61, 1, '7f39f8317fbdb1988ef4c628eba02591', 'Product Name 59', 'product-name-59', 'Product short description 59', 'Product short description 59', 'easy', 1, 'SKU-000059', 'attribute set', 'product type', 1, 1, NULL, 1, 243, 671, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(62, 1, '44f683a84163b3523afe57c2e008bc8c', 'Product Name 60', 'product-name-60', 'Product short description 60', 'Product short description 60', 'easy', 1, 'SKU-000060', 'attribute set', 'product type', 1, 1, NULL, 1, 319, 230, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(63, 1, '03afdbd66e7929b125f8597834fa83a4', 'Product Name 61', 'product-name-61', 'Product short description 61', 'Product short description 61', 'easy', 1, 'SKU-000061', 'attribute set', 'product type', 1, 1, NULL, 1, 396, 610, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(64, 1, 'ea5d2f1c4608232e07d3aa3d998e5135', 'Product Name 62', 'product-name-62', 'Product short description 62', 'Product short description 62', 'easy', 1, 'SKU-000062', 'attribute set', 'product type', 1, 1, NULL, 1, 409, 424, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(65, 1, 'fc490ca45c00b1249bbe3554a4fdf6fb', 'Product Name 63', 'product-name-63', 'Product short description 63', 'Product short description 63', 'easy', 1, 'SKU-000063', 'attribute set', 'product type', 1, 1, NULL, 1, 269, 510, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(66, 1, '3295c76acbf4caaed33c36b1b5fc2cb1', 'Product Name 64', 'product-name-64', 'Product short description 64', 'Product short description 64', 'easy', 1, 'SKU-000064', 'attribute set', 'product type', 1, 1, NULL, 1, 769, 719, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(67, 1, '735b90b4568125ed6c3f678819b6e058', 'Product Name 65', 'product-name-65', 'Product short description 65', 'Product short description 65', 'easy', 1, 'SKU-000065', 'attribute set', 'product type', 1, 1, NULL, 1, 921, 336, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(68, 1, 'a3f390d88e4c41f2747bfa2f1b5f87db', 'Product Name 66', 'product-name-66', 'Product short description 66', 'Product short description 66', 'easy', 1, 'SKU-000066', 'attribute set', 'product type', 1, 1, NULL, 1, 643, 953, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(69, 1, '14bfa6bb14875e45bba028a21ed38046', 'Product Name 67', 'product-name-67', 'Product short description 67', 'Product short description 67', 'easy', 1, 'SKU-000067', 'attribute set', 'product type', 1, 1, NULL, 1, 759, 868, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(70, 1, '7cbbc409ec990f19c78c75bd1e06f215', 'Product Name 68', 'product-name-68', 'Product short description 68', 'Product short description 68', 'easy', 1, 'SKU-000068', 'attribute set', 'product type', 1, 1, NULL, 1, 759, 283, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(71, 1, 'e2c420d928d4bf8ce0ff2ec19b371514', 'Product Name 69', 'product-name-69', 'Product short description 69', 'Product short description 69', 'easy', 1, 'SKU-000069', 'attribute set', 'product type', 1, 1, NULL, 1, 887, 429, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(72, 1, '32bb90e8976aab5298d5da10fe66f21d', 'Product Name 70', 'product-name-70', 'Product short description 70', 'Product short description 70', 'easy', 1, 'SKU-000070', 'attribute set', 'product type', 1, 1, NULL, 1, 905, 997, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(73, 1, 'd2ddea18f00665ce8623e36bd4e3c7c5', 'Product Name 71', 'product-name-71', 'Product short description 71', 'Product short description 71', 'easy', 1, 'SKU-000071', 'attribute set', 'product type', 1, 1, NULL, 1, 365, 549, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(74, 1, 'ad61ab143223efbc24c7d2583be69251', 'Product Name 72', 'product-name-72', 'Product short description 72', 'Product short description 72', 'easy', 1, 'SKU-000072', 'attribute set', 'product type', 1, 1, NULL, 1, 703, 871, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(75, 1, 'd09bf41544a3365a46c9077ebb5e35c3', 'Product Name 73', 'product-name-73', 'Product short description 73', 'Product short description 73', 'easy', 1, 'SKU-000073', 'attribute set', 'product type', 1, 1, NULL, 1, 538, 618, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(76, 1, 'fbd7939d674997cdb4692d34de8633c4', 'Product Name 74', 'product-name-74', 'Product short description 74', 'Product short description 74', 'easy', 1, 'SKU-000074', 'attribute set', 'product type', 1, 1, NULL, 1, 383, 329, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(77, 1, '28dd2c7955ce926456240b2ff0100bde', 'Product Name 75', 'product-name-75', 'Product short description 75', 'Product short description 75', 'easy', 1, 'SKU-000075', 'attribute set', 'product type', 1, 1, NULL, 1, 463, 723, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(78, 1, '35f4a8d465e6e1edc05f3d8ab658c551', 'Product Name 76', 'product-name-76', 'Product short description 76', 'Product short description 76', 'easy', 1, 'SKU-000076', 'attribute set', 'product type', 1, 1, NULL, 1, 157, 622, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(79, 1, 'd1fe173d08e959397adf34b1d77e88d7', 'Product Name 77', 'product-name-77', 'Product short description 77', 'Product short description 77', 'easy', 1, 'SKU-000077', 'attribute set', 'product type', 1, 1, NULL, 1, 387, 122, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(80, 1, 'f033ab37c30201f73f142449d037028d', 'Product Name 78', 'product-name-78', 'Product short description 78', 'Product short description 78', 'easy', 1, 'SKU-000078', 'attribute set', 'product type', 1, 1, NULL, 1, 810, 976, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(81, 1, '43ec517d68b6edd3015b3edc9a11367b', 'Product Name 79', 'product-name-79', 'Product short description 79', 'Product short description 79', 'easy', 1, 'SKU-000079', 'attribute set', 'product type', 1, 1, NULL, 1, 862, 310, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(82, 1, '9778d5d219c5080b9a6a17bef029331c', 'Product Name 80', 'product-name-80', 'Product short description 80', 'Product short description 80', 'easy', 1, 'SKU-000080', 'attribute set', 'product type', 1, 1, NULL, 1, 733, 735, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(83, 1, 'fe9fc289c3ff0af142b6d3bead98a923', 'Product Name 81', 'product-name-81', 'Product short description 81', 'Product short description 81', 'easy', 1, 'SKU-000081', 'attribute set', 'product type', 1, 1, NULL, 1, 541, 542, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(84, 1, '68d30a9594728bc39aa24be94b319d21', 'Product Name 82', 'product-name-82', 'Product short description 82', 'Product short description 82', 'easy', 1, 'SKU-000082', 'attribute set', 'product type', 1, 1, NULL, 1, 434, 705, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(85, 1, '3ef815416f775098fe977004015c6193', 'Product Name 83', 'product-name-83', 'Product short description 83', 'Product short description 83', 'easy', 1, 'SKU-000083', 'attribute set', 'product type', 1, 1, NULL, 1, 399, 368, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(86, 1, '93db85ed909c13838ff95ccfa94cebd9', 'Product Name 84', 'product-name-84', 'Product short description 84', 'Product short description 84', 'easy', 1, 'SKU-000084', 'attribute set', 'product type', 1, 1, NULL, 1, 879, 349, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(87, 1, 'c7e1249ffc03eb9ded908c236bd1996d', 'Product Name 85', 'product-name-85', 'Product short description 85', 'Product short description 85', 'easy', 1, 'SKU-000085', 'attribute set', 'product type', 1, 1, NULL, 1, 212, 679, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(88, 1, '2a38a4a9316c49e5a833517c45d31070', 'Product Name 86', 'product-name-86', 'Product short description 86', 'Product short description 86', 'easy', 1, 'SKU-000086', 'attribute set', 'product type', 1, 1, NULL, 1, 340, 868, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(89, 1, '7647966b7343c29048673252e490f736', 'Product Name 87', 'product-name-87', 'Product short description 87', 'Product short description 87', 'easy', 1, 'SKU-000087', 'attribute set', 'product type', 1, 1, NULL, 1, 677, 505, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(90, 1, '8613985ec49eb8f757ae6439e879bb2a', 'Product Name 88', 'product-name-88', 'Product short description 88', 'Product short description 88', 'easy', 1, 'SKU-000088', 'attribute set', 'product type', 1, 1, NULL, 1, 718, 836, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(91, 1, '54229abfcfa5649e7003b83dd4755294', 'Product Name 89', 'product-name-89', 'Product short description 89', 'Product short description 89', 'easy', 1, 'SKU-000089', 'attribute set', 'product type', 1, 1, NULL, 1, 641, 999, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(92, 1, '92cc227532d17e56e07902b254dfad10', 'Product Name 90', 'product-name-90', 'Product short description 90', 'Product short description 90', 'easy', 1, 'SKU-000090', 'attribute set', 'product type', 1, 1, NULL, 1, 299, 476, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(93, 1, '98dce83da57b0395e163467c9dae521b', 'Product Name 91', 'product-name-91', 'Product short description 91', 'Product short description 91', 'easy', 1, 'SKU-000091', 'attribute set', 'product type', 1, 1, NULL, 1, 147, 985, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(94, 1, 'f4b9ec30ad9f68f89b29639786cb62ef', 'Product Name 92', 'product-name-92', 'Product short description 92', 'Product short description 92', 'easy', 1, 'SKU-000092', 'attribute set', 'product type', 1, 1, NULL, 1, 919, 649, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(95, 1, '812b4ba287f5ee0bc9d43bbf5bbe87fb', 'Product Name 93', 'product-name-93', 'Product short description 93', 'Product short description 93', 'easy', 1, 'SKU-000093', 'attribute set', 'product type', 1, 1, NULL, 1, 835, 500, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(96, 1, '26657d5ff9020d2abefe558796b99584', 'Product Name 94', 'product-name-94', 'Product short description 94', 'Product short description 94', 'easy', 1, 'SKU-000094', 'attribute set', 'product type', 1, 1, NULL, 1, 801, 834, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(97, 1, 'e2ef524fbf3d9fe611d5a8e90fefdc9c', 'Product Name 95', 'product-name-95', 'Product short description 95', 'Product short description 95', 'easy', 1, 'SKU-000095', 'attribute set', 'product type', 1, 1, NULL, 1, 813, 282, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(98, 1, 'ed3d2c21991e3bef5e069713af9fa6ca', 'Product Name 96', 'product-name-96', 'Product short description 96', 'Product short description 96', 'easy', 1, 'SKU-000096', 'attribute set', 'product type', 1, 1, NULL, 1, 530, 878, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(99, 1, 'ac627ab1ccbdb62ec96e702f07f6425b', 'Product Name 97', 'product-name-97', 'Product short description 97', 'Product short description 97', 'easy', 1, 'SKU-000097', 'attribute set', 'product type', 1, 1, NULL, 1, 470, 690, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(100, 1, 'f899139df5e1059396431415e770c6dd', 'Product Name 98', 'product-name-98', 'Product short description 98', 'Product short description 98', 'easy', 1, 'SKU-000098', 'attribute set', 'product type', 1, 1, NULL, 1, 274, 420, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(101, 1, '38b3eff8baf56627478ec76a704e9b52', 'Product Name 99', 'product-name-99', 'Product short description 99', 'Product short description 99', 'easy', 1, 'SKU-000099', 'attribute set', 'product type', 1, 1, NULL, 1, 799, 332, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(102, 1, 'ec8956637a99787bd197eacd77acce5e', 'Product Name 100', 'product-name-100', 'Product short description 100', 'Product short description 100', 'easy', 1, 'SKU-0000100', 'attribute set', 'product type', 1, 1, NULL, 1, 338, 838, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(103, 1, '6974ce5ac660610b44d9b9fed0ff9548', 'Product Name 101', 'product-name-101', 'Product short description 101', 'Product short description 101', 'easy', 1, 'SKU-0000101', 'attribute set', 'product type', 1, 1, NULL, 1, 608, 184, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(104, 1, 'c9e1074f5b3f9fc8ea15d152add07294', 'Product Name 102', 'product-name-102', 'Product short description 102', 'Product short description 102', 'easy', 1, 'SKU-0000102', 'attribute set', 'product type', 1, 1, NULL, 1, 301, 452, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(105, 1, '65b9eea6e1cc6bb9f0cd2a47751a186f', 'Product Name 103', 'product-name-103', 'Product short description 103', 'Product short description 103', 'easy', 1, 'SKU-0000103', 'attribute set', 'product type', 1, 1, NULL, 1, 572, 945, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(106, 1, 'f0935e4cd5920aa6c7c996a5ee53a70f', 'Product Name 104', 'product-name-104', 'Product short description 104', 'Product short description 104', 'easy', 1, 'SKU-0000104', 'attribute set', 'product type', 1, 1, NULL, 1, 790, 404, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(107, 1, 'a97da629b098b75c294dffdc3e463904', 'Product Name 105', 'product-name-105', 'Product short description 105', 'Product short description 105', 'easy', 1, 'SKU-0000105', 'attribute set', 'product type', 1, 1, NULL, 1, 783, 635, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(108, 1, 'a3c65c2974270fd093ee8a9bf8ae7d0b', 'Product Name 106', 'product-name-106', 'Product short description 106', 'Product short description 106', 'easy', 1, 'SKU-0000106', 'attribute set', 'product type', 1, 1, NULL, 1, 986, 520, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(109, 1, '2723d092b63885e0d7c260cc007e8b9d', 'Product Name 107', 'product-name-107', 'Product short description 107', 'Product short description 107', 'easy', 1, 'SKU-0000107', 'attribute set', 'product type', 1, 1, NULL, 1, 965, 285, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(110, 1, '5f93f983524def3dca464469d2cf9f3e', 'Product Name 108', 'product-name-108', 'Product short description 108', 'Product short description 108', 'easy', 1, 'SKU-0000108', 'attribute set', 'product type', 1, 1, NULL, 1, 117, 324, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(111, 1, '698d51a19d8a121ce581499d7b701668', 'Product Name 109', 'product-name-109', 'Product short description 109', 'Product short description 109', 'easy', 1, 'SKU-0000109', 'attribute set', 'product type', 1, 1, NULL, 1, 843, 248, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(112, 1, '7f6ffaa6bb0b408017b62254211691b5', 'Product Name 110', 'product-name-110', 'Product short description 110', 'Product short description 110', 'easy', 1, 'SKU-0000110', 'attribute set', 'product type', 1, 1, NULL, 1, 647, 926, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(113, 1, '73278a4a86960eeb576a8fd4c9ec6997', 'Product Name 111', 'product-name-111', 'Product short description 111', 'Product short description 111', 'easy', 1, 'SKU-0000111', 'attribute set', 'product type', 1, 1, NULL, 1, 573, 730, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(114, 1, '5fd0b37cd7dbbb00f97ba6ce92bf5add', 'Product Name 112', 'product-name-112', 'Product short description 112', 'Product short description 112', 'easy', 1, 'SKU-0000112', 'attribute set', 'product type', 1, 1, NULL, 1, 835, 577, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(115, 1, '2b44928ae11fb9384c4cf38708677c48', 'Product Name 113', 'product-name-113', 'Product short description 113', 'Product short description 113', 'easy', 1, 'SKU-0000113', 'attribute set', 'product type', 1, 1, NULL, 1, 703, 509, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(116, 1, 'c45147dee729311ef5b5c3003946c48f', 'Product Name 114', 'product-name-114', 'Product short description 114', 'Product short description 114', 'easy', 1, 'SKU-0000114', 'attribute set', 'product type', 1, 1, NULL, 1, 982, 168, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(117, 1, 'eb160de1de89d9058fcb0b968dbbbd68', 'Product Name 115', 'product-name-115', 'Product short description 115', 'Product short description 115', 'easy', 1, 'SKU-0000115', 'attribute set', 'product type', 1, 1, NULL, 1, 184, 872, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(118, 1, '5ef059938ba799aaa845e1c2e8a762bd', 'Product Name 116', 'product-name-116', 'Product short description 116', 'Product short description 116', 'easy', 1, 'SKU-0000116', 'attribute set', 'product type', 1, 1, NULL, 1, 549, 456, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(119, 1, '07e1cd7dca89a1678042477183b7ac3f', 'Product Name 117', 'product-name-117', 'Product short description 117', 'Product short description 117', 'easy', 1, 'SKU-0000117', 'attribute set', 'product type', 1, 1, NULL, 1, 903, 790, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(120, 1, 'da4fb5c6e93e74d3df8527599fa62642', 'Product Name 118', 'product-name-118', 'Product short description 118', 'Product short description 118', 'easy', 1, 'SKU-0000118', 'attribute set', 'product type', 1, 1, NULL, 1, 626, 673, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(121, 1, '4c56ff4ce4aaf9573aa5dff913df997a', 'Product Name 119', 'product-name-119', 'Product short description 119', 'Product short description 119', 'easy', 1, 'SKU-0000119', 'attribute set', 'product type', 1, 1, NULL, 1, 511, 720, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(122, 1, 'a0a080f42e6f13b3a2df133f073095dd', 'Product Name 120', 'product-name-120', 'Product short description 120', 'Product short description 120', 'easy', 1, 'SKU-0000120', 'attribute set', 'product type', 1, 1, NULL, 1, 210, 665, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(123, 1, '202cb962ac59075b964b07152d234b70', 'Product Name 121', 'product-name-121', 'Product short description 121', 'Product short description 121', 'easy', 1, 'SKU-0000121', 'attribute set', 'product type', 1, 1, NULL, 1, 949, 708, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(124, 1, 'c8ffe9a587b126f152ed3d89a146b445', 'Product Name 122', 'product-name-122', 'Product short description 122', 'Product short description 122', 'easy', 1, 'SKU-0000122', 'attribute set', 'product type', 1, 1, NULL, 1, 819, 375, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(125, 1, '3def184ad8f4755ff269862ea77393dd', 'Product Name 123', 'product-name-123', 'Product short description 123', 'Product short description 123', 'easy', 1, 'SKU-0000123', 'attribute set', 'product type', 1, 1, NULL, 1, 745, 774, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(126, 1, '069059b7ef840f0c74a814ec9237b6ec', 'Product Name 124', 'product-name-124', 'Product short description 124', 'Product short description 124', 'easy', 1, 'SKU-0000124', 'attribute set', 'product type', 1, 1, NULL, 1, 795, 100, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(127, 1, 'ec5decca5ed3d6b8079e2e7e7bacc9f2', 'Product Name 125', 'product-name-125', 'Product short description 125', 'Product short description 125', 'easy', 1, 'SKU-0000125', 'attribute set', 'product type', 1, 1, NULL, 1, 342, 286, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(128, 1, '76dc611d6ebaafc66cc0879c71b5db5c', 'Product Name 126', 'product-name-126', 'Product short description 126', 'Product short description 126', 'easy', 1, 'SKU-0000126', 'attribute set', 'product type', 1, 1, NULL, 1, 154, 604, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(129, 1, 'd1f491a404d6854880943e5c3cd9ca25', 'Product Name 127', 'product-name-127', 'Product short description 127', 'Product short description 127', 'easy', 1, 'SKU-0000127', 'attribute set', 'product type', 1, 1, NULL, 1, 147, 301, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(130, 1, '9b8619251a19057cff70779273e95aa6', 'Product Name 128', 'product-name-128', 'Product short description 128', 'Product short description 128', 'easy', 1, 'SKU-0000128', 'attribute set', 'product type', 1, 1, NULL, 1, 670, 689, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(131, 1, '1afa34a7f984eeabdbb0a7d494132ee5', 'Product Name 129', 'product-name-129', 'Product short description 129', 'Product short description 129', 'easy', 1, 'SKU-0000129', 'attribute set', 'product type', 1, 1, NULL, 1, 504, 756, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(132, 1, '65ded5353c5ee48d0b7d48c591b8f430', 'Product Name 130', 'product-name-130', 'Product short description 130', 'Product short description 130', 'easy', 1, 'SKU-0000130', 'attribute set', 'product type', 1, 1, NULL, 1, 542, 641, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(133, 1, '9fc3d7152ba9336a670e36d0ed79bc43', 'Product Name 131', 'product-name-131', 'Product short description 131', 'Product short description 131', 'easy', 1, 'SKU-0000131', 'attribute set', 'product type', 1, 1, NULL, 1, 121, 420, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(134, 1, '02522a2b2726fb0a03bb19f2d8d9524d', 'Product Name 132', 'product-name-132', 'Product short description 132', 'Product short description 132', 'easy', 1, 'SKU-0000132', 'attribute set', 'product type', 1, 1, NULL, 1, 796, 184, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(135, 1, '7f1de29e6da19d22b51c68001e7e0e54', 'Product Name 133', 'product-name-133', 'Product short description 133', 'Product short description 133', 'easy', 1, 'SKU-0000133', 'attribute set', 'product type', 1, 1, NULL, 1, 540, 614, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(136, 1, '42a0e188f5033bc65bf8d78622277c4e', 'Product Name 134', 'product-name-134', 'Product short description 134', 'Product short description 134', 'easy', 1, 'SKU-0000134', 'attribute set', 'product type', 1, 1, NULL, 1, 768, 609, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(137, 1, '3988c7f88ebcb58c6ce932b957b6f332', 'Product Name 135', 'product-name-135', 'Product short description 135', 'Product short description 135', 'easy', 1, 'SKU-0000135', 'attribute set', 'product type', 1, 1, NULL, 1, 723, 548, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(138, 1, '013d407166ec4fa56eb1e1f8cbe183b9', 'Product Name 136', 'product-name-136', 'Product short description 136', 'Product short description 136', 'easy', 1, 'SKU-0000136', 'attribute set', 'product type', 1, 1, NULL, 1, 430, 955, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(139, 1, 'e00da03b685a0dd18fb6a08af0923de0', 'Product Name 137', 'product-name-137', 'Product short description 137', 'Product short description 137', 'easy', 1, 'SKU-0000137', 'attribute set', 'product type', 1, 1, NULL, 1, 547, 329, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(140, 1, '1385974ed5904a438616ff7bdb3f7439', 'Product Name 138', 'product-name-138', 'Product short description 138', 'Product short description 138', 'easy', 1, 'SKU-0000138', 'attribute set', 'product type', 1, 1, NULL, 1, 434, 365, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(141, 1, '0f28b5d49b3020afeecd95b4009adf4c', 'Product Name 139', 'product-name-139', 'Product short description 139', 'Product short description 139', 'easy', 1, 'SKU-0000139', 'attribute set', 'product type', 1, 1, NULL, 1, 751, 180, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(142, 1, 'a8baa56554f96369ab93e4f3bb068c22', 'Product Name 140', 'product-name-140', 'Product short description 140', 'Product short description 140', 'easy', 1, 'SKU-0000140', 'attribute set', 'product type', 1, 1, NULL, 1, 586, 409, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(143, 1, '903ce9225fca3e988c2af215d4e544d3', 'Product Name 141', 'product-name-141', 'Product short description 141', 'Product short description 141', 'easy', 1, 'SKU-0000141', 'attribute set', 'product type', 1, 1, NULL, 1, 421, 939, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(144, 1, '0a09c8844ba8f0936c20bd791130d6b6', 'Product Name 142', 'product-name-142', 'Product short description 142', 'Product short description 142', 'easy', 1, 'SKU-0000142', 'attribute set', 'product type', 1, 1, NULL, 1, 900, 724, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(145, 1, '2b24d495052a8ce66358eb576b8912c8', 'Product Name 143', 'product-name-143', 'Product short description 143', 'Product short description 143', 'easy', 1, 'SKU-0000143', 'attribute set', 'product type', 1, 1, NULL, 1, 780, 758, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(146, 1, 'a5e00132373a7031000fd987a3c9f87b', 'Product Name 144', 'product-name-144', 'Product short description 144', 'Product short description 144', 'easy', 1, 'SKU-0000144', 'attribute set', 'product type', 1, 1, NULL, 1, 679, 782, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(147, 1, '8d5e957f297893487bd98fa830fa6413', 'Product Name 145', 'product-name-145', 'Product short description 145', 'Product short description 145', 'easy', 1, 'SKU-0000145', 'attribute set', 'product type', 1, 1, NULL, 1, 165, 847, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(148, 1, '47d1e990583c9c67424d369f3414728e', 'Product Name 146', 'product-name-146', 'Product short description 146', 'Product short description 146', 'easy', 1, 'SKU-0000146', 'attribute set', 'product type', 1, 1, NULL, 1, 351, 655, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(149, 1, 'f2217062e9a397a1dca429e7d70bc6ca', 'Product Name 147', 'product-name-147', 'Product short description 147', 'Product short description 147', 'easy', 1, 'SKU-0000147', 'attribute set', 'product type', 1, 1, NULL, 1, 487, 315, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(150, 1, '7ef605fc8dba5425d6965fbd4c8fbe1f', 'Product Name 148', 'product-name-148', 'Product short description 148', 'Product short description 148', 'easy', 1, 'SKU-0000148', 'attribute set', 'product type', 1, 1, NULL, 1, 740, 620, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(151, 1, 'a8f15eda80c50adb0e71943adc8015cf', 'Product Name 149', 'product-name-149', 'Product short description 149', 'Product short description 149', 'easy', 1, 'SKU-0000149', 'attribute set', 'product type', 1, 1, NULL, 1, 914, 489, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 
 -- Dumping structure for table knitfit.product_comments
@@ -598,9 +751,16 @@ CREATE TABLE IF NOT EXISTS `product_comments` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table knitfit.product_comments: ~0 rows (approximately)
+-- Dumping data for table knitfit.product_comments: ~6 rows (approximately)
 DELETE FROM `product_comments`;
 /*!40000 ALTER TABLE `product_comments` DISABLE KEYS */;
+INSERT INTO `product_comments` (`id`, `user_id`, `product_id`, `rating`, `name`, `email`, `comment`, `status`, `created_at`, `updated_at`, `ipaddress`) VALUES
+	(1, 1, 1, 1, NULL, NULL, 'Test', 0, NULL, NULL, NULL),
+	(2, 1, 1, 2, NULL, NULL, 'Test', 0, NULL, NULL, NULL),
+	(3, 1, 1, 3, NULL, NULL, 'Test', 0, NULL, NULL, NULL),
+	(4, 1, 2, 3, NULL, NULL, 'Test', 0, NULL, NULL, NULL),
+	(5, 1, 5, 5, NULL, NULL, 'Test', 0, NULL, NULL, NULL),
+	(6, 1, 5, 5, NULL, NULL, 'Test', 0, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `product_comments` ENABLE KEYS */;
 
 -- Dumping structure for table knitfit.product_designer_measurements
@@ -622,13 +782,15 @@ CREATE TABLE IF NOT EXISTS `product_designer_measurements` (
   KEY `user_id` (`user_id`),
   KEY `product_id` (`product_id`),
   CONSTRAINT `product_designer_measurements_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table knitfit.product_designer_measurements: ~0 rows (approximately)
 DELETE FROM `product_designer_measurements`;
 /*!40000 ALTER TABLE `product_designer_measurements` DISABLE KEYS */;
 INSERT INTO `product_designer_measurements` (`id`, `user_id`, `product_id`, `measurement_name`, `measurement_value`, `measurement_type`, `measurement_description`, `measurement_image`, `status`, `created_at`, `updated_at`, `ipaddress`) VALUES
-	(1, NULL, 1, 'Wrist Circumference', NULL, 'text', NULL, NULL, 1, NULL, NULL, NULL);
+	(1, NULL, 1, 'Lower_edge_width', NULL, 'text', NULL, NULL, 1, NULL, NULL, NULL),
+	(2, NULL, 1, 'Lower_edge_to_underarm', NULL, 'text', NULL, NULL, 1, NULL, NULL, NULL),
+	(3, NULL, 1, 'Lower_edge_to_waist', NULL, 'text', NULL, NULL, 1, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `product_designer_measurements` ENABLE KEYS */;
 
 -- Dumping structure for table knitfit.product_images
@@ -707,23 +869,13 @@ CREATE TABLE IF NOT EXISTS `projects` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `product_id` (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
--- Dumping data for table knitfit.projects: ~10 rows (approximately)
+-- Dumping data for table knitfit.projects: ~0 rows (approximately)
 DELETE FROM `projects`;
 /*!40000 ALTER TABLE `projects` DISABLE KEYS */;
 INSERT INTO `projects` (`id`, `token_key`, `user_id`, `product_id`, `name`, `description`, `pattern_type`, `uom`, `stitch_gauge`, `row_gauge`, `measurement_profile`, `ease`, `user_verify`, `status`, `is_archive`, `is_deleted`, `created_at`, `updated_at`, `ipaddress`) VALUES
-	(1, 'c4ca4238a0b923820dcc509a6f75849b', 1, 0, 'Test', 'test', 'external', 'cm', '18 sts / 10 cm', '28 sts / 10 cm', 'For Jack', '12 cm', 1, 1, 0, 0, '2020-02-24 06:27:36', '2020-02-25 06:47:04', NULL),
-	(2, 'c81e728d9d4c2f636f067f89cc14862c', 1, 0, 'test 2', 'test', 'external', 'cm', '18 sts / 10 cm', '30 sts / 10 cm', 'For Jack', '16 cm', 1, 1, 0, 0, '2020-02-24 07:30:00', '2020-02-24 12:05:13', NULL),
-	(3, 'eccbc87e4b5ce2fe28308fd9f2a7baf3', 1, 0, 'test', 'test', 'external', 'cm', '20 sts / 10 cm', '28 sts / 10 cm', 'For Jack', '11 cm', 1, 3, 0, 0, '2020-02-24 09:05:26', '2020-03-02 11:30:41', NULL),
-	(4, 'a87ff679a2f3e71d9181a67b7542122c', 1, 0, 'external pattern', 'external pattern', 'external', 'in', '6', '7', '39', '4.5', 1, 1, 0, 1, '2020-02-24 16:21:50', '2020-02-24 16:24:37', NULL),
-	(5, 'e4da3b7fbbce2345d7772b0674a318d5', 1, 0, 'test external pattern', 'test external pattern', 'external', 'in', '7', '8', '38', '3.25', 1, 1, 0, 1, '2020-02-24 16:25:32', '2020-02-24 16:29:44', NULL),
-	(6, '1679091c5a880faf6fb5e6087eb1b2dc', 1, 0, 'Off the shoulder ripple top', 'Off the shoulder ripple top', 'external', 'in', '11', '6', '39', '4.5', 1, 2, 0, 0, '2020-02-25 06:48:48', '2020-03-02 11:30:39', NULL),
-	(7, '8f14e45fceea167a5a36dedd4bea2543', 1, 0, 'Peakaboo cabled sweater', 'Peakaboo cabled sweater', 'external', 'in', '9', '8', '38', '19.75', 1, 1, 0, 1, '2020-02-25 13:12:38', '2020-02-29 14:33:33', NULL),
-	(8, 'c9f0f895fb98ab9159f51fd0297e236d', 1, 1, 'Peakaboo cabled sweater', 'Long description', 'non-custom', 'in', '8', '4', '41', '4.75', NULL, 1, 0, 0, '2020-03-02 04:59:06', '2020-03-02 04:59:06', NULL),
-	(9, '45c48cce2e2d7fbdea1afc51c7c6ad26', 1, 1, 'Peakaboo Cables sweater', 'Long description', 'custom', 'in', 'Select value (inches)', 'Select value (inches)', '0', '2.75', NULL, 1, 0, 0, '2020-03-02 08:09:17', '2020-03-02 08:09:17', NULL),
-	(10, 'd3d9446802a44259755d38e6d163e820', 1, 1, 'Peakaboo Cables sweater', 'Long description', 'custom', 'cm', '6', '5', '41', '11', NULL, 2, 0, 0, '2020-03-02 09:07:30', '2020-03-03 06:22:23', NULL),
-	(11, '6512bd43d9caa6e02c990b0a82652dca', 1, 1, 'Peakaboo Cables sweater', 'Long description', 'custom', 'in', '5', '8', '41', '3.75', NULL, 3, 0, 0, '2020-03-02 09:09:32', '2020-03-02 11:30:35', NULL);
+	(12, 'c4ca4238a0b923820dcc509a6f75849b', 1, 1, 'Peakaboo Cables sweater', 'Long description', 'custom', 'in', '7', '6', '44', '3.5', NULL, 1, 0, 0, '2020-03-06 10:59:22', '2020-03-06 10:59:22', NULL);
 /*!40000 ALTER TABLE `projects` ENABLE KEYS */;
 
 -- Dumping structure for table knitfit.projects_designer_measurements
@@ -741,13 +893,15 @@ CREATE TABLE IF NOT EXISTS `projects_designer_measurements` (
   KEY `user_id` (`user_id`),
   KEY `project_id` (`project_id`),
   CONSTRAINT `project_designer_measurements_id` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Dumping data for table knitfit.projects_designer_measurements: ~0 rows (approximately)
+-- Dumping data for table knitfit.projects_designer_measurements: ~1 rows (approximately)
 DELETE FROM `projects_designer_measurements`;
 /*!40000 ALTER TABLE `projects_designer_measurements` DISABLE KEYS */;
 INSERT INTO `projects_designer_measurements` (`id`, `user_id`, `project_id`, `measurement_name`, `measurement_value`, `created_at`, `updated_at`, `ipaddress`) VALUES
-	(1, 1, 11, 'wrist_circumference', '50', '2020-03-02 09:09:32', '2020-03-02 09:09:32', '127.0.0.1');
+	(2, 1, 12, 'Lower_edge_width', '10', '2020-03-06 10:59:22', '2020-03-06 10:59:22', '127.0.0.1'),
+	(3, 1, 12, 'Lower_edge_to_underarm', '14', NULL, NULL, NULL),
+	(4, 1, 12, 'Lower_edge_to_waist', '23', NULL, NULL, NULL);
 /*!40000 ALTER TABLE `projects_designer_measurements` ENABLE KEYS */;
 
 -- Dumping structure for table knitfit.projects_images
@@ -765,45 +919,13 @@ CREATE TABLE IF NOT EXISTS `projects_images` (
   KEY `user_id` (`user_id`),
   KEY `project_id` (`project_id`),
   CONSTRAINT `projects_image_id` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
 
--- Dumping data for table knitfit.projects_images: ~30 rows (approximately)
+-- Dumping data for table knitfit.projects_images: ~0 rows (approximately)
 DELETE FROM `projects_images`;
 /*!40000 ALTER TABLE `projects_images` DISABLE KEYS */;
 INSERT INTO `projects_images` (`id`, `user_id`, `project_id`, `image_path`, `image_ext`, `created_at`, `updated_at`, `ipaddress`) VALUES
-	(1, 1, 1, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1582525616-The Boyfriend Sweater.jpg', NULL, '2020-02-24 06:27:36', '2020-02-24 06:27:36', '::1'),
-	(2, 1, 1, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1582525616-Swing-Coat-P-Front.jpg', NULL, '2020-02-24 06:27:36', '2020-02-24 06:27:36', '::1'),
-	(3, 1, 2, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1582529383-Off-the-Shoulder Ruffle Top.jpg', NULL, '2020-02-24 07:30:00', '2020-02-24 07:30:00', '::1'),
-	(4, 1, 3, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1582535083-Off-the-Shoulder Ruffle Top.jpg', NULL, '2020-02-24 09:05:27', '2020-02-24 09:05:27', '::1'),
-	(5, 1, 3, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1582535083-Marsha\'s-Lacy-Tee.jpg', NULL, '2020-02-24 09:05:27', '2020-02-24 09:05:27', '::1'),
-	(6, 1, 4, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1582561276-img-round5.jpg', NULL, '2020-02-24 16:21:50', '2020-02-24 16:21:50', '::1'),
-	(7, 1, 4, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1582561276-img-round4.jpg', NULL, '2020-02-24 16:21:51', '2020-02-24 16:21:51', '::1'),
-	(8, 1, 5, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1582561502-img-round7.jpg', NULL, '2020-02-24 16:25:32', '2020-02-24 16:25:32', '::1'),
-	(9, 1, 5, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1582561502-img-round6.jpg', NULL, '2020-02-24 16:25:32', '2020-02-24 16:25:32', '::1'),
-	(10, 1, 5, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1582561501-img-round5.jpg', NULL, '2020-02-24 16:25:32', '2020-02-24 16:25:32', '::1'),
-	(11, 1, 6, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1582613283-Swing-Coat-P-Front.jpg', NULL, '2020-02-25 06:48:48', '2020-02-25 06:48:48', '::1'),
-	(12, 1, 6, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1582613283-Marsha\'s-Lacy-Tee.jpg', NULL, '2020-02-25 06:48:48', '2020-02-25 06:48:48', '::1'),
-	(13, 1, 7, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1582636277-KnitFit _Patterns Instruction.pdf', 'pdf', '2020-02-25 13:12:38', '2020-02-25 13:12:38', '::1'),
-	(14, 1, 7, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1582636254-Emily\'s Sweater.jpg', 'jpg', '2020-02-25 13:12:38', '2020-02-25 13:12:38', '::1'),
-	(15, 1, 7, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1582648374-l3.jpg', 'jpg', '2020-02-25 16:33:00', '2020-02-25 16:33:00', '::1'),
-	(16, 1, 7, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1582648374-l2.jpg', 'jpg', '2020-02-25 16:33:00', '2020-02-25 16:33:00', '::1'),
-	(17, 1, 7, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1582648374-l1.jpg', 'jpg', '2020-02-25 16:33:00', '2020-02-25 16:33:00', '::1'),
-	(18, 1, 7, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1582648997-card14.jpg', 'jpg', '2020-02-25 16:43:20', '2020-02-25 16:43:20', '::1'),
-	(19, 1, 7, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1582648997-card2.jpg', 'jpg', '2020-02-25 16:43:20', '2020-02-25 16:43:20', '::1'),
-	(20, 1, 7, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1582648997-card13.jpg', 'jpg', '2020-02-25 16:43:20', '2020-02-25 16:43:20', '::1'),
-	(21, 1, 8, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1581673838187.png', 'jpg', '2020-03-02 04:59:06', '2020-03-02 04:59:06', '127.0.0.1'),
-	(22, 1, 8, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1583132773-lady_two.png', 'jpg', '2020-03-02 07:06:16', '2020-03-02 07:06:16', '127.0.0.1'),
-	(23, 1, 8, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1583132773-Screenshot_1.png', 'jpg', '2020-03-02 07:06:16', '2020-03-02 07:06:16', '127.0.0.1'),
-	(24, 1, 8, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1583132773-img_girl.png', 'jpg', '2020-03-02 07:06:16', '2020-03-02 07:06:16', '127.0.0.1'),
-	(25, 1, 8, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1583132773-lady_one.png', 'jpg', '2020-03-02 07:06:16', '2020-03-02 07:06:16', '127.0.0.1'),
-	(26, 1, 8, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1583132773-lady_four.png', 'jpg', '2020-03-02 07:06:16', '2020-03-02 07:06:16', '127.0.0.1'),
-	(27, 1, 8, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1583132773-lady_three.png', 'jpg', '2020-03-02 07:06:16', '2020-03-02 07:06:16', '127.0.0.1'),
-	(28, 1, 8, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1583132777-Screenshot_2.png', 'jpg', '2020-03-02 07:06:18', '2020-03-02 07:06:18', '127.0.0.1'),
-	(29, 1, 8, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1583132777-Screenshot_3.png', 'jpg', '2020-03-02 07:06:19', '2020-03-02 07:06:19', '127.0.0.1'),
-	(30, 1, 8, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1583132777-Screenshot_4.png', 'jpg', '2020-03-02 07:06:19', '2020-03-02 07:06:19', '127.0.0.1'),
-	(31, 1, 9, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1581673838187.png', 'jpg', '2020-03-02 08:09:17', '2020-03-02 08:09:17', '127.0.0.1'),
-	(32, 1, 10, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1581673838187.png', 'jpg', '2020-03-02 09:07:31', '2020-03-02 09:07:31', '127.0.0.1'),
-	(33, 1, 11, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1581673838187.png', 'jpg', '2020-03-02 09:09:32', '2020-03-02 09:09:32', '127.0.0.1');
+	(34, 1, 12, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1581673838187.png', 'jpg', '2020-03-06 10:59:22', '2020-03-06 10:59:22', '127.0.0.1');
 /*!40000 ALTER TABLE `projects_images` ENABLE KEYS */;
 
 -- Dumping structure for table knitfit.projects_needle
@@ -820,28 +942,13 @@ CREATE TABLE IF NOT EXISTS `projects_needle` (
   KEY `user_id` (`user_id`),
   KEY `project_id` (`project_id`),
   CONSTRAINT `projects_needle_id` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
--- Dumping data for table knitfit.projects_needle: ~16 rows (approximately)
+-- Dumping data for table knitfit.projects_needle: ~0 rows (approximately)
 DELETE FROM `projects_needle`;
 /*!40000 ALTER TABLE `projects_needle` DISABLE KEYS */;
 INSERT INTO `projects_needle` (`id`, `user_id`, `project_id`, `needle_size`, `created_at`, `updated_at`, `ipaddress`) VALUES
-	(1, 1, 1, 'US 11 - 8mm', '2020-02-24 06:27:36', '2020-02-24 06:27:36', '::1'),
-	(2, 1, 1, 'US 8 - 5mm', '2020-02-24 06:27:36', '2020-02-24 06:27:36', '::1'),
-	(3, 1, 2, 'US 11 - 8mm', '2020-02-24 07:30:00', '2020-02-24 07:30:00', '::1'),
-	(4, 1, 3, 'US 7 - 4.5mm', '2020-02-24 09:05:27', '2020-02-24 09:05:27', '::1'),
-	(5, 1, 4, '13', '2020-02-24 16:21:51', '2020-02-24 16:21:51', '::1'),
-	(6, 1, 5, '11', '2020-02-24 16:25:32', '2020-02-24 16:25:32', '::1'),
-	(7, 1, 6, '8', '2020-02-25 06:48:48', '2020-02-25 06:48:48', '::1'),
-	(8, 1, 7, '8', '2020-02-25 13:12:38', '2020-02-25 13:12:38', '::1'),
-	(9, 1, 7, '17', '2020-02-25 13:12:38', '2020-02-25 13:12:38', '::1'),
-	(10, 1, 8, '13', '2020-03-02 04:59:06', '2020-03-02 04:59:06', '127.0.0.1'),
-	(11, 1, 9, 'Select needle size', '2020-03-02 08:09:17', '2020-03-02 08:09:17', '127.0.0.1'),
-	(12, 1, 9, 'Select needle size', '2020-03-02 08:09:17', '2020-03-02 08:09:17', '127.0.0.1'),
-	(13, 1, 10, '10', '2020-03-02 09:07:31', '2020-03-02 09:07:31', '127.0.0.1'),
-	(14, 1, 10, '3', '2020-03-02 09:07:31', '2020-03-02 09:07:31', '127.0.0.1'),
-	(15, 1, 11, '14', '2020-03-02 09:09:32', '2020-03-02 09:09:32', '127.0.0.1'),
-	(16, 1, 11, '7', '2020-03-02 09:09:32', '2020-03-02 09:09:32', '127.0.0.1');
+	(17, 1, 12, '14', '2020-03-06 10:59:22', '2020-03-06 10:59:22', '127.0.0.1');
 /*!40000 ALTER TABLE `projects_needle` ENABLE KEYS */;
 
 -- Dumping structure for table knitfit.projects_notes
@@ -857,13 +964,11 @@ CREATE TABLE IF NOT EXISTS `projects_notes` (
   `completed_at` datetime DEFAULT NULL,
   `ipaddress` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Dumping data for table knitfit.projects_notes: ~0 rows (approximately)
 DELETE FROM `projects_notes`;
 /*!40000 ALTER TABLE `projects_notes` DISABLE KEYS */;
-INSERT INTO `projects_notes` (`id`, `user_id`, `project_id`, `notes`, `status`, `created_at`, `updated_at`, `completed_at`, `ipaddress`) VALUES
-	(1, 1, 8, 'tets notes', 1, '2020-03-02 05:18:42', '2020-03-02 05:18:42', NULL, '127.0.0.1');
 /*!40000 ALTER TABLE `projects_notes` ENABLE KEYS */;
 
 -- Dumping structure for table knitfit.projects_yarn
@@ -885,28 +990,13 @@ CREATE TABLE IF NOT EXISTS `projects_yarn` (
   KEY `user_id` (`user_id`),
   KEY `project_id` (`project_id`),
   CONSTRAINT `projects_yarn_id` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
--- Dumping data for table knitfit.projects_yarn: ~16 rows (approximately)
+-- Dumping data for table knitfit.projects_yarn: ~0 rows (approximately)
 DELETE FROM `projects_yarn`;
 /*!40000 ALTER TABLE `projects_yarn` DISABLE KEYS */;
 INSERT INTO `projects_yarn` (`id`, `user_id`, `project_id`, `yarn_used`, `fiber_type`, `yarn_weight`, `colourway`, `dye_lot`, `skeins`, `created_at`, `updated_at`, `ipaddress`) VALUES
-	(1, 1, 1, 'test 1', 'Combed cotton woollen', 'Lace', 'colourway', 'dye lot', 'skeins', '2020-02-24 06:27:36', '2020-02-24 06:27:36', '::1'),
-	(2, 1, 1, 'Lion Brand Yarn 135-189 Hometown Yarn', 'Combed cotton woollen', 'Lace', 'cw 1', 'd l 1', 'sk 1', '2020-02-24 06:27:36', '2020-02-24 06:27:36', '::1'),
-	(3, 1, 2, 'fff', 'Combed cotton woollen', 'Lace', 'fff', 'fff', 'fff', '2020-02-24 07:30:00', '2020-02-24 07:30:00', '::1'),
-	(4, 1, 3, 'test', 'Combed cotton woollen', 'Lace', 'test', 'test', 'test', '2020-02-24 09:05:27', '2020-02-24 09:05:27', '::1'),
-	(5, 1, 4, 'test', 'test', 'Super Fine', 'dsd', 'dsds', 'dsd', '2020-02-24 16:21:51', '2020-02-24 16:21:51', '::1'),
-	(6, 1, 5, 'fd', 'Combed cotton woollen', 'Fine', 'fsd', 'ff', 'sdfdf', '2020-02-24 16:25:32', '2020-02-24 16:25:32', '::1'),
-	(7, 1, 6, 'Lion brand', 'Combed cotton woollen', 'Super Fine', 'colour way', 'dye lot', 'skeins', '2020-02-25 06:48:48', '2020-02-25 06:48:48', '::1'),
-	(8, 1, 7, 'Tiger Brand', 'wool', 'Lace', 'black colour', 'black dye lot', 'white', '2020-02-25 13:12:38', '2020-02-25 13:12:38', '::1'),
-	(9, 1, 7, 'Goat brand', 'wool', 'Bulky', 'black colour', 'yellow', 'yello white', '2020-02-25 13:12:38', '2020-02-25 13:12:38', '::1'),
-	(10, 1, 8, 'test 1', 'test 2', 'Lace', 'test 3', 'test 4', 'test 5', '2020-03-02 04:59:06', '2020-03-02 04:59:06', '127.0.0.1'),
-	(11, 1, 9, NULL, NULL, 'Lace', NULL, NULL, NULL, '2020-03-02 08:09:17', '2020-03-02 08:09:17', '127.0.0.1'),
-	(12, 1, 9, NULL, NULL, 'Lace', NULL, NULL, NULL, '2020-03-02 08:09:17', '2020-03-02 08:09:17', '127.0.0.1'),
-	(13, 1, 10, 'abcd', 'abcd', 'Lace', 'abcd', 'abcd', 'abcd', '2020-03-02 09:07:31', '2020-03-02 09:07:31', '127.0.0.1'),
-	(14, 1, 10, 'abcd ed', 'abcd ed', 'Fine', 'abcd ed', 'abcd ed', 'abcd ed', '2020-03-02 09:07:31', '2020-03-02 09:07:31', '127.0.0.1'),
-	(15, 1, 11, 'abcd2f', 'abcd2f', 'Fine', 'abcd2f', 'abcd2f', 'abcd2f', '2020-03-02 09:09:32', '2020-03-02 09:09:32', '127.0.0.1'),
-	(16, 1, 11, 'abcdefghi', 'abcdefghi', 'Fine', 'abcdefghi', 'abcdefghi', 'abcdefghi', '2020-03-02 09:09:32', '2020-03-02 09:09:32', '127.0.0.1');
+	(17, 1, 12, 'yarn 1', 'fiber 1', 'Lace', 'colourway 1', 'dye lot 1', 'skeins 1', '2020-03-06 10:59:22', '2020-03-06 10:59:22', '127.0.0.1');
 /*!40000 ALTER TABLE `projects_yarn` ENABLE KEYS */;
 
 -- Dumping structure for table knitfit.roles
@@ -917,9 +1007,9 @@ CREATE TABLE IF NOT EXISTS `roles` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table knitfit.roles: ~6 rows (approximately)
+-- Dumping data for table knitfit.roles: ~12 rows (approximately)
 DELETE FROM `roles`;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
 INSERT INTO `roles` (`id`, `role_name`, `created_at`, `updated_at`) VALUES
@@ -928,7 +1018,13 @@ INSERT INTO `roles` (`id`, `role_name`, `created_at`, `updated_at`) VALUES
 	(3, 'Wholesaler', '2020-01-02 06:03:05', '2020-01-02 06:03:05'),
 	(4, 'Designer', '2020-01-02 06:03:05', '2020-01-02 06:03:05'),
 	(5, 'Advertaiser', '2020-01-02 06:03:06', '2020-01-02 06:03:06'),
-	(6, 'Retailer', '2020-01-02 06:03:06', '2020-01-02 06:03:06');
+	(6, 'Retailer', '2020-01-02 06:03:06', '2020-01-02 06:03:06'),
+	(7, 'Admin', '2020-03-07 13:33:42', '2020-03-07 13:33:42'),
+	(8, 'Knitter', '2020-03-07 13:33:42', '2020-03-07 13:33:42'),
+	(9, 'Wholesaler', '2020-03-07 13:33:42', '2020-03-07 13:33:42'),
+	(10, 'Designer', '2020-03-07 13:33:42', '2020-03-07 13:33:42'),
+	(11, 'Advertaiser', '2020-03-07 13:33:43', '2020-03-07 13:33:43'),
+	(12, 'Retailer', '2020-03-07 13:33:43', '2020-03-07 13:33:43');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 
 -- Dumping structure for table knitfit.subcategory
@@ -1088,7 +1184,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `name`, `first_name`, `last_name`, `username`, `location`, `role`, `type`, `email`, `password`, `enc_email`, `mobile`, `gender`, `dob`, `address`, `landmark`, `country`, `state`, `postcode`, `oauth_provider`, `oauth_uid`, `oauth_picture`, `locale`, `picture`, `picture_orginal`, `link`, `status`, `security_question`, `security_answer`, `normal_sa`, `login_attempts`, `subscription_type`, `sub_exp`, `Inactiveusers_count`, `banner_orginal`, `banner`, `remember_token`, `created_at`, `updated_at`) VALUES
-	(1, NULL, 'Rama', 'krishna', 'krishna021', NULL, 2, 1, 'rkrishna021@gmail.com', '$2y$10$FPMODHHvNKxvj7HMr8W/2OHVylepaAlhK030tsHHzvTetKGR72KjC', '5ab1945e86c20a49eb54996df4ec59a0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '40f682', NULL, 'resources/assets/user.png', NULL, NULL, 1, NULL, NULL, NULL, 0, 2, '2020-04-04', 0, NULL, NULL, NULL, '2020-01-02 06:03:46', '2020-03-05 10:46:00'),
+	(1, NULL, 'Rama', 'krishna', 'krishna021', NULL, 2, 1, 'rkrishna021@gmail.com', '$2y$10$FPMODHHvNKxvj7HMr8W/2OHVylepaAlhK030tsHHzvTetKGR72KjC', '5ab1945e86c20a49eb54996df4ec59a0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '40f682', NULL, 'resources/assets/user.png', NULL, NULL, 1, NULL, NULL, NULL, 0, 2, '2020-04-08', 0, NULL, NULL, NULL, '2020-01-02 06:03:46', '2020-03-09 12:23:04'),
 	(2, NULL, 'srinik', 'rao', NULL, NULL, 2, 1, 'nikithabandari79@gmail.com', '$2y$10$qeqZWr7J2pm9y6luWwyEmOcur/3SuEWaXKy56EJQne2UgJVGw8CRi', '5fa3d12e2b60bdf2597afe2ca2b92f1c', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'b17f0e', NULL, 'resources/assets/user.png', NULL, NULL, 1, NULL, NULL, NULL, 0, 0, '2016-01-16', 0, NULL, NULL, NULL, '2020-01-16 15:25:52', '2020-01-27 13:08:16'),
 	(3, NULL, 'G Sekhar', NULL, NULL, NULL, 2, 1, 'csk.gogineni@gmail.com', NULL, 'ddfe6890cd91dd72233c38495d74c094', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'google', '115887792567693996150', NULL, NULL, 'https://lh3.googleusercontent.com/a-/AAuE7mBT6KAvl4aV_vfmJjinFVwsel64RcvOhJqVZcQZ-g', NULL, NULL, 1, NULL, NULL, NULL, 0, 0, '2027-01-27', 0, NULL, NULL, 'WhhSA32WUjNjCgb2NtIW4gh4defWa3uV1ccAuLkbiNffEQ6bSn4h5sP69yE7', '2020-01-27 15:53:02', '2020-01-27 15:53:02'),
 	(4, NULL, 'chandu g', NULL, NULL, NULL, 2, 1, 'chandu.spany5@gmail.com', NULL, 'daa64ecf233df73fa3b81cdc9ff6cc19', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'google', '104439905999927332517', NULL, NULL, 'https://lh6.googleusercontent.com/-nceZ30EUO7k/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rd49fxVLwg4aw4e9-SyCPB6nWLiTQ/photo.jpg', NULL, NULL, 1, NULL, NULL, NULL, 0, 0, '2027-01-27', 0, NULL, NULL, 'nIzgJ8v5g2U0TqKiQP24mtxbpreAsWwxlURkM87vJxxiqGzArj7Lv3eQCg1L', '2020-01-27 15:55:24', '2020-01-27 15:55:24'),
@@ -1148,22 +1244,13 @@ CREATE TABLE IF NOT EXISTS `user_measurements` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table knitfit.user_measurements: ~10 rows (approximately)
+-- Dumping data for table knitfit.user_measurements: ~0 rows (approximately)
 DELETE FROM `user_measurements`;
 /*!40000 ALTER TABLE `user_measurements` DISABLE KEYS */;
 INSERT INTO `user_measurements` (`id`, `user_id`, `m_title`, `slug`, `m_description`, `m_date`, `first_name`, `last_name`, `email_address`, `measurement_preference`, `user_meas_image`, `ext`, `hips`, `waist`, `waist_front`, `bust`, `bust_front`, `bust_back`, `waist_to_underarm`, `armhole_depth`, `wrist_circumference`, `forearm_circumference`, `upperarm_circumference`, `shoulder_circumference`, `wrist_to_underarm`, `wrist_to_elbow`, `elbow_to_underarm`, `wrist_to_top_of_shoulder`, `depth_of_neck`, `neck_width`, `neck_circumference`, `neck_to_shoulder`, `shoulder_to_shoulder`, `created_at`, `updated_at`) VALUES
-	(20, 8, 'Caitlyn', NULL, NULL, '2012-01-01', NULL, NULL, NULL, 'centimeters', 'https://via.placeholder.com/200X250', NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, '2020-02-01 02:36:21'),
-	(28, 13, 'Usha Sister', NULL, NULL, '2020-02-11', NULL, NULL, NULL, 'inches', 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1581429459garter_stitch_square.jpg', NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL),
-	(29, 14, 'Sample', NULL, NULL, '2020-02-11', NULL, NULL, NULL, 'inches', 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1581433450heart photo.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	(31, 17, 'first measurement', NULL, NULL, '2020-02-12', NULL, NULL, NULL, 'inches', 'https://via.placeholder.com/150X200', NULL, 1, 1.25, 0, 0, 0, 0, 0, 0, 1, 0, 0.75, 1.75, 0.25, 0.75, 0, 0, 0, 0, 0, 0, 0, NULL, NULL),
-	(33, 2, 'measurement1', NULL, NULL, '2020-02-12', NULL, NULL, NULL, 'inches', 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1581492102holi.jpg', NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL),
-	(36, 1, 'Test 2', 'test-2', NULL, '2020-02-19', NULL, NULL, NULL, 'inches', 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1583423385-overflow.jpg', 'jpg', 0, 0, 0, 0.75, 6.25, 7, 0, 0, 0.5, 6.25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, '2020-03-05 15:47:23'),
-	(38, 1, 'Test 1', 'test-1', NULL, '2020-02-20', NULL, NULL, NULL, 'inches', 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1582186250Swing-Coat-P-Front.jpg', NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL),
-	(39, 1, 'Test 3', 'test-3', NULL, '2020-02-20', NULL, NULL, NULL, 'inches', 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1583417119-bg-cta.jpg', 'jpg', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, '2020-03-05 14:04:50'),
-	(41, 1, 'new measurement set', '', 'new measurement set', '2020-09-10', NULL, NULL, NULL, 'inches', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-27 07:10:16', '2020-02-27 07:10:16'),
-	(43, 1, 'new measurement set new', 'new-measurement-set-new', 'new measurement set for new', '2020-09-10', NULL, NULL, NULL, 'inches', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-27 07:14:06', '2020-02-27 07:19:04');
+	(44, 1, 'Test 1', NULL, NULL, '2020-03-06', NULL, NULL, NULL, 'inches', 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1583480382-card13.jpg', 'jpg', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL);
 /*!40000 ALTER TABLE `user_measurements` ENABLE KEYS */;
 
 -- Dumping structure for table knitfit.user_profile
@@ -1257,7 +1344,7 @@ CREATE TABLE IF NOT EXISTS `user_subscriptions` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table knitfit.user_subscriptions: ~7 rows (approximately)
 DELETE FROM `user_subscriptions`;
@@ -1268,8 +1355,8 @@ INSERT INTO `user_subscriptions` (`id`, `user_id`, `subscription_id`, `created_a
 	(6, 11, 1, NULL, NULL),
 	(7, 12, 1, NULL, NULL),
 	(8, 13, 1, NULL, NULL),
-	(11, 1, 2, NULL, NULL),
-	(12, 18, 2, NULL, NULL);
+	(12, 18, 2, NULL, NULL),
+	(13, 1, 2, NULL, NULL);
 /*!40000 ALTER TABLE `user_subscriptions` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
