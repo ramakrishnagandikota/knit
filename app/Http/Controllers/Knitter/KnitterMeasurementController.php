@@ -30,6 +30,14 @@ class KnitterMeasurementController extends Controller
 
     function add_measurements(Request $request){
         //$request->session()->forget('measurement_id');
+    if(Auth::user()->subscription_type == 1){
+    $count = DB::table('user_measurements')->where('user_id',Auth::user()->id)->count();
+        if($count == 1){
+            Session::flash('error','You are in Free subscription. Please upgrade to Basic to add more measurement profiles.');
+            return redirect('knitter/measurements');
+        }
+            
+    }
         $mid = $request->session()->get('measurement_id');
 
         if($mid){
@@ -39,6 +47,8 @@ class KnitterMeasurementController extends Controller
     }
 
     function get_my_measurements(){
+
+
         $meas = User::find(Auth::user()->id)->measurements;
         return view('knitter.measurements.measurements',compact('meas'));
     }
@@ -55,6 +65,8 @@ class KnitterMeasurementController extends Controller
     }
 
     function create_measurements(Request $request){
+
+       
         
         if(isset($request->image)){
             $imagepath = $request->image[0];

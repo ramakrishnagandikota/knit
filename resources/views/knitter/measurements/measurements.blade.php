@@ -1,9 +1,7 @@
 @extends('layouts.knitterapp')
 @section('title','Knitter Dashboard')
 @section('content')
-@if(session('message'))
-<div class="alert alert-success">{{session('message')}}</div>
-@endif
+
 
 
 <div class="pcoded-wrapper" id="dashboard">
@@ -22,13 +20,32 @@
 <div class="page-main-content">
 <div class="row">
 <div class="col-sm-12">
+
+  @if(session('message'))
+<div class="alert alert-success">{{session('message')}}</div>
+@endif
+
+@if(session('error'))
+<div class="alert alert-danger">{{session('error')}}</div>
+@endif
+
   <div class="collection-product-wrapper">
       <div class="product-wrapper-grid">
           <div class="row card-bg justify-content-center">
               <div class="col-lg-4">
                   <h5 class="theme-heading page-header-title f-w-600">Measurement profile</h5></div>
               <div class="col-lg-8 m-b-10">
+              @if(Auth::user()->subscription_type == 1)
+                @if($meas->count() == 1)
+                  <button class="btn waves-effect pull-right waves-light btn-primary theme-outline-btn" data-toggle="modal" data-target="#NoModal"><i class="icofont icofont-plus"></i>Add measurement profile</button>
+                @else
                   <button class="btn waves-effect pull-right waves-light btn-primary theme-outline-btn" data-toggle="modal" data-target="#myModal"><i class="icofont icofont-plus"></i>Add measurement profile</button>
+                @endif
+              @else
+              <button class="btn waves-effect pull-right waves-light btn-primary theme-outline-btn" data-toggle="modal" data-target="#myModal"><i class="icofont icofont-plus"></i>Add measurement profile</button>
+              @endif
+                  
+
               </div>
 
 @if($meas->count() > 0)
@@ -155,6 +172,28 @@
                 
                   </div>
                 </div>
+
+
+<div class="modal fade" id="NoModal" role="dialog">
+                <div class="modal-dialog modal-md">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                          <h5 class="modal-title">Subscription Required</h5>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+<p class="text-center" >You are in <b>Free subscription</b> now.</p>
+<p class="text-center">Please upgrade your subscriptionto <b>Basic</b> to add more measurement profiles.</p>
+
+                  </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger cancel-btn" data-dismiss="modal">Close</button>
+    </div>
+    </div>
+                
+                  </div>
+                </div>
+
 
 
  <div class="row users-card justify-content-center m-t-10">

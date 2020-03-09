@@ -20,9 +20,24 @@
                             <span class="tooltip-content clearfix" id="Customtooltip">
                             <span class="tooltip-text" style="width: 100%;">Select the type of pattern you will use for this project.</span>
                         </span>
-                        </span>     
-                        <!-- To Do Card List card start -->
+                        </span>    
+                        <!-- To Do Card List card start --> 
+    @php                    
+if(Auth::user()->subscription_type == 1){
+  if($projects == 1){
+  $form = 'none';
+  $div = 'block';
+  }else{
+  $form = 'block';
+  $div = 'none';
+  }
+}else{
+$form = 'block';
+  $div = 'none';
+}
+@endphp
 
+@if($form == 'block')
 <form id="create-project">
     <div class="card">
         <div class="outline-row m-b-10 p-10 m-t-10" style="margin-right: 10px;margin-left: 10px;">
@@ -62,8 +77,9 @@
 
     </div>
 </form>
+@endif
 
-
+<div class="alert alert-danger text-center" style="display: {{$div}}">You are in Free subscription. Please upgrade to Basic to add more projects.</div>
 
                             </div>
                         </div>

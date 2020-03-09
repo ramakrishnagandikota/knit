@@ -34,7 +34,7 @@ class Subscription
      }
 
      if(Auth::check()){
-        return response("Insufficient permissions", 401);
+        return response("You dont have any subscription, Please contact admin.", 401);
      }else{
         return redirect('/login');
      }

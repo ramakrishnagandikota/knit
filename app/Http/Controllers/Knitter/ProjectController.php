@@ -121,7 +121,8 @@ class ProjectController extends Controller
         ->where('booking_process.category_id', 1)
         ->where('booking_process.user_id', Auth::user()->id)
         ->get();
-    	return view('knitter.projects.create-project',compact('measurements','needlesizes','orders'));
+        $projects = Auth::user()->projects()->count();
+    	return view('knitter.projects.create-project',compact('measurements','needlesizes','orders','projects'));
     }
 
     function delete_project(Request $request){
