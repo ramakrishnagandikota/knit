@@ -14,10 +14,6 @@ use App\User;
 
 class MeasurementsApiController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('JWT');
-    }
 
     public function index(){
     	return MeasurementResource::collection(Auth::user()->measurements()->latest()->get());

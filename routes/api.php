@@ -24,4 +24,5 @@ Route::post('register', 'API\LoginController@register');
 
 Route::group(['middleware' => 'auth:api'], function(){
 	Route::post('details', 'API\LoginController@details');
+	Route::apiResource('/measurements','API\MeasurementsApiController');
 });

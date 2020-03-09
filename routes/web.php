@@ -50,7 +50,7 @@ Route::post('validate/newpassword','Logincontroller@validate_newpassword');
 Route::get('subscription','SubscriptionController@subscription_view');
 Route::post('add-cart','SubscriptionController@add_to_cart');
 
-
+/*
 Route::get('paypal/ec-checkout', 'SubscriptionController@getExpressCheckout');
 Route::get('paypal/ec-checkout-success', 'SubscriptionController@getExpressCheckoutSuccess');
 Route::get('paypal/adaptive-pay', 'SubscriptionController@getAdaptivePay');
@@ -59,3 +59,11 @@ Route::get('paypal/cancel-subscription', 'SubscriptionController@cancel_subscrip
 Route::post('paypal/notify', 'SubscriptionController@notify');
 
 Route::get('payment/success','SubscriptionController@getExpressCheckoutSuccess');
+*/
+
+Route::get('shop-patterns','ShoppingController@index');
+Route::get('product/{pid}/{slug}','ShoppingController@product_full_view');
+Route::get('pattern-popup/{pid}',[
+	'uses' => 'ShoppingController@pattern_popup',
+    'as' => 'pattern-popup/{pid}'
+]);

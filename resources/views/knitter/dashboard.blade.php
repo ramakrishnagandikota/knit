@@ -29,7 +29,7 @@
 						</li>
 						<li>
 							<figure>
-								<a href="#"> <img class="dashboard-icons" src="{{ asset('resources/assets/files/assets/icon/custom-icon/Shop-Design.png')}}" /></a>
+								<a href="{{url('shop-patterns')}}"> <img class="dashboard-icons" src="{{ asset('resources/assets/files/assets/icon/custom-icon/Shop-Design.png')}}" /></a>
 								<figcaption class="text-muted">Shop</figcaption>
 							</figure>
 						</li>

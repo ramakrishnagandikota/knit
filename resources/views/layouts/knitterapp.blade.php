@@ -233,7 +233,7 @@
                         </a>
                         <div class="row right-menubar">
                             <div class="col-lg-6 col-6"><figure class="no-bg"><a href="{{url('knitter/project-library')}}" class="m-l-10"> <img class="icon-img" src="{{ asset('resources/assets/files/assets/icon/custom-icon/Projects.png')}}" /></a><figcaption class="text-muted text-center">Project Library</figcaption></figure></div>
-                            <div class="col-lg-6 col-6"> <a href="#">
+                            <div class="col-lg-6 col-6"> <a href="{{url('shop-patterns')}}">
                                 <figure class="no-bg">
                                     <img class="icon-img" src="{{ asset('resources/assets/files/assets/icon/custom-icon/Shop-Design.png')}}" /></a>
                                     <figcaption class="text-muted text-center">Shop</figcaption>

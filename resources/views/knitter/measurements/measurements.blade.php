@@ -226,9 +226,9 @@
 
     var pro = localStorage.getItem('project');
    // alert(pro);
-    if(pro){
-      window.location.assign('{{url("knitter/project-library")}}');
-    }
+    //if(pro){
+      //window.location.assign('url("knitter/project-library")}}');
+    //}
     
 
     $(document).on('click','.getId',function(){

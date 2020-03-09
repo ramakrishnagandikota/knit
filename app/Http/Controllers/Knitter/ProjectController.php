@@ -29,6 +29,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Reader\IReader;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\MeasurementResource;
 
 class ProjectController extends Controller
 {
@@ -684,14 +685,88 @@ $rows1 = $worksheet->rangeToArray(
         $project_needle = $project->project_needle()->leftJoin('needle_sizes','needle_sizes.id','projects_needle.needle_size')->select('needle_sizes.us_size','needle_sizes.mm_size','projects_needle.id as pnid')->get();
     $stitch_gauge = GaugeConversion::where('id',$project->stitch_gauge)->first();
     $row_gauge = GaugeConversion::where('id',$project->row_gauge)->first();
-    $measurements = UserMeasurements::where('id',$project->measurement_profile)->first();
+    $measurements = UserMeasurements::where('id',$project->measurement_profile)->first(['hips','waist','waist_front','bust','bust_front','bust_back','waist_to_underarm','armhole_depth','wrist_circumference',
+'forearm_circumference','upperarm_circumference','shoulder_circumference','wrist_to_underarm','wrist_to_elbow','elbow_to_underarm',
+'wrist_to_top_of_shoulder','depth_of_neck','neck_width','neck_circumference','neck_to_shoulder','shoulder_to_shoulder']);
     $project_notes = $project->project_notes;
     $product = Products::where('id',$project->product_id)->first();
     
     $pdm = ProjectsDesignerMeasurements::where('project_id',$project->id)->get();
     $pdf = ProductPdf::where('product_id',$project->product_id)->first();
 
-    $filename = storage_path('Peekaboo Cabled Sweater Variables.xlsx');
+    $array = array('FIRST_NAME' => Auth::user()->first_name,'LAST_NAME' => Auth::user()->last_name,'EMAIL_ADDRESS' => Auth::user()->email);
+    $array1 = array('STITCH_GAUGE' =>$project->stitch_gauge,'ROW_GAUGE' => $project->row_gauge,'EASE' => $project->ease,'NEEDLE_SIZE' => 3);
+    //$m = (array) $measurements;
+   // array_push($m,$array);
+    //echo '<pre>';
+    //print_r($m);
+    //echo '</pre>';
+    //exit;
+
+    /* Adding  a file */
+
+            $path = storage_path('Peekaboo Cabled Sweater Variables.xlsx');
+            //$url = Storage::url('Emily_s Sweater Variables.xlsx');
+            $time = Auth::user()->id;
+            
+            $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($path);
+            $worksheet = $spreadsheet->getSheetByName('KnitVariables');
+
+            $rows = $worksheet->rangeToArray(
+                'B2:B26',     // The worksheet range that we want to retrieve
+                NULL,        // Value that should be returned for empty cells
+                TRUE,        // Should formulas be calculated (the equivalent of getCalculatedValue() for each cell)
+                TRUE,        // Should values be formatted (the equivalent of getFormattedValue() for each cell)
+                TRUE         // Should the array be indexed by cell row and cell column
+            );  
+
+    $columns = DB::getSchemaBuilder()->getColumnListing('user_measurements');
+            
+            $i=2;
+            foreach ($rows as $row) {
+                //echo $row['B']."<br>";
+
+                foreach ($columns as $key) {
+                   $key1 = strtoupper($key);
+                    if($row['B'] == $key1){
+                    //echo $row['B'].' - '.strtoupper($key).' - '.$i."<br>";
+                    $value = $measurements->$key;
+                    $worksheet->getCell("C".$i)->setValue($value); 
+                    }
+                }
+                
+
+                foreach ($array as $k => $val) {
+                    if($row['B'] == $k){
+                    // echo $row['B'].' -- '.$k."<br>";
+                    $worksheet->getCell("C".$i)->setValue($val); 
+                    }
+                }
+
+                foreach ($array1 as $ky => $va) {
+                    if($row['B'] == $ky){
+                    // echo $row['B'].' -- '.$ky."<br>";
+                    $worksheet->getCell("C".$i)->setValue($va); 
+                    }
+                }
+
+                foreach ($pdm as $pm => $mdp) {
+                    $mname = strtoupper($mdp->measurement_name);
+                    if($row['B'] == $mname){
+                    //echo $mname.' -- '.$mdp->measurement_value."<br>";
+                    $worksheet->getCell("C".$i)->setValue($mdp->measurement_value); 
+                    }
+                }
+                $i++;
+            }
+            //exit;
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+            $writer->setPreCalculateFormulas(true);
+            $save = $writer->save(storage_path('write'.$time.'.xlsx'));
+
+    /* Adding a file */
+
+    $filename = storage_path('write'.$time.'.xlsx');
 
             $str = '';
 
@@ -731,7 +806,7 @@ $rows1 = $worksheet->rangeToArray(
 
     $cont = $pdf->content;
             //exit;
-
+    unlink($filename);
     return view('knitter.projects.generate-custom-pattern',compact('project','project_images','project_yarn','project_needle','stitch_gauge','row_gauge','measurements','project_notes','product','pdf','pdm','filename','cont'));
     }
 }
