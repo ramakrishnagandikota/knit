@@ -14,9 +14,6 @@ use Illuminate\Support\Str;
 
 class ShoppingController extends Controller
 {
-	function __construct(){
-		$this->middleware('auth');
-	}
 
     function index(Request $request){
 

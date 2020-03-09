@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-<title>KnitFit eCom | Shop pattern</title>
+<title>KnitFit eCom | Shop patterns</title>
 <!-- HTML5 Shim and Respond.js IE10 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 10]>
@@ -109,7 +109,7 @@ padding: unset
 </li>
 <!-- <li><a href="../../Knitter/Nini/Dashboard.html">Home</a></li> -->
 <li class="active"><a href="{{url('shop-patterns')}}">Shop patterns</a></li>
-
+@if(Auth::check())
 <li class="header-notification">
 <div class="dropdown-primary dropdown">
 <div class="dropdown-toggle f-16" data-toggle="dropdown">
@@ -136,7 +136,7 @@ Account <i class="feather icon-chevron-down"></i>
 
 </div>
 </li>
-
+@endif
 <li class="header-notification p-l-0 p-r-5">
 <div class="dropdown-primary dropdown">
 <div class="dropdown-toggle" data-toggle="dropdown">
@@ -196,7 +196,7 @@ Account <i class="feather icon-chevron-down"></i>
 </div>
 </li>
 <!-- <li class="mobile-wishlist p-0 m-l-10"><a href="my-whislist.html"><i class="fa fa-heart" aria-hidden="true"></i></a></li> -->
-
+@if(Auth::check())
 <li class="user-profile header-notification">
 <div class="dropdown-primary dropdown">
 <div class="dropdown-toggle" data-toggle="dropdown">
@@ -213,6 +213,15 @@ Account <i class="feather icon-chevron-down"></i>
 </ul>
 </div>
 </li>
+@else
+    <li>
+    <a href="{{url('login')}}">Login</a>
+    </li>
+    
+    <li>
+    <a href="{{url('register')}}">Register</a>
+    </li>
+@endif
 </ul>
 </div>
 </div>
