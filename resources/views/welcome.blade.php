@@ -77,9 +77,13 @@
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="{{url('knitter/dashboard')}}">Dashboard</a>
           </li>
-          @else
+          @elseif(Auth::user()->hasRole('Designer'))
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="{{url('designer/dashboard')}}">Dashboard</a>
+          </li>
+          @else
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="{{url('admin')}}">Dashboard</a>
           </li>
           @endif
 

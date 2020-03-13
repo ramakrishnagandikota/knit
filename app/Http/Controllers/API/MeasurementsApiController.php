@@ -15,6 +15,10 @@ use App\User;
 class MeasurementsApiController extends Controller
 {
 
+    function dashboard(){
+        return MeasurementResource::collection(Auth::user()->measurements()->latest()->take(5)->get());
+    } 
+
     public function index(){
     	return MeasurementResource::collection(Auth::user()->measurements()->latest()->get());
     }

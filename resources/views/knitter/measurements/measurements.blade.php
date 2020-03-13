@@ -239,6 +239,7 @@
         color: #ffed00 !important;
     }
     a:hover{text-decoration: none;}
+    
 </style>
 <!-- Custom js -->
 <link rel="stylesheet" type="text/css" href="{{ asset('resources/assets/KnitfitEcommerce/assets/css/slick.css') }}">

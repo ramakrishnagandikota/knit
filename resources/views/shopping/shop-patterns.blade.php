@@ -7,9 +7,9 @@
 <div class="collection-wrapper">
 <div class="container">
 <div class="row">
-<div class="col-sm-3 collection-filter">
+<div class="col-sm-3 collection-filter" >
 <!-- side-bar colleps block stat -->
-<div class="collection-filter-block card">
+<div class="collection-filter-block card" id="collection-filter">
 <!-- brand filter start -->
 <div class="collection-mobile-back"><span class="filter-back"><i class="fa fa-angle-left" aria-hidden="true"></i> back</span></div>
 <!-- Garment construction filter start here -->
@@ -32,22 +32,14 @@
 <div class="list-group-item">
 <div class="col-lg-12">
 <div class="collection-brand-filter">
+@if($garmenttype->count() > 0)
+    @foreach($garmenttype as $gt)
 <div class="custom-control custom-checkbox collection-filter-checkbox">
-<input type="checkbox" class="custom-control-input" id="cardigan">
-<label class="custom-control-label" for="cardigan">Cardigan</label>
+<input type="checkbox" class="custom-control-input" id="{{$gt->slug}}" value="{{$gt->slug}}">
+<label class="custom-control-label" for="{{$gt->slug}}">{{$gt->name}}</label>
 </div>
-<div class="custom-control custom-checkbox collection-filter-checkbox">
-<input type="checkbox" class="custom-control-input" id="coat">
-<label class="custom-control-label" for="coat">Coat</label>
-</div>
-<div class="custom-control custom-checkbox collection-filter-checkbox">
-<input type="checkbox" class="custom-control-input" id="dress">
-<label class="custom-control-label" for="dress">Dress</label>
-</div>
-<div class="custom-control custom-checkbox collection-filter-checkbox">
-<input type="checkbox" class="custom-control-input" id="pullover">
-<label class="custom-control-label" for="pullover">Pullover</label>
-</div>
+    @endforeach
+@endif
 </div>
 </div>
 </div>
@@ -75,18 +67,17 @@
 <div class="list-group-item">
 <div class="col-lg-12">
 <div class="collection-brand-filter">
+
+
+@if($garmentconstruction->count() > 0)
+    @foreach($garmentconstruction as $gc)
 <div class="custom-control custom-checkbox collection-filter-checkbox">
-<input type="checkbox" class="custom-control-input" id="bottom_up">
-<label class="custom-control-label" for="bottom_up">Bottom Up</label>
+<input type="checkbox" class="custom-control-input" id="{{$gc->slug}}" value="{{$gc->slug}}">
+<label class="custom-control-label" for="{{$gc->slug}}">{{$gc->name}}</label>
 </div>
-<div class="custom-control custom-checkbox collection-filter-checkbox">
-<input type="checkbox" class="custom-control-input" id="top_down">
-<label class="custom-control-label" for="top_down">Top-Down</label>
-</div>
-<div class="custom-control custom-checkbox collection-filter-checkbox">
-<input type="checkbox" class="custom-control-input" id="raglan">
-<label class="custom-control-label" for="raglan">Raglan</label>
-</div>
+    @endforeach
+@endif
+
 </div>
 </div>
 </div>
@@ -114,17 +105,14 @@
 <div class="list-group-item">
 <div class="col-lg-12">
 <div class="collection-brand-filter">
+
 <div class="custom-control custom-checkbox collection-filter-checkbox">
-<input type="checkbox" class="custom-control-input" id="roadster">
-<label class="custom-control-label" for="accessories">Purchased</label>
+<input type="checkbox" class="custom-control-input" id="custom" value="custom">
+<label class="custom-control-label" for="custom">Custom</label>
 </div>
 <div class="custom-control custom-checkbox collection-filter-checkbox">
-<input type="checkbox" class="custom-control-input" id="blanket">
-<label class="custom-control-label" for="blanket">Custom</label>
-</div>
-<div class="custom-control custom-checkbox collection-filter-checkbox">
-<input type="checkbox" class="custom-control-input" id="garments">
-<label class="custom-control-label" for="garments">Non custom</label>
+<input type="checkbox" class="custom-control-input" id="non-custom" value="non-custom">
+<label class="custom-control-label" for="non-custom">Non custom</label>
 </div>
 <!-- <div class="custom-control custom-checkbox collection-filter-checkbox">
 <input type="checkbox" class="custom-control-input" id="toys">
@@ -157,8 +145,8 @@
 <div class="col-lg-12">
 <div class="collection-brand-filter">
 <div class="custom-control custom-checkbox collection-filter-checkbox">
-<input type="checkbox" class="custom-control-input" id="roadster">
-<label class="custom-control-label" for="accessories">Knit Fit Couture</label>
+<input type="checkbox" class="custom-control-input" id="knit-fit-couture" value="knit-fit-couture">
+<label class="custom-control-label" for="knit-fit-couture">Knit Fit Couture</label>
 </div>
 </div>
 </div>
@@ -168,52 +156,7 @@
 </div>
 </div>
 <!--Ends here-->  
-
-<!-- Garment construction filter start here -->
-<div class="row outline-row m-b-10" data-toggle="collapse" data-target="#section5">
-<div class="accordion col-lg-11 p-r-0 p-l-0">
-<h5 class="card-header-text accordion-left-menu-heading">Price</h5>
-</div>
-<div class="col-lg-1 p-r-0 m-t-5">
-<i class="fa fa-caret-down pull-right micro-icons"></i>
-</button>
-</div>
-</div>
-<div class="collapse" id="section5">
-<div class="">
-<div class="row">
-<div class="col-lg-12 col-sm-12">
-<div class="list-group-item">
-<div class="col-lg-12">
-<div class="collection-brand-filter">
-<div class="custom-control custom-checkbox collection-filter-checkbox">
-<input type="checkbox" class="custom-control-input" id="hundred">
-<label class="custom-control-label" for="hundred">$10 - $100</label>
-</div>
-<div class="custom-control custom-checkbox collection-filter-checkbox">
-<input type="checkbox" class="custom-control-input" id="twohundred">
-<label class="custom-control-label" for="twohundred">$100 - $200</label>
-</div>
-<div class="custom-control custom-checkbox collection-filter-checkbox">
-<input type="checkbox" class="custom-control-input" id="threehundred">
-<label class="custom-control-label" for="threehundred">$200 - $300</label>
-</div>
-<div class="custom-control custom-checkbox collection-filter-checkbox">
-<input type="checkbox" class="custom-control-input" id="fourhundred">
-<label class="custom-control-label" for="fourhundred">$300 - $400</label>
-</div>
-<div class="custom-control custom-checkbox collection-filter-checkbox">
-<input type="checkbox" class="custom-control-input" id="fourhundredabove">
-<label class="custom-control-label" for="fourhundredabove">$400 above</label>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!--Ends here-->  
+ 
 </div>
 </div>
 
@@ -290,7 +233,7 @@
 $rating = DB::select(DB::raw("select SUM(rating) as rat from product_comments where product_id = '".$pro->id."' "));
 $totrate = DB::table('product_comments')->where('product_id',$pro->id)->count();
 @endphp
-<div class="col-xl-3 col-md-6 col-grid-box">
+<div class="col-xl-3 col-md-6 col-grid-box sectionContent knit-fit-couture">
 <div class="product-box">
     <div class="img-wrapper">
         <div class="front">
@@ -411,7 +354,11 @@ $totrate = DB::table('product_comments')->where('product_id',$pro->id)->count();
 </style>
 
 <script type="text/javascript">
+    var sections = $('.sectionContent');
+
 	$(function(){
+        updateContentVisibility();
+
 		var perPage = '{{$perPage}}';
 		setTimeout(function(){
 			var pageLink = $(".page-item a");
@@ -428,7 +375,24 @@ $totrate = DB::table('product_comments')->where('product_id',$pro->id)->count();
 			var id = $(this).attr('data-id');
 			$("#show-pattern").load('{{url("pattern-popup")}}/'+id)
 		});
+
+
+
+        $("#collection-filter :checkbox").click(updateContentVisibility);
+        
 		
 	});
+
+function updateContentVisibility(){
+    var checked = $("#collection-filter :checkbox:checked");
+    if(checked.length){
+        sections.hide();
+        checked.each(function(){
+            $("." + $(this).val()).show();
+        });
+    } else {
+        sections.show();
+    }
+}
 </script>
 @endsection

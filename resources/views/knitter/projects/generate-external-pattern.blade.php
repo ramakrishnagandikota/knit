@@ -225,7 +225,11 @@
         <label class="col-form-label f-w-600">Stitch gauge</label>
         <div class="row">
             <div class="col-md-12">
+                @if($stitch_gauge)
                 <label class="col-form-label m-l-15">{{$project->uom == 'in' ? $stitch_gauge->stitch_gauge_inch.' sts / 1 Inches' : $stitch_gauge->stitches_10_cm.' sts / 10 Centimeters' }}</label>
+                @else
+                <label class="col-form-label m-l-15">NA</label>
+                @endif
             </div>
         </div>
     </div>
@@ -236,7 +240,11 @@
         <label class="col-form-label f-w-600">Row gauge</label>
         <div class="row">
             <div class="col-md-12">
+                @if($row_gauge)
                 <label class="col-form-label m-l-15">{{$project->uom == 'in' ? $row_gauge->row_gauge_inch.' sts / 1 Inches' : $row_gauge->rows_10_cm.' sts / 10 Centimeters' }}</label>
+                @else
+                <label class="col-form-label m-l-15">NA</label> 
+                @endif
             </div>
         </div>
     </div>
@@ -262,7 +270,11 @@
         </label>
         <div class="row">
             <div class="col-md-12">
+                @if($measurements)
                 <label class="col-form-label m-l-15">For {{ucfirst($measurements->m_title)}}</label>
+                @else
+                <label class="col-form-label m-l-15">NA</label>
+                @endif
             </div>
         </div>
     </div>
@@ -274,7 +286,11 @@
         </label>
         <div class="row">
             <div class="col-md-12">
+                @if($project->ease)
                 <label class="col-form-label m-l-15">{{ $project->uom == 'in' ? $project->ease.'"' : $project->ease.'cm' }}</label>
+                @else
+                <label class="col-form-label m-l-15">NA</label>
+                @endif
             </div>
         </div>
     </div>

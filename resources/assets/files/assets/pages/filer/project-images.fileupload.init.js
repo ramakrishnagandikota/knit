@@ -118,11 +118,17 @@ $(document).ready(function(){
                 var parent = el.find(".jFiler-jProgressBar").parent();
                 //el.find("#image").val(data.path);
                 //el.find("#ext").val(data.ext);
+
+                if(PAGE == 'adminProducts'){
+                var add1 = '<input type="hidden" name="images[]" value="'+data.path+'">';
+                $("#ajaxDiv").append(add1);
+                }
+
                 if(data.ext == 'jpg'){
                     var add = '<div class="col-xl-2 col-lg-3 col-sm-3 col-xs-12 custom-padding-column">\
-                    <a href="'+data.path+'" data-toggle="lightbox" data-gallery="example-gallery">\
-                    <img src="'+data.path+'" class="img-fluid m-b-10" alt=""></a></div>';
-                    $("#gallery_images").append(add);
+                <a href="'+data.path+'" data-toggle="lightbox" data-gallery="example-gallery">\
+                <img src="'+data.path+'" class="img-fluid m-b-10" alt=""></a></div>';
+                $("#gallery_images").append(add);
                 }
                 el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
                     $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow");

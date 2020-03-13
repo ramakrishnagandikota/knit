@@ -11,6 +11,8 @@ use App\Models\ProductComments;
 use App\Models\Product_images;
 use DB;
 use Illuminate\Support\Str;
+use App\Models\GarmentConstruction;
+use App\Models\GarmentType;
 
 class ShoppingController extends Controller
 {
@@ -45,8 +47,11 @@ class ShoppingController extends Controller
     	}else{
     		$products = Products::orderBy('id','ASC')->paginate($perPage);
     	}
+
+        $garmenttype = GarmentType::all();
+        $garmentconstruction = GarmentConstruction::all();
     
-    	return view('shopping.shop-patterns',compact('products','page','perPage','orderBy')); 	 	
+    	return view('shopping.shop-patterns',compact('products','page','perPage','orderBy','garmenttype','garmentconstruction')); 	 	
     }
 
     function product_full_view(Request $request){

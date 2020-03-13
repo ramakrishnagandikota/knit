@@ -274,12 +274,12 @@ class ProjectController extends Controller
     	$project_images = $project->project_images;
     	$project_yarn = $project->project_yarn;
     	$project_needle = $project->project_needle()->leftJoin('needle_sizes','needle_sizes.id','projects_needle.needle_size')->select('needle_sizes.us_size','needle_sizes.mm_size','projects_needle.id as pnid')->get();
+        
     $stitch_gauge = GaugeConversion::where('id',$project->stitch_gauge)->first();
     $row_gauge = GaugeConversion::where('id',$project->row_gauge)->first();
     $measurements = UserMeasurements::where('id',$project->measurement_profile)->first();
     $project_notes = $project->project_notes;
     $product = Products::where('id',$project->product_id)->first();
-
     return view('knitter.projects.generate-external-pattern',compact('project','project_images','project_yarn','project_needle','stitch_gauge','row_gauge','measurements','project_notes','product'));
     }
 

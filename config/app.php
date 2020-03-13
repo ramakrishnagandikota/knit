@@ -170,6 +170,7 @@ return [
 		Laravel\Passport\PassportServiceProvider::class,
 		Intervention\Image\ImageServiceProvider::class,
 		Laravel\Socialite\SocialiteServiceProvider::class,
+        
 
         /*
          * Application Service Providers...
