@@ -311,6 +311,34 @@
                 </select>
                     </div>
                 </div>
+
+                <div class="form-group row">
+                  <?php 
+          $exp2 = explode(',',$product->design_elements);
+          ?>
+                    <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">Design Elements*</label>
+                    <div class="col-sm-7">
+                       <select class="select" multiple="multiple" required id="design_elements" name="design_elements[]" style="width: 100%;">
+                @foreach($designElements as $de)
+                <option value="{{ $de->slug }}" @for($m=0;$m<count($exp2);$m++) @if($exp2[$m] == $de->slug) selected @endif @endfor >{{ $de->name }}</option>
+                @endforeach
+                </select>
+                    </div>
+          </div>
+
+          <div class="form-group row">
+             <?php 
+          $exp3 = explode(',',$product->shoulder_construction);
+          ?>
+              <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">Shoulder construction*</label>
+              <div class="col-sm-7">
+                 <select class="select" multiple="multiple" required id="shoulder_construction" name="shoulder_construction[]" style="width: 100%;">
+              @foreach($shoulderConstruction as $sc)
+              <option value="{{ $sc->slug }}" @for($n=0;$n<count($exp3);$n++) @if($exp3[$n] == $sc->slug) selected @endif @endfor >{{ $sc->name }}</option>
+              @endforeach
+              </select>
+                  </div>
+          </div>
       </div>
 
 
@@ -538,6 +566,16 @@
     
         $("#garment_construction").select2({
             placeholder: "Please Select Garment Construction",
+            allowClear: true
+        });
+
+        $("#design_elements").select2({
+            placeholder: "Please Select Design Elements",
+            allowClear: true
+        });
+
+        $("#shoulder_construction").select2({
+            placeholder: "Please Select Shoulder Construction",
             allowClear: true
         });
         

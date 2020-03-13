@@ -363,10 +363,10 @@
         success : function(res){
           if(res.status == 'success'){
             $("#generatedpatterns"+id+",#workinprogress"+id+",#completed"+id).remove();
-            notify('fa fa-check','success',' ','Project has been added to archive');
+            notify('fa fa-check','success',' ','Project deleted successfully');
             
           }else{
-            notify('fa fa-times','error',' ','Unable to add project to archive, Try again after sometime.');
+            notify('fa fa-times','error',' ','Unable to delete project, Try again after sometime.');
           }
         },
         complete : function(){

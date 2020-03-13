@@ -248,7 +248,7 @@
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">Additional Information*</label>
                     <div class="col-sm-7">
-                        <textarea type="text" name="additional_information" required id="additional_information" class="form-control">{{$product->additional_information}}</textarea>
+                        <textarea type="text" name="additional_information" required id="additional_information" class="form-control"></textarea>
                     </div>
                 </div>
                
@@ -293,18 +293,41 @@
                 @endforeach
                 </select>
                     </div>
-                </div>
+          </div>
 
-                <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">Garment construction*</label>
+          <div class="form-group row">
+              <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">Garment construction*</label>
+              <div class="col-sm-7">
+                 <select class="select" multiple="multiple" required id="garment_construction" name="garment_construction[]" style="width: 100%;">
+              @foreach($garmentConstruction as $gc)
+              <option value="{{ $gc->slug }}" >{{ $gc->name }}</option>
+              @endforeach
+              </select>
+                  </div>
+          </div>
+
+          <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">Design Elements*</label>
                     <div class="col-sm-7">
-                       <select class="select" multiple="multiple" required id="garment_construction" name="garment_construction[]" style="width: 100%;">
-                @foreach($garmentConstruction as $gc)
-                <option value="{{ $gc->slug }}" >{{ $gc->name }}</option>
+                       <select class="select" multiple="multiple" required id="design_elements" name="design_elements[]" style="width: 100%;">
+                @foreach($designElements as $de)
+                <option value="{{ $de->slug }}" >{{ $de->name }}</option>
                 @endforeach
                 </select>
                     </div>
-                </div>
+          </div>
+
+          <div class="form-group row">
+              <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">Shoulder construction*</label>
+              <div class="col-sm-7">
+                 <select class="select" multiple="multiple" required id="shoulder_construction" name="shoulder_construction[]" style="width: 100%;">
+              @foreach($shoulderConstruction as $sc)
+              <option value="{{ $sc->slug }}" >{{ $sc->name }}</option>
+              @endforeach
+              </select>
+                  </div>
+          </div>
+
       </div>
 
 
@@ -475,6 +498,16 @@
     
         $("#garment_construction").select2({
             placeholder: "Please Select Garment Construction",
+            allowClear: true
+        });
+
+        $("#design_elements").select2({
+            placeholder: "Please Select Design Elements",
+            allowClear: true
+        });
+
+        $("#shoulder_construction").select2({
+            placeholder: "Please Select Shoulder Construction",
             allowClear: true
         });
         

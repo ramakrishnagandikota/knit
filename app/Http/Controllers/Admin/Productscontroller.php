@@ -32,6 +32,7 @@ use App\Models\GaugeConversion;
 use App\Models\ProductDesignerMeasurements;
 use Carbon\Carbon;
 use App\Models\ProductPdf;
+use App\Models\MasterList;
 
 class Productscontroller extends Controller
 {
@@ -56,11 +57,13 @@ class Productscontroller extends Controller
     function add_new_pattern(){
         $pcount = DB::table('products')->count();
         $subcategory = Subcategory::where('category_id',1)->get();
-        $garmentType = GarmentType::all();
-        $garmentConstruction = GarmentConstruction::all();
+        $garmentType = MasterList::where('type','garment_type')->get();
+        $garmentConstruction = MasterList::where('type','garment_construction')->get();
+        $designElements = MasterList::where('type','design_elements')->get();
+        $shoulderConstruction = MasterList::where('type','shoulder_construction')->get();
         $needlesizes = NeedleSizes::all();
         $gaugeconversion = GaugeConversion::all();
-        return view('admin.products.add-product',compact('pcount','subcategory','garmentType','garmentConstruction','needlesizes','gaugeconversion'));
+        return view('admin.products.add-product',compact('pcount','subcategory','garmentType','garmentConstruction','needlesizes','gaugeconversion','designElements','shoulderConstruction'));
     }
 
     function upload_image(Request $request){
@@ -131,6 +134,8 @@ class Productscontroller extends Controller
 
     	$garmentType = implode(',',$request->garment_type);
     	$garmentConstruction = implode(',',$request->garment_construction);
+        $designElements = implode(',',$request->design_elements);
+        $shoulderConstruction = implode(',',$request->shoulder_construction);
 
 
     	$pro = new Products;
@@ -171,6 +176,8 @@ class Productscontroller extends Controller
     	
     	$pro->garment_type = $garmentType;
     	$pro->garment_construction = $garmentConstruction;
+        $pro->design_elements = $designElements;
+        $pro->shoulder_construction = $shoulderConstruction;
     	$pro->created_at = Carbon::now();
     	$pro->ipaddress = $_SERVER['REMOTE_ADDR'];
     	$save = $pro->save();
@@ -223,6 +230,8 @@ class Productscontroller extends Controller
 
     	$garmentType = implode(',',$request->garment_type);
     	$garmentConstruction = implode(',',$request->garment_construction);
+        $designElements = implode(',',$request->design_elements);
+        $shoulderConstruction = implode(',',$request->shoulder_construction);
 
 
     	$pro = Products::find($request->id);
@@ -263,6 +272,8 @@ class Productscontroller extends Controller
     	
     	$pro->garment_type = $garmentType;
     	$pro->garment_construction = $garmentConstruction;
+        $pro->design_elements = $designElements;
+        $pro->shoulder_construction = $shoulderConstruction;
     	$pro->updated_at = Carbon::now();
     	$pro->ipaddress = $_SERVER['REMOTE_ADDR'];
     	$save = $pro->save();
@@ -329,14 +340,16 @@ class Productscontroller extends Controller
     function edit_product(Request $request){
     	$pid = $request->pid;
     	$subcategory = Subcategory::where('category_id',1)->get();
-        $garmentType = GarmentType::all();
-        $garmentConstruction = GarmentConstruction::all();
+        $garmentType = MasterList::where('type','garment_type')->get();
+        $garmentConstruction = MasterList::where('type','garment_construction')->get();
+        $designElements = MasterList::where('type','design_elements')->get();
+        $shoulderConstruction = MasterList::where('type','shoulder_construction')->get();
         $needlesizes = NeedleSizes::all();
         $gaugeconversion = GaugeConversion::all();
     	$product = Products::where('pid',$pid)->first();
     	$measurements = ProductDesignerMeasurements::where('product_id',$product->id)->get();
     	$product_images = Product_images::where('product_id',$product->id)->get();
-    	return view('admin.products.edit-product',compact('product','measurements','product_images','subcategory','garmentType','garmentConstruction','gaugeconversion','needlesizes'));
+    	return view('admin.products.edit-product',compact('product','measurements','product_images','subcategory','garmentType','garmentConstruction','gaugeconversion','needlesizes','designElements','shoulderConstruction'));
     }
 
     function remove_product_image(Request $request){
