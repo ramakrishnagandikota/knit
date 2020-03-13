@@ -76,14 +76,19 @@
                  @if($generatedpatterns->count() > 0)
                 @foreach($generatedpatterns as $gp)
                 <?php 
-                $image = App\Models\Project::find($gp->pid)->project_images()->first();
+                $image = DB::table('projects_images')->where('project_id',$gp->pid)->first();
+        if($image){
+          $i1 = $image->image_path;
+        }else{
+          $i1 = '';
+        }
                 ?>
                  <li class="" id="generatedpatterns{{$gp->pid}}" data-id="{{$gp->pid}}">
                     <div class="col-md-12 m-b-20">
                        <div class="card-sub-custom">
                           <div class="card-block">
                              <div class="row">
-                                <div class="col-lg-4"><img class="img-fluid" src="{{ $image->image_path }}"  alt="round-img"></div>
+                                <div class="col-lg-4"><img class="img-fluid" src="{{ $i1 }}"  alt="round-img"></div>
                                 <div class="col-lg-8">
                                    <h6 class="card-title">
                                 @if($gp->pattern_type == 'custom')
@@ -132,14 +137,19 @@
                 @if($workinprogress->count() > 0)
                 @foreach($workinprogress as $wp)
                 <?php 
-                $image2 = App\Models\Project::find($wp->pid)->project_images()->first();
+                $image2 = DB::table('projects_images')->where('project_id',$wp->pid)->first();
+        if($image2){
+          $i2 = $image2->image_path;
+        }else{
+          $i2 = '';
+        }
                 ?>
                  <li class="" id="workinprogress{{$wp->pid}}" data-id="{{$wp->pid}}">
                     <div class="col-md-12 m-b-20">
                        <div class="card-sub-custom">
                           <div class="card-block">
                              <div class="row">
-                                <div class="col-lg-4"><img class="img-fluid" src="{{ $image2->image_path }}" alt="round-img"></div>
+                                <div class="col-lg-4"><img class="img-fluid" src="{{ $i2 }}" alt="round-img"></div>
                                 <div class="col-lg-8">
                                    <h6 class="card-title">
                                     @if($wp->pattern_type == 'custom')
@@ -188,14 +198,19 @@
                 @if($completed->count() > 0)
                 @foreach($completed as $com)
                 <?php 
-                $image3 = App\Models\Project::find($com->pid)->project_images()->first();
+                $image3 = DB::table('projects_images')->where('project_id',$com->pid)->first();
+        if($image3){
+          $i3 = $image3->image_path;
+        }else{
+          $i3 = '';
+        }
                 ?>
                  <li class="" id="completed{{$com->pid}}" data-id="{{$com->pid}}">
                     <div class="col-md-12 m-b-20">
                        <div class="card-sub-custom">
                           <div class="card-block">
                              <div class="row">
-                                <div class="col-lg-4"><img class="img-fluid" src="{{ $image3->image_path }}" alt="round-img"></div>
+                                <div class="col-lg-4"><img class="img-fluid" src="{{ $i3  }}" alt="round-img"></div>
                                 <div class="col-lg-8">
                                    <h6 class="card-title">
                                   @if($com->pattern_type == 'custom')
@@ -291,37 +306,37 @@
 <script type="text/javascript" src="{{ asset('resources/assets/files/assets/pages/notification/notification.js') }}"></script>
 
 <script type="text/javascript">
-	$(function(){
+  $(function(){
     localStorage.removeItem('project');
-		$(document).on('click','.moveToArchive',function(){
-			var id = $(this).attr('data-id');
+    $(document).on('click','.moveToArchive',function(){
+      var id = $(this).attr('data-id');
 
-			$.ajaxSetup({
-			    headers: {
-			        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			    }
-			});
+      $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+      });
 
-			$.ajax({
-				url : '{{url("knitter/project-to-archive")}}',
-				type : 'POST',
-				data: 'id='+id,
-				beforeSend : function(){
-					$(".loading").show();
-				},
-				success : function(res){
-					if(res.status == 'success'){
+      $.ajax({
+        url : '{{url("knitter/project-to-archive")}}',
+        type : 'POST',
+        data: 'id='+id,
+        beforeSend : function(){
+          $(".loading").show();
+        },
+        success : function(res){
+          if(res.status == 'success'){
             $("#generatedpatterns"+id+",#workinprogress"+id+",#completed"+id).remove();
-						notify('fa fa-check','success',' ','Project has been added to archive');
-					}else{
-						notify('fa fa-times','error',' ','Unable to add project to archive, Try again after sometime.');
-					}
-				},
-				complete : function(){
-					$(".loading").hide();
-				}
-			});
-		});
+            notify('fa fa-check','success',' ','Project has been added to archive');
+          }else{
+            notify('fa fa-times','error',' ','Unable to add project to archive, Try again after sometime.');
+          }
+        },
+        complete : function(){
+          $(".loading").hide();
+        }
+      });
+    });
 
 
     $(document).on('click','.deleteAction',function(){
@@ -360,10 +375,10 @@
       });
 
     });
-	});
+  });
 
 
-	function notify(icon, type,title, msg){
+  function notify(icon, type,title, msg){
         $.growl({
             icon: icon,
             title: title,

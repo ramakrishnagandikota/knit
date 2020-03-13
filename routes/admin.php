@@ -142,9 +142,9 @@ Route::group(['middleware' => 'web','prefix' => 'admin'], function () {
         'roles' => ['Admin']
     ]);
 
-    Route::get('create-pattern/{id}',[
+    Route::get('create-pattern/{pid}',[
         'uses' => 'Admin\Productscontroller@create_pattern',
-        'as' => 'create-pattern/{id}',
+        'as' => 'create-pattern/{pid}',
         'middleware' => 'roles',
         'roles' => ['Admin']
     ]);
@@ -159,6 +159,13 @@ Route::group(['middleware' => 'web','prefix' => 'admin'], function () {
     Route::post('remove-product-image',[
         'uses' => 'Admin\Productscontroller@remove_product_image',
         'as' => 'remove-product-image',
+        'middleware' => 'roles',
+        'roles' => ['Admin']
+    ]);
+
+    Route::post('add-pattern-instructions',[
+        'uses' => 'Admin\Productscontroller@add_pattern_instructions',
+        'as' => 'add-pattern-instructions',
         'middleware' => 'roles',
         'roles' => ['Admin']
     ]);

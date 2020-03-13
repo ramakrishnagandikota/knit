@@ -75,7 +75,7 @@
                 <td>{{$da->sku}}</td>
                 <td>@if($da->status == 1) <span style="color:green;">Active</span> @else <span style="color: red;"> In Active</span> @endif</td>
                 <td>
-                	<a href="{{url('admin/products-edit/'.$da->pid)}}" class="fa fa-pencil" data-toggle="tooltip" title="Edit"></a> | <a href="javascript:;" data-toggle="tooltip" title="Delete" class="fa fa-trash-o delete-product" data-id="{{$da->id}}"></a> | <a href="{{url('admin/create-pattern/'.$da->id)}}" class="mdi mdi-chemical-weapon"  data-toggle="tooltip" title="Setup Pattern Template" ></a>
+                	<a href="{{url('admin/products-edit/'.$da->pid)}}" class="fa fa-pencil" data-toggle="tooltip" title="Edit"></a> | <a href="javascript:;" data-toggle="tooltip" title="Delete" class="fa fa-trash-o delete-product" data-id="{{$da->id}}"></a> | <a href="{{url('admin/create-pattern/'.$da->pid)}}" class="mdi mdi-chemical-weapon"  data-toggle="tooltip" title="Setup Pattern Template" ></a>
                 </td>
             </tr>
             <?php $i++; ?>

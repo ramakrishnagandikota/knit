@@ -123,14 +123,14 @@ class LoginController extends Controller
             $user->password = bcrypt($request->password);
             $user->enc_email = $md5email;
             $user->picture = 'resources/assets/user.png';
-            $user->oauth_picture = $this->random_color();
+            
             $user->subscription_type = 1;
             $user->sub_exp = Carbon::now()->addDays(30);
             $user->created_at = date('Y-m-d H:i:s');
             $user->save();
             
-        $success['access_token'] =  $user->createToken('MyApp')->accessToken;
-        $success['name'] =  $user->first_name.' '.$user->last_name;
+        //$success['access_token'] =  $user->createToken('MyApp')->accessToken;
+        $success['message'] =  'Hi '$user->first_name.' '.$user->last_name.', Please check your email to activate your account.';
         
         
         $user->subscription()->attach(['1']);

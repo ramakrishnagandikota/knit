@@ -341,6 +341,7 @@
  </style> 
  <script type="text/javascript">
      var URL = "{{url('/')}}";
+     var PAGE = '';
  </script>
 <!-- Required Jquery -->
 <script type="text/javascript" src="{{ asset('resources/assets/files/bower_components/jquery/js/jquery.min.js')}}"></script>

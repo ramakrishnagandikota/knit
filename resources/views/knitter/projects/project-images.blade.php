@@ -137,6 +137,7 @@ box-shadow:1px 0px 6px 0px #bfbfbf;
 </style>
 <script type="text/javascript">
 	var URL = '{{url("knitter/project/my-images/".$project->id)}}';
+    var PAGE = '';
 </script>
 <!-- light-box css -->
 <link rel="stylesheet" type="text/css" href="{{ asset('resources/assets/files/bower_components/ekko-lightbox/css/ekko-lightbox.css') }}">

@@ -31,6 +31,7 @@ use App\Models\NeedleSizes;
 use App\Models\GaugeConversion;
 use App\Models\ProductDesignerMeasurements;
 use Carbon\Carbon;
+use App\Models\ProductPdf;
 
 class Productscontroller extends Controller
 {
@@ -363,6 +364,34 @@ class Productscontroller extends Controller
     	$pro = Products::find($request->id);
     	$pro->status = 0;
     	$save = $pro->save();
+    	if($save){
+    		return response()->json(['status' => 'Success']);
+    	}else{
+    		return response()->json(['status' => 'Fail']);
+    	}
+    }
+
+    function create_pattern(Request $request){
+    	$pid = $request->pid;
+    	$product = Products::where('pid',$pid)->first();
+    	$pdf = ProductPdf::where('product_id',$product->id)->first();
+    	return view('admin.products.pattern-template',compact('pid','pdf','product'));
+    }
+
+    function add_pattern_instructions(Request $request){
+    	if($request->id == 0){
+    		$pdf = new ProductPdf;
+    		$pdf->user_id = Auth::user()->id;
+    		$pdf->product_id = $request->product_id;
+    		$pdf->created_at = Carbon::now();
+    		$pdf->ipaddress = $_SERVER['REMOTE_ADDR'];
+    	}else{
+    		$pdf = ProductPdf::find($request->id);
+    		$pdf->updated_at = Carbon::now();
+    		$pdf->ipaddress = $_SERVER['REMOTE_ADDR'];
+    	}
+    	$pdf->content = $request->content;
+    	$save = $pdf->save();
     	if($save){
     		return response()->json(['status' => 'Success']);
     	}else{
