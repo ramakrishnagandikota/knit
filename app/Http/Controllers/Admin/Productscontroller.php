@@ -132,11 +132,31 @@ class Productscontroller extends Controller
     function upload_product(Request $request){
     	$pcount = Products::count() + 1;
 
-    	$garmentType = implode(',',$request->garment_type);
-    	$garmentConstruction = implode(',',$request->garment_construction);
-        $designElements = implode(',',$request->design_elements);
-        $shoulderConstruction = implode(',',$request->shoulder_construction);
+        if($request->garment_type){
+            $garmentType = implode(',',$request->garment_type);
+        }else{
+            $garmentType = '';
+        }
 
+        if($request->garment_construction){
+            $garmentConstruction = implode(',',$request->garment_construction);
+        }else{
+            $garmentConstruction = '';
+        }
+
+        if($request->design_elements){
+            $designElements = implode(',',$request->design_elements);
+        }else{
+            $designElements = '';
+        }
+
+        if($request->shoulder_construction){
+        $shoulderConstruction = implode(',',$request->shoulder_construction);
+        }else{
+        $shoulderConstruction = '';
+        }
+    	
+    	
 
     	$pro = new Products;
     	$pro->user_id = Auth::user()->id;
@@ -203,6 +223,7 @@ class Productscontroller extends Controller
 	    		$measurements->save();
 	    	}
 
+            if($request->images){
 	    	for ($j=0; $j < count($request->images); $j++) { 
 	    		$image = new Product_images;
 	    		$image->user_id = Auth::user()->id; 
@@ -216,6 +237,7 @@ class Productscontroller extends Controller
 	    		$image->status = 1;
 	    		$image->save();
 	    	}
+        }
 
 	    	return response()->json(['status' => 'Success']);
 
@@ -226,12 +248,35 @@ class Productscontroller extends Controller
 
 
     function update_product(Request $request){
+        //echo '<pre>';
+        //print_r($request->all());
+        //echo '</pre>';
+        //exit;
     	$pcount = Products::count() + 1;
 
-    	$garmentType = implode(',',$request->garment_type);
-    	$garmentConstruction = implode(',',$request->garment_construction);
-        $designElements = implode(',',$request->design_elements);
+    	if($request->garment_type){
+            $garmentType = implode(',',$request->garment_type);
+        }else{
+            $garmentType = '';
+        }
+
+        if($request->garment_construction){
+            $garmentConstruction = implode(',',$request->garment_construction);
+        }else{
+            $garmentConstruction = '';
+        }
+
+        if($request->design_elements){
+            $designElements = implode(',',$request->design_elements);
+        }else{
+            $designElements = '';
+        }
+
+        if($request->shoulder_construction){
         $shoulderConstruction = implode(',',$request->shoulder_construction);
+        }else{
+        $shoulderConstruction = '';
+        }
 
 
     	$pro = Products::find($request->id);

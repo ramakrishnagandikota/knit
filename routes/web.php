@@ -83,3 +83,7 @@ Route::get('payment/success/{order_id}', 'CheckoutController@success')->name('pa
 Route::get('order/invoice/{orderId}','CheckoutController@payment_invoice');
 Route::get('order/faild/{orderId}','CheckoutController@payment_faild');
 Route::get('cancel/{orderId}', 'CheckoutController@cancel_order');
+
+Route::get('my-account','AccountController@my_account');
+Route::get('my-address','AccountController@my_address');
+Route::get('my-orders','AccountController@myorders');

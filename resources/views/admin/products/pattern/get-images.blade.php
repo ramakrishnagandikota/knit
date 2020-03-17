@@ -10,7 +10,7 @@
             <img src="{{$im->image_path}}" width="100" height="100" border=0 >
             </center>
 
-            <span style="font-size:11px">{{str_limit($im->title,10)}}</span>
+            <span style="font-size:11px">{{Str::limit($im->title,10)}}</span>
             <br>
             <a href="javascript:void(0);" onclick="inserisci(this);" class="insert-image" data-image="{{$im->image_path}}"><span class="glyphicon glyphicon-download"></span></a>
             <br>

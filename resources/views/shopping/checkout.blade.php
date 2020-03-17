@@ -187,6 +187,9 @@
 </form>
 @endsection
 @section('footerscript')
+  <link rel="stylesheet" type="text/css" href="{{asset('resources/assets/slick/slick.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{asset('resources/assets/slick/slick-theme.css') }}">
+<script type="text/javascript" src="{{asset('resources/assets/slick/slick.min.js')}}"></script>
 <style type="text/css">
 	.no-visible{
 		display: none;
@@ -244,6 +247,8 @@
 				return false;
 			}
 			$("#userAddress").html(res);
+               
+          
 		});
 	}
 

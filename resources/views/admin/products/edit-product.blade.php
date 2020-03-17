@@ -235,21 +235,21 @@
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">Product Description*</label>
                     <div class="col-sm-7">
-                        <textarea type="text" name="description" id="description" class="form-control" required >{{$product->product_description}}</textarea>
+                        <textarea type="text"  id="description" class="form-control" required >{{$product->product_description}}</textarea>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">Details*</label>
                     <div class="col-sm-7">
-                        <textarea type="text" name="short_description" required id="short_description" class="form-control">{{$product->short_description}}</textarea>
+                        <textarea type="text"  required id="short_description" class="form-control">{{$product->short_description}}</textarea>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-3 text-right control-label col-form-label">Additional Information*</label>
                     <div class="col-sm-7">
-                        <textarea type="text" name="additional_information" required id="additional_information" class="form-control">{{$product->additional_information}}</textarea>
+                        <textarea type="text"  required id="additional_information" class="form-control">{{$product->additional_information}}</textarea>
                     </div>
                 </div>
                
@@ -544,9 +544,9 @@
 <script type="text/javascript">
     $(function(){
 
-      CKEDITOR.replace('description');
-      CKEDITOR.replace('short_description');
-      CKEDITOR.replace('additional_information');
+       var description = CKEDITOR.replace('description');
+      var short_description = CKEDITOR.replace('short_description');
+      var additional_information = CKEDITOR.replace('additional_information');
 
         $('#set_product_new_to_date,#special_price_start_date,#special_price_end_date').bootstrapMaterialDatePicker({ format: 'MM/DD/YYYY', weekStart : 0, time: false });
 
@@ -628,8 +628,15 @@
         
     
     btnsubmit.click(function(){
-        var Data = $("#product-insert").serializeArray();
+        var Data = $("#product-insert").serializeArray(); 
+       var description = CKEDITOR.instances.description.getData();
+       var short_description = CKEDITOR.instances.short_description.getData();
+       var additional_information = CKEDITOR.instances.additional_information.getData();
 
+       Data.push({name: 'description', value: description});
+       Data.push({name: 'short_description', value: short_description});
+       Data.push({name: 'additional_information', value: additional_information});
+       
         $.ajax({
            url : '{{ url("admin/update-product") }}',
            type : 'POST',
@@ -650,7 +657,7 @@
                 Swal.fire(
                       'Oops!',
                       'Unable to add product, Try again after some time.',
-                      'fail'
+                      'error'
                     )
               }
 
