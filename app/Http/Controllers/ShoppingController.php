@@ -13,6 +13,9 @@ use DB;
 use Illuminate\Support\Str;
 use App\Models\GarmentConstruction;
 use App\Models\GarmentType;
+use App\Models\MasterList;
+use App\Cart;
+use Session;
 
 class ShoppingController extends Controller
 {
@@ -27,6 +30,8 @@ class ShoppingController extends Controller
 
     	exit;
 		*/
+
+        
 
     	$perPage = ($request->get('perPage')) ? $request->get('perPage') : 25;
     	$page = ($request->get('page')) ? $request->get('page') : 1;
@@ -48,10 +53,12 @@ class ShoppingController extends Controller
     		$products = Products::orderBy('id','ASC')->paginate($perPage);
     	}
 
-        $garmenttype = GarmentType::all();
-        $garmentconstruction = GarmentConstruction::all();
+        $garmentType = MasterList::where('type','garment_type')->get();
+        $garmentConstruction = MasterList::where('type','garment_construction')->get();
+        $designElements = MasterList::where('type','design_elements')->get();
+        $shoulderConstruction = MasterList::where('type','shoulder_construction')->get();
     
-    	return view('shopping.shop-patterns',compact('products','page','perPage','orderBy','garmenttype','garmentconstruction')); 	 	
+    	return view('shopping.shop-patterns',compact('products','page','perPage','orderBy','garmentType','garmentConstruction','designElements','shoulderConstruction')); 	 	
     }
 
     function product_full_view(Request $request){
@@ -67,5 +74,6 @@ class ShoppingController extends Controller
     function pattern_popup(Request $request){
     	$pid = $request->pid;
     	$product = Products::where('pid',$pid)->first();
+        return view('shopping.pattern-popup',compact('product'));
     }
 }

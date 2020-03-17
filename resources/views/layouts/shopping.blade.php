@@ -12,6 +12,7 @@
 <!-- Meta -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="description" content="Gradient Able Bootstrap admin template made using Bootstrap 4 and it has huge amount of ready made feature, UI components, pages which completely fulfills any dashboard needs." />
 <meta name="keywords" content="bootstrap, bootstrap admin template, admin theme, admin dashboard, dashboard template, admin template, responsive" />
@@ -46,29 +47,6 @@
 <!-- Theme css -->
 <link rel="stylesheet" type="text/css" href="{{ asset('resources/assets/KnitfitEcommerce/assets/css/color17.css') }}" media="screen" id="color">
 <link rel="stylesheet" type="text/css" href="{{ asset('resources/assets/KnitfitEcommerce/assets/css/left-menu.css') }}">
-<style>
-.custom-control-label::before {
-border: .8px solid #0d665c!important;
-background-color: transparent;
-}
-
-.list-group-item {
-padding: .75rem 0rem;
-}
-
-select option:hover,
-select option:focus,
-select option:active {
-background: linear-gradient(#000000, #000000);
-background-color: #000000 !important;
-/* for IE */
-color: #ffed00 !important;
-}
-
-.custom-select {
-padding: unset
-}
-</style>
 
 </head>
 
@@ -87,7 +65,7 @@ padding: unset
 <div class="navbar-wrapper">
 <div class="navbar-logo">
 
-<a href="{{url('knitter/dashboard')}}">
+<a href="{{url('/')}}">
 <img class="img-fluid theme-logo" src="{{ asset('resources/assets/files/assets/images/logoNew.png') }}" alt="Theme-Logo" />
 </a>
 <a class="mobile-options waves-effect waves-light">
@@ -122,7 +100,7 @@ Account <i class="feather icon-chevron-down"></i>
             <ul class="show-div shopping-cart">
                 <!-- <li><a href="my-whislist.html">Wishlist</a></li> -->
                 <li><a href="#">Cart</a></li>
-                <li><a href="#">My account</a></li>
+                <li><a href="#">My account </a></li>
                 <li><a href="#">Wishlist</a></li>
                 <!-- <li><a href="forget_pwd.html">Forget password</a></li> -->
                 <li><a href="#">Checkout</a></li>
@@ -137,62 +115,11 @@ Account <i class="feather icon-chevron-down"></i>
 </div>
 </li>
 @endif
-<li class="header-notification p-l-0 p-r-5">
-<div class="dropdown-primary dropdown">
-<div class="dropdown-toggle" data-toggle="dropdown">
-<i class="typcn typcn-shopping-cart"></i>
-<span class="badge bg-c-red">3</span>
-</div>
-<ul class="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-<li>
-<h5>Your cart</h5>
-<ul class="header-dropdown">
-<li  class="onhover-div mobile-cart">
-    <ul class="show-div shopping-cart">
-        <li>
-            <div class="media">
-                <a href="#"><img class="mr-3" src="{{ asset('resources/assets/KnitfitEcommerce/assets/images/pro3/peekaboo_1.jpg') }}" alt="Generic placeholder image"></a>
-                <div class="media-body">
-                    <a href="#"><h6>Peekaboo cabled sweater</h6></a>
-                    <h6 class="m-l-10">1 x $ 10.00</h6>
-                </div><a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a>
-            </div> 
-        </li>
-        <li>
-            <div class="media">
-                <a href="#"><img class="mr-3" src="{{ asset('resources/assets/KnitfitEcommerce/assets/images/pro3/peekaboo_1.jpg') }}" alt="Generic placeholder image"></a>
-                <span class="media-body">
-                    <a href="#"><h6>The boyfriend sweater</h6></a>
-                    <h6 class="m-l-10">1 x $ 10.00</h6>
-                </span> <a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a>
-            </div></li>
-        <li>
-            <div class="media">
-                <a href="#"><img class="mr-3" src="{{ asset('resources/assets/KnitfitEcommerce/assets/images/pro3/peekaboo_1.jpg') }}" alt="Generic placeholder image"></a>
-                <div class="media-body">
-                    <a href="#"><h6>Emily's sweater</h6></a>
-                    <h6 class="m-l-10">1 x $ 10.00</h6>
-                </div>
-                <a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a>
-            </div>  
-            <hr class="m-b-0 m-t-5">
-        </li>
-        <li>
-            <div class="total text-right">
-                <h5 class="f-w-500 text-muted m-b-10" style="margin-right: -20px;">Subtotal : $30.00</h5>
-            </div>  <hr class="m-b-5 m-t-5">
-        </li>
-        <li>
-            <div class="buttons text-center">
-                <a href="cart.html" class="view-cart theme-outline-btn">View cart</a>
-                <a href="checkout.html" class="checkout theme-btn">Checkout</a>
-            </div>
-        </li>
-    </ul>
-</li>
 
-</ul>
-</li>
+<li class="header-notification p-l-0 p-r-5">
+<div class="dropdown-primary dropdown" id="cart-div">   
+       
+
 </div>
 </li>
 <!-- <li class="mobile-wishlist p-0 m-l-10"><a href="my-whislist.html"><i class="fa fa-heart" aria-hidden="true"></i></a></li> -->
@@ -215,7 +142,7 @@ Account <i class="feather icon-chevron-down"></i>
 </li>
 @else
     <li>
-    <a href="{{url('login')}}">Login</a>
+    <a href="{{url('login?p='.URL::previous())}}">Login</a>
     </li>
     
     <li>
@@ -283,7 +210,7 @@ Account <i class="feather icon-chevron-down"></i>
         <div class="row">
             <div class="col-xl-6 col-md-6 col-sm-12">
                 <div class="footer-end">
-                    <p><i class="fa fa-copyright" aria-hidden="true"></i> 2018-19 KnitFitCo</p>
+                    <p><i class="fa fa-copyright" aria-hidden="true"></i> {{date('Y')}} <a href="{{url('/')}}">KnitFitCo</a></p>
                 </div>
             </div>
             <div class="col-xl-6 col-md-6 col-sm-12">
@@ -368,8 +295,7 @@ Account <i class="feather icon-chevron-down"></i>
 <!-- Theme js-->
 <script src="{{ asset('resources/assets/KnitfitEcommerce/assets/js/script.js') }}"></script>
 
-<!-- Required Jquery -->
-<script type="text/javascript" src="{{ asset('resources/assets/files/bower_components/jquery/js/jquery.min.js') }}"></script>
+
 <script type="text/javascript" src="{{ asset('resources/assets/files/bower_components/jquery-ui/js/jquery-ui.min.js') }}"></script>
 
 <!-- menu js-->
@@ -393,6 +319,7 @@ Account <i class="feather icon-chevron-down"></i>
 <script type="text/javascript" src="{{ asset('resources/assets/files/assets/js/script.js') }}"></script>
 
 <script>
+
     var page = '{{$page}}';
 var x, i, j, selElmnt, a, b, c;
 /*look for any elements with the class "custom-select":*/
@@ -472,6 +399,7 @@ document.addEventListener("click", closeAllSelect);
 </script>
 
 <script>
+
     var page = '{{$page}}';
     var perPage = '{{$perPage}}';
 var x, i, j, selElmnt, a, b, c;
@@ -550,8 +478,33 @@ x[i].classList.add("select-hide");
 /*if the user clicks anywhere outside the select box,
 then close all select boxes:*/
 document.addEventListener("click", closeAllSelect);
+
+
+
+
 </script>
 
+<script type="text/javascript">
+    $(function(){
+        getCart();
+
+        $(document).on('click','.remove-item',function(){
+        if(confirm('Are you sure want to remove item from cart ?')){
+            var id = $(this).attr('data-id');
+        $.get('{{url("remove-item")}}/'+id,function(res){
+    getCart();
+    if(document.title == 'Knitfit - Checkout'){
+        window.location.assign('{{url("shop-patterns")}}')
+    }
+    addProductCartOrWishlist('fa-check','Success','Product Successfully removed from cart');
+        });
+        }
+    });
+    });
+    function getCart(){
+    $("#cart-div").load('{{ url("load-cart") }}');
+    }
+</script>
 @yield('footerscript')
 </body>
 

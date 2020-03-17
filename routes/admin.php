@@ -142,9 +142,9 @@ Route::group(['middleware' => 'web','prefix' => 'admin'], function () {
         'roles' => ['Admin']
     ]);
 
-    Route::get('create-pattern/{pid}',[
+    Route::get('create-pattern/{id}',[
         'uses' => 'Admin\Productscontroller@create_pattern',
-        'as' => 'create-pattern/{pid}',
+        'as' => 'create-pattern/{id}',
         'middleware' => 'roles',
         'roles' => ['Admin']
     ]);
@@ -166,6 +166,20 @@ Route::group(['middleware' => 'web','prefix' => 'admin'], function () {
     Route::post('add-pattern-instructions',[
         'uses' => 'Admin\Productscontroller@add_pattern_instructions',
         'as' => 'add-pattern-instructions',
+        'middleware' => 'roles',
+        'roles' => ['Admin']
+    ]);
+
+    Route::post('show-all-images',[
+        'uses' => 'Admin\Productscontroller@get_images_for_pattern',
+        'as' => 'show-all-images',
+        'middleware' => 'roles',
+        'roles' => ['Admin']
+    ]);
+
+    Route::post('upload-images-for-pattern',[
+        'uses' => 'Admin\Productscontroller@upload_images_for_pattern',
+        'as' => 'upload-images-for-pattern',
         'middleware' => 'roles',
         'roles' => ['Admin']
     ]);

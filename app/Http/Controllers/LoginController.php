@@ -34,7 +34,6 @@ class Logincontroller extends Controller
 
     function login_page(Request $request){
 
-
 		
         if(Auth::check()){
             return redirect('home');
@@ -74,8 +73,10 @@ class Logincontroller extends Controller
 				if(Auth::user()->hasRole('Admin')){
 					return redirect('admin');
 				}else if(Auth::user()->hasRole('Knitter')){
-                    return redirect('knitter/dashboard');
-                    //return redirect()->back();
+                    if($request->previous == '/login' || $request->previous == '/'){
+                        return redirect('knitter/dashboard');
+                    }
+                        return redirect($request->previous);
                 }else if(Auth::user()->hasRole('Designer')){
                     return redirect('/');
                     //return redirect()->back();

@@ -104,60 +104,7 @@ wishlist</span></button>
 </div>
 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
 <div class="p-10">
-<p>This sweater is meant to be comfortable and float over your body shape, however, you may decide how tight or loose you want the sweater to be by selecting the ease you want added to your measurements:
-</p>
-<ul class="ulli">
-<li>
-<p>Standard: 1.5 inches will be added to your measurements for a comfortable fit that glides over your body; or,
-</p>
-</li>
-<li>
-<p>Casual: 3 inches will be added to your measurements for a loose fit.
-</p>
-</li>
-
-</ul>
-<p>You will need to take the following measurements for your custom pattern at checkout:
-</p>
-<ul class="ulli">
-<li type="circle">
-<p>Lower Edge Width
-</p>
-</li>
-<li type="circle">
-<p>Length from Lower Edge to Underarm
-</p>
-</li>
-<li type="circle">
-<p>Waist</p>
-</li>
-<li type="circle">
-<p>Bust</p>
-</li>
-<li type="circle">
-<p>Wrist Circumference
-</p>
-</li>
-<li type="circle">
-<p>Forearm Circumference
-</p>
-</li>
-<li type="circle">
-<p>Upper Arm Circumference
-</p>
-</li>
-<li type="circle">
-<p>Length from Wrist to Underarm
-</p>
-</li>
-<li type="circle">
-<p>Armhole Depth
-</p>
-</li>
-</ul>
-<p>The original design was created in a gauge of 5.5 stitches and 7 rows per inch in stockinette. However, you can select a yarn from fingering to aran weight if you’d like. Just make sure that you have knit an accurate gauge swatch in the yarn you will be using.
-</p>
-</p>
+{!! $product->product_description !!}
 </div>
 </div>
 </div>
@@ -174,9 +121,7 @@ wishlist</span></button>
 
 <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionExample">
 <div class="p-10">
-<ul class="ulli pl-18">
-Not available
-</ul>
+{!! $product->short_description !!}
 </div>
 </div>
 </div>
@@ -194,42 +139,7 @@ Not available
 
 <div id="collapsethree" class="collapse" aria-labelledby="headingthree" data-parent="#accordionExample">
 <div class="p-10">
-<p><strong>Yarn
-            Requirements:</strong>
-</p>
-<p>The amount of yarn in the kit is estimated for sizes 32 (34, 36, 38, 40, 42, 44)
-</p>
-<br>
-<p><strong>Fingering
-            weight
-            yarn</strong>
-<br> Yardage needed: 1900 (1900, 2000, 2200, 2200, 2400, 2400)
-<br>
-<br>
-<strong>DK weight
-            yarn</strong>
-<br> Yardage needed: 1100 (1200, 1300, 1350, 1500, 1600, 1600)
-<br>
-<br>
-<strong>Worsted
-            weight
-            yarn</strong>
-<br> Yardage needed: 1300 (1400, 1500, 1600, 1600, 1700, 1700)
-</p>
-<br>
-
-<p><strong>Tools:</strong>
-</p>
-
-<ul class="ulli">
-<li>
-<p>24" or 36" circular needle in the size that will give you a desirable fabric given the yarn that your choose.
-</p>
-</li>
-<li>
-<p>Markers</p>
-</li>
-</ul>
+{!! $product->additional_information !!}
 </div>
 </div>
 </div>
@@ -374,8 +284,19 @@ Not available
 
 <div class="col-lg-3">
 <div class="product-right product-form-box">
-<h4><del>$459.00</del><span>55% off</span></h4>
-<h3>$32.96</h3>
+    @if($product->sale_price)
+    @php 
+    $perc = ($product->sale_price / $product->price) * 100;
+    $percent = 100 - $perc;
+    @endphp
+<h4>
+    <del>${{number_format($product->price,2)}}</del>
+    <span>{{(int) $percent}}% off</span>
+</h4>
+<h3>${{number_format($product->sale_price,2)}}</h3>
+@else
+<h3>${{number_format($product->price,2)}}</h3>
+@endif
 <!-- <ul class="color-variant">
 <li class="bg-light0"></li>
 <li class="bg-light1"></li>
@@ -384,7 +305,7 @@ Not available
 <div class="product-description border-product">
 
 </div>
-<div class="product-buttons" style="display: inline-flex;"><a href="#" data-toggle="modal" data-target="#addtocart" class="btn theme-outline-btn waves-effect waves-light">Add to
+<div class="product-buttons" style="display: inline-flex;"><a href="#" data-toggle="modal" data-target="#addtocart" class="btn theme-outline-btn waves-effect waves-light addToCart" data-id="{{$product->id}}">Add to
 cart</a> <a href="#" class="btn theme-btn waves-effect waves-light">Buy now</a></div>
 </div>
 </div>
@@ -403,4 +324,87 @@ cart</a> <a href="#" class="btn theme-btn waves-effect waves-light">Buy now</a><
 
     <!-- Zoom js-->
     <script src="{{ asset('resources/assets/KnitfitEcommerce/assets/js/jquery.elevatezoom.js') }}"></script>
+
+
+    <script type="text/javascript">
+        $(function(){
+             $(document).on('click','.addToCart',function(){
+        /* var is_login = $("#is_login").val();
+        if(!is_login){
+            addProductCartOrWishlist('fa-times','Error','Please login to add product to cart.')
+            return false;
+        } */
+        var id = $(this).attr('data-id');
+        var Data = 'product_id='+id;
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+            $.ajax({
+                url : '{{url("add-to-cart")}}',
+                type : 'POST',
+                data : Data,
+                beforeSend: function(){
+                
+                },
+                success : function(res){
+                    if(res.error == 'fail'){
+                       addProductCartOrWishlist('fa-times','Oops!','This product is already in cart.'); 
+                    }else{
+                    addProductCartOrWishlist('fa-check','Success','Product Successfully added to cart');
+                    }
+                },
+                complete : function(){
+                    getCart();
+                },
+                error : function(jQxhr,textStatus){
+                    if(jQxhr.statusText == 'Unauthorized'){
+                        addProductCartOrWishlist('fa-times','Error','Please login to add product to cart.');
+                    }
+                }
+            }); 
+    });
+        });
+
+function addProductCartOrWishlist(icon,status,msg){
+        $.notify({
+            icon: 'fa '+icon,
+            title: status+'!',
+            message: msg
+        },{
+            element: 'body',
+            position: null,
+            type: "info",
+            allow_dismiss: true,
+            newest_on_top: false,
+            showProgressbar: true,
+            placement: {
+                from: "top",
+                align: "right"
+            },
+            offset: 20,
+            spacing: 10,
+            z_index: 10000,
+            delay: 3000,
+            animate: {
+                enter: 'animated fadeInDown',
+                exit: 'animated fadeOutUp'
+            },
+            icon_type: 'class',
+            template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+            '<span data-notify="icon"></span> ' +
+            '<span data-notify="title">{1}</span> ' +
+            '<span data-notify="message">{2}</span>' +
+            '<div class="progress" data-notify="progressbar">' +
+            '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+            '</div>' +
+            '<a href="{3}" target="{4}" data-notify="url"></a>' +
+            '</div>'
+        });
+    }
+    </script>
 @endsection

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('title','Sign-In')
 @section('content')
+
         @if(Session::has('error'))
         <p class="text-center alert alert-success">{{Session::get('error')}}</p>
         @endif
@@ -67,6 +68,7 @@
                                 <p class="text-inverse text-left">Don't have an account?<a href="{{url('register')}}" style="color: #0d665c"> <b>Register here </b></a></p>
                             </div>
                         </div>
+                        <input type="hidden" name="previous" value="{{ str_replace(url('/'), '', URL::previous())}}">
                     </form>
                         <!-- end of form -->
 @endsection

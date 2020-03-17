@@ -18,7 +18,12 @@ class Cart
 
 
     public function add($item,$id){
-    	$storedItem = ['qty' => 0,'price' => $item->price,'item' => $item];
+        if($item->sale_price){
+            $price = $item->sale_price;
+        }else{
+            $price = $item->price;
+        }
+    	$storedItem = ['qty' => 0,'price' => $price,'item' => $item];
 
     	if($this->items){
     		if(array_key_exists($id, $this->items)){
@@ -27,11 +32,11 @@ class Cart
     	}
 
     	$storedItem['qty']++;
-    	$storedItem['price'] = $item->price * $storedItem['qty'];
+    	$storedItem['price'] = $price * $storedItem['qty'];
     	$this->items[$id] = $storedItem;
 
     	$this->totalQty++;
-    	$this->totalPrice += $item->price;
+    	$this->totalPrice += $price;
     }
 
     function ReduceByOne($id){

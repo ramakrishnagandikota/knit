@@ -8057,7 +8057,7 @@ body.horizontal-icon .pcoded[pcoded-device-type="desktop"] .pcoded-navbar .pcode
 
 .right-icon-control .form-icon {
     position: absolute;
-    bottom: 8px;
+    bottom: 12px;
     right: 8px
 }
 
@@ -8795,8 +8795,8 @@ body.horizontal-icon .pcoded[pcoded-device-type="desktop"] .pcoded-navbar .pcode
     right: 0;
     text-align: center;
     margin-left: -20px;
-    border: 1px solid #ccc;
-    border-radius: 0;
+    border: 1px solid #0d665c;
+    border-radius: 2px;
     background-color: #fff;
     -webkit-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
     transition: border 0.15s ease-in-out, color 0.15s ease-in-out
@@ -11165,7 +11165,7 @@ label,.card-header-img h4,.card-header-img h6{color: #6f6f6f;font-family: "Segoe
 .badge-top-right {margin-left: -6px !important; top: -8px !important;color: black !important;}
 .icofont-heart{color: indianred;}
 .icofont-ui-message{color: cadetblue;}
-.card .img-hover{padding-top: 10px;}
+.card .img-hover{margin-top: 10px;}
 .img-hover img{height:200px !important;width: 200px !important;}
 .custom-label{font-size: 12px;}
 .ti-location-pin{color: #0db10d;margin-right: 4px;}
@@ -11674,7 +11674,7 @@ button:focus{outline: none !important}
 .comment-sidebar{width: 0;right: -22px;}
 /* width */
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 10px;
 }
 
 /* Track */

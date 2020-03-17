@@ -384,7 +384,7 @@ class Productscontroller extends Controller
     	}
     }
 
-    function create_pattern(Request $request){
+    /* function create_pattern(Request $request){
     	$pid = $request->pid;
     	$product = Products::where('pid',$pid)->first();
     	$pdf = ProductPdf::where('product_id',$product->id)->first();
@@ -410,5 +410,47 @@ class Productscontroller extends Controller
     	}else{
     		return response()->json(['status' => 'Fail']);
     	}
+    } */
+
+    function create_pattern(Request $request){
+        $product_id = $request->id;
+        $data = DB::table('product_pdf')->where('product_id',$request->id)->first();
+        return view('admin.products.pattern.index',compact('product_id','data'));
+    }
+
+    function create_pattern_pdf(Request $request){
+        if($request->id == 0){
+            $array = array('product_id'=>$request->product_id,'content' => $request->content,'e_content'=> $request->econtent);
+            $ins = DB::table('product_pdf')->insert($array);
+        }else{
+            $array = array('content' => $request->content,'e_content'=> $request->econtent);
+            $ins = DB::table('product_pdf')->where('id',$request->id)->update($array);
+        }
+
+        if($ins){
+            return 0;
+        }else{
+            return 1;
+        }
+    }
+
+    function get_images_for_pattern(Request $request){
+        $images = DB::table('pattern_images')->get();
+        return view('admin.products.pattern.get-images',compact('images'));
+    }
+
+    function upload_images_for_pattern(Request $request){
+        $image = $request->file('nomefile');
+        $filename = time().$image->getClientOriginalName();
+        $name = basename($filename);
+
+        $s3 = \Storage::disk('s3');
+        $filepath = '/knitfit/products/'.$filename;
+        $pu1 = $s3->put($filepath, file_get_contents($image), 'public');
+
+      
+        $array = array('title' => $name,'image_path' => "https://s3.us-east-2.amazonaws.com/".env('AWS_BUCKET').$filepath);
+        $ins = DB::table('pattern_images')->insert($array);
+         
     }
 }

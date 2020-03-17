@@ -11,6 +11,7 @@ use App\Models\Booking_process;
 use App\Models\UserMeasurements;
 use Illuminate\Auth\MustVerifyEmail;
 use Auth;
+use App\Models\UserAddress;
 use App\Models\Subscription;
 use App\Models\SubscriptionProperties;
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
@@ -121,6 +122,10 @@ class User extends Authenticatable implements MustVerifyEmailContract
 
    function orders(){
     return $this->hasMany(Orders::class);
+   }
+
+   function address(){
+    return $this->hasMany(UserAddress::class);
    }
 
    function bookings(){

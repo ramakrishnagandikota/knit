@@ -67,3 +67,19 @@ Route::get('pattern-popup/{pid}',[
 	'uses' => 'ShoppingController@pattern_popup',
     'as' => 'pattern-popup/{pid}'
 ]);
+
+/* cart items */
+Route::get('load-cart','CartController@get_cart');
+Route::post('add-to-cart','CartController@add_to_cart');
+Route::get('cart','CartController@my_cart');
+Route::get('remove-all-items','CartController@remove_all_items');
+Route::get('remove-item/{id}','CartController@getReduseByOne');
+Route::get('checkout','CartController@checkout');
+Route::get('getUserAddress','CartController@getUserAddress');
+
+Route::post('placeOrder','CheckoutController@place_order');
+Route::get('payment/cancel/{orderId}', 'CheckoutController@cancel')->name('payment.cancel');
+Route::get('payment/success/{order_id}', 'CheckoutController@success')->name('payment.success');
+Route::get('order/invoice/{orderId}','CheckoutController@payment_invoice');
+Route::get('order/faild/{orderId}','CheckoutController@payment_faild');
+Route::get('cancel/{orderId}', 'CheckoutController@cancel_order');

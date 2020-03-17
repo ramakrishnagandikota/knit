@@ -460,6 +460,7 @@
 
 <script src="{{ asset('resources/assets/files/assets/pages/jquery.filer/js/jquery.filer.min.js') }}"></script>
 <script src="{{ asset('resources/assets/files/assets/pages/filer/project-images.fileupload.init.js') }}" type="text/javascript"></script>
+<script src="{{ asset('resources/assets/files/assets/pages/ckeditor/ckeditor.js') }}"></script>
 
 <style type="text/css">
   .select2-container--default .select2-selection--multiple .select2-selection__clear{
@@ -473,6 +474,10 @@
 
 <script type="text/javascript">
 	$(function(){
+
+    CKEDITOR.replace('description');
+      CKEDITOR.replace('short_description');
+      CKEDITOR.replace('additional_information');
 
 		$('#set_product_new_to_date,#special_price_start_date,#special_price_end_date').bootstrapMaterialDatePicker({ format: 'MM/DD/YYYY', weekStart : 0, time: false });
 

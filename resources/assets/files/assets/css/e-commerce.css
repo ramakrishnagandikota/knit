@@ -50,7 +50,7 @@
     /* Styling for Custome Dropdown optionlist on Shop-PatternPage */
     .custom-select {
         position: relative;
-        color: green;
+        border: none;
       }
       .select-items div:hover, .same-as-selected {
         background-color:#ececec!important;
@@ -91,7 +91,9 @@
         border: 1px solid transparent;
         cursor: pointer;
         user-select: none;
+        border-radius: 3px;
       }
+  
       
       /*style items (options):*/
       .select-items {
