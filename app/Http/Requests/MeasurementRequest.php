@@ -24,9 +24,10 @@ class MeasurementRequest extends FormRequest
     public function rules()
     {
         return [
-            'm_title' =>'required',
+            'm_title' =>'required','unique:user_measurements',
             'm_date' => 'required',
-            'measurement_preference' => 'required'
+            'measurement_preference' => 'required',
+            'in_preview' => 'required'
         ];
     }
 }

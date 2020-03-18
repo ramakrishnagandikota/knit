@@ -28,4 +28,5 @@ Route::group(['middleware' => 'auth:api'], function(){
 	Route::get('dashboard','API\MeasurementsApiController@dashboard');
 	Route::post('details', 'API\LoginController@details');
 	Route::apiResource('/measurements','API\MeasurementsApiController');
+	Route::post('checkMeasurementTitle','API\MeasurementsApiController@check_measurement_name');
 });

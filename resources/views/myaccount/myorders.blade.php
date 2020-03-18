@@ -14,7 +14,7 @@
                     <ul>
                         <li><a href="{{url('my-account')}}">Account info</a></li>
                         <li ><a href="{{url('my-address')}}">Address</a></li>
-                        <li><a href="{{url('my-orders')}}">My orders</a></li>
+                        <li class="active"><a href="{{url('my-orders')}}">My orders</a></li>
                     </ul>
                     </div>
                 </div>

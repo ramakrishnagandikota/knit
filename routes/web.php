@@ -87,3 +87,5 @@ Route::get('cancel/{orderId}', 'CheckoutController@cancel_order');
 Route::get('my-account','AccountController@my_account');
 Route::get('my-address','AccountController@my_address');
 Route::get('my-orders','AccountController@myorders');
+Route::get('add-address','AccountController@add_address');
+Route::post('add-address','AccountController@add_my_address');

@@ -19,6 +19,16 @@ class MeasurementsApiController extends Controller
         return MeasurementResource::collection(Auth::user()->measurements()->latest()->take(5)->get());
     } 
 
+    function check_measurement_name(Request $request){
+        $name =  $request->m_title;
+        $check = UserMeasurements::where('m_title',$name)->count();
+        if($check != 0){
+            return response()->json(['success' => false,'message' => 'Measurement name already exists.Please select another one.']);
+        }else{
+            return response()->json(['success' => true]);
+        }
+    }
+
     public function index(){
     	return MeasurementResource::collection(Auth::user()->measurements()->latest()->get());
     }
@@ -26,7 +36,7 @@ class MeasurementsApiController extends Controller
     public function store(MeasurementRequest $request){
     	$measurement = Auth::user()->measurements()->create($request->all());
    //return response(new MeasurementResource($measurement), Response::HTTP_CREATED);
-    	return response()->json(['created' => true],Response::HTTP_CREATED);
+    	return response()->json(['created' => true,'id' => $measurement->id],Response::HTTP_CREATED);
     }
 
     public function show(UserMeasurements $measurement){

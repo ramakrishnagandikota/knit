@@ -44,6 +44,7 @@ class MeasurementResource extends JsonResource
             'neck_circumference' => $this->neck_circumference,
             'neck_to_shoulder' => $this->neck_to_shoulder,
             'shoulder_to_shoulder' => $this->shoulder_to_shoulder,
+            'in_preview' => ($this->in_preview == 1) ? true : false,
             'created_at' => $this->created_at
         ];
     }

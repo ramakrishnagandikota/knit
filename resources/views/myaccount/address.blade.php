@@ -12,7 +12,7 @@
 <div class="card block-content">
 <ul>
     <li><a href="{{url('my-account')}}">Account info</a></li>
-    <li ><a href="{{url('my-address')}}">Address</a></li>
+    <li class="active" ><a href="{{url('my-address')}}">Address</a></li>
     <li><a href="{{url('my-orders')}}">My orders</a></li>
 </ul>
 </div>
@@ -27,7 +27,7 @@
 <div class="row">
     <div class="col-sm-6">
         <div class="card">
-           <a href="billing_Add.html">
+           <a href="{{url('add-address')}}">
             <div class="box-content text-center pad">
                     <i class="fa fa-plus"></i>
                 <h3 class="m-t-20 m-b-15">Add address </h3>
@@ -35,19 +35,27 @@
         </a>
         </div>
     </div>
+
+    @if($address->count() > 0)
+    @foreach($address as $add)
     <div class="col-sm-6">
         <div class="card setActive">
             <div class="box-title">
-                <h4>MARK JECNO </h4><a href="#"><u>Edit</u></a></div>
+                <h4>{{ucwords($add->first_name)}} {{ucwords($add->last_name)}} </h4><a href="{{url('edit-address/'.base64_encode($add->id))}}"><u>Edit</u></a> | <a href="{{url('delete-address/'.base64_encode($add->id))}}"><u>Delete</u></a></div>
             <div class="box-content">
-                <h6>115 EWS
-                    New mukhrjee nagar
-                    Dewas, Madhya Pradesh 455001
-                    India</h6>
-                <h6>mark-jenco@gmail.com</h6>
-                <h6><a href="#"><u>Set as default</u></a></h6></div>
+                <h6>{{$add->address}},{{$add->city}},{{$add->state}},{{$add->country}} - {{$add->zipcode}}</h6>
+                <h6>{{$add->email}}</h6>
+                @if($add->is_default == 0)
+                <h6><a href="javascript:;" data-id="{{$add->id}}"><u>Set as default</u></a></h6>
+                @endif
+            </div>
         </div>
     </div>
+    @endforeach
+   <div style="margin:auto;"> {{$address->links()}} </div> 
+@endif
+
+
 </div><br>
 <div class="page-title">
         <h2>Shipping address</h2></div>

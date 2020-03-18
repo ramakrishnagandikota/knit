@@ -130,7 +130,7 @@ class LoginController extends Controller
             $user->save();
             
         //$success['access_token'] =  $user->createToken('MyApp')->accessToken;
-        $success['message'] =  'Hi '$user->first_name.' '.$user->last_name.', Please check your email to activate your account.';
+        $success['message'] =  'Hi '.$user->first_name.' '.$user->last_name.', Please check your email to activate your account.';
         
         
         $user->subscription()->attach(['1']);
