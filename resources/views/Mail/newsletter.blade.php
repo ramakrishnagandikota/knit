@@ -240,7 +240,7 @@
 
                                         <div style="line-height: 24px">
 
-                                       To Unscbscribe from notifications , please <a href="{{url('newsletter/unsubscribe/'.$details['token'])}}">unsubscribe</a> 
+                                       To Unscbscribe from notifications , <a href="{{url('newsletter/unsubscribe/'.$details['token'])}}">unsubscribe</a> here.
                                         </div>
                                     </td>
                                 </tr>

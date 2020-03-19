@@ -30,8 +30,9 @@ Route::match(array('GET','POST'),'register',[
     'as' => 'register'
 ]);
 
-Route::post('notify-us','Home\Frontendcontroller@notify_us');
-Route::get('newsletter/unsubscribe/{token}','Home\Frontendcontroller@newsletter_unscbscribe');
+Route::get('subscribe-newsletters','AccountController@subscribe_newsletters');
+Route::get('newsletter/unsubscribe/{token}','AccountController@newsletter_unscbscribe');
+
 Route::post('contact-us','Home\Frontendcontroller@contact_us');
 
 Route::get('logout',[
@@ -67,7 +68,12 @@ Route::get('pattern-popup/{pid}',[
 	'uses' => 'ShoppingController@pattern_popup',
     'as' => 'pattern-popup/{pid}'
 ]);
-
+Route::post('addComments','ShoppingController@add_comments');
+Route::get('get-comments/{id}','ShoppingController@getproduct_comments');
+Route::post('wishlist','ShoppingController@wishlist');
+Route::get('wishlist','ShoppingController@my_wishlist');
+Route::get('remove-wishlist/{id}','ShoppingController@remove_wishlist');
+Route::post('delete-comment','ShoppingController@delete_comment');
 /* cart items */
 Route::get('load-cart','CartController@get_cart');
 Route::post('add-to-cart','CartController@add_to_cart');
@@ -76,6 +82,8 @@ Route::get('remove-all-items','CartController@remove_all_items');
 Route::get('remove-item/{id}','CartController@getReduseByOne');
 Route::get('checkout','CartController@checkout');
 Route::get('getUserAddress','CartController@getUserAddress');
+
+Route::get('buynow/{pid}','CartController@buy_now');
 
 Route::post('placeOrder','CheckoutController@place_order');
 Route::get('payment/cancel/{orderId}', 'CheckoutController@cancel')->name('payment.cancel');
@@ -89,3 +97,7 @@ Route::get('my-address','AccountController@my_address');
 Route::get('my-orders','AccountController@myorders');
 Route::get('add-address','AccountController@add_address');
 Route::post('add-address','AccountController@add_my_address');
+Route::get('edit-address/{id}','AccountController@edit_address');
+Route::post('update-address','AccountController@update_my_address');
+Route::get('delete-address/{id}','AccountController@delete_address');
+Route::get('set-default/{id}','AccountController@set_default_address');

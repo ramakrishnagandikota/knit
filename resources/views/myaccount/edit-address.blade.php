@@ -1,5 +1,5 @@
 @extends('layouts.shopping')
-@section('title','Add new address')
+@section('title','Edit address')
 @section('content')
 
 <section class="section-b-space">
@@ -27,8 +27,9 @@
 <div class="col-lg-9">
 <div class="checkout-page">
 <div class="checkout-form">
-<form action="{{url('add-address')}}" method="POST">
+<form action="{{url('update-address')}}" method="POST">
 	@csrf
+    <input type="hidden" name="id" value="{{base64_encode($add->id)}}">
 <div class="row">
     <div class="card col-md-10 offset-lg-1 p-20">
         <div class="checkout-title  text-center">
@@ -36,50 +37,50 @@
         <div class="row check-out">
             <div class="form-group col-md-6 col-sm-6 col-xs-12">
                 <div class="field-label">First name</div>
-                <input type="text" name="first_name" value="" placeholder="">
+                <input type="text" name="first_name" value="{{$add->first_name}}" placeholder="">
                 <span class="red">{{$errors->first('first_name')}}</span>
             </div>
             <div class="form-group col-md-6 col-sm-6 col-xs-12">
                 <div class="field-label">Last name</div>
-                <input type="text" name="last_name" value="{{old('last_name')}}" placeholder="">
+                <input type="text" name="last_name" value="{{$add->last_name}}" placeholder="">
                 <span class="red">{{$errors->first('last_name')}}</span>
             </div>
             <div class="form-group col-md-6 col-sm-6 col-xs-12">
                 <div class="field-label">Phone</div>
-                <input type="text" name="mobile" value="{{old('mobile')}}" placeholder="">
+                <input type="text" name="mobile" value="{{$add->mobile}}" placeholder="">
                 <span class="red">{{$errors->first('mobile')}}</span>
             </div>
             <div class="form-group col-md-6 col-sm-6 col-xs-12">
                 <div class="field-label">Email address</div>
-                <input type="text" name="email" value="{{old('email')}}" placeholder="">
+                <input type="text" name="email" value="{{$add->email}}" placeholder="">
                 <span class="red">{{$errors->first('email')}}</span>
             </div>
             <div class="form-group col-md-12 col-sm-12 col-xs-12">
                 <div class="field-label">Country</div>
                 <select name="country">
-                    <option value="Canada">Canada</option>
-                    <option value="United States">United States</option>
+                    <option @if($add->country == 'Canada') selected @endif value="Canada">Canada</option>
+                    <option @if($add->country == 'United States') selected @endif value="United States">United States</option>
                 </select>
                 <span class="red">{{$errors->first('country')}}</span>
             </div>
             <div class="form-group col-md-12 col-sm-12 col-xs-12">
                 <div class="field-label">Address</div>
-                <input type="text" name="address" value="{{old('address')}}" placeholder="Street address">
+                <input type="text" name="address" value="{{$add->address}}" placeholder="Street address">
                 <span class="red">{{$errors->first('address')}}</span>
             </div>
             <div class="form-group col-md-12 col-sm-12 col-xs-12">
                 <div class="field-label">Town/City</div>
-                <input type="text" name="city" value="{{old('city')}}" placeholder="">
+                <input type="text" name="city" value="{{$add->city}}" placeholder="">
                 <span class="red">{{$errors->first('city')}}</span>
             </div>
             <div class="form-group col-md-12 col-sm-6 col-xs-12">
                 <div class="field-label">State / County</div>
-                <input type="text" name="state" value="{{old('state')}}" placeholder="">
+                <input type="text" name="state" value="{{$add->state}}" placeholder="">
                 <span class="red">{{$errors->first('state')}}</span>
             </div>
             <div class="form-group col-md-12 col-sm-6 col-xs-12">
                 <div class="field-label">Postal code</div>
-                <input type="text" name="zipcode" value="{{old('zipcode')}}" placeholder="">
+                <input type="text" name="zipcode" value="{{$add->zipcode}}" placeholder="">
                 <span class="red">{{$errors->first('zipcode')}}</span>
             </div>
             <!-- <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">

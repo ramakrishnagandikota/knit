@@ -27,45 +27,45 @@
     <div class="no-visible col-lg-6 col-sm-12 col-xs-12 card p-t-25">
         <div class="checkout-title">
             <h3>Billing details</h3></div>
-        <div class="row check-out">
+        <div class="row check-out" id="add-form">
             <div class="form-group col-md-6 col-sm-6 col-xs-12">
                 <div class="field-label">First name</div>
-                <input type="text" name="first_name" value="" placeholder="">
+                <input type="text" name="first_name" value="" placeholder=""  >
             </div>
             <div class="form-group col-md-6 col-sm-6 col-xs-12">
                 <div class="field-label">Last name</div>
-                <input type="text" name="last_name" value="" placeholder="">
+                <input type="text" name="last_name" value="" placeholder=""  >
             </div>
             <div class="form-group col-md-6 col-sm-6 col-xs-12">
                 <div class="field-label">Phone</div>
-                <input type="text" name="mobile" value="" placeholder="">
+                <input type="text" name="mobile" value="" placeholder=""  >
             </div>
             <div class="form-group col-md-6 col-sm-6 col-xs-12">
                 <div class="field-label">Email address</div>
-                <input type="text" name="email" value="" placeholder="">
+                <input type="text" name="email" value="" placeholder=""  >
             </div>
             <div class="form-group col-md-12 col-sm-12 col-xs-12">
                 <div class="field-label">Country</div>
-                <select name="country">
+                <select name="country"  >
                     <option value="Canada">Canada</option>
                     <option value="United States">United States</option>
                 </select>
             </div>
             <div class="form-group col-md-12 col-sm-12 col-xs-12">
                 <div class="field-label">Address</div>
-                <input type="text" name="address" value="" placeholder="Street address">
+                <input type="text" name="address" value=""  placeholder="Street address">
             </div>
             <div class="form-group col-md-12 col-sm-12 col-xs-12">
                 <div class="field-label">Town/City</div>
-                <input type="text" name="city" value="" placeholder="">
+                <input type="text" name="city" value=""  placeholder="">
             </div>
             <div class="form-group col-md-12 col-sm-6 col-xs-12">
-                <div class="field-label">State / County</div>
-                <input type="text" name="state" value="" placeholder="">
+                <div class="field-label">State</div>
+                <input type="text" name="state" value=""  placeholder="">
             </div>
             <div class="form-group col-md-12 col-sm-6 col-xs-12">
                 <div class="field-label">Postal code</div>
-                <input type="text" name="zipcode" value="" placeholder="">
+                <input type="text" name="zipcode" value=""  placeholder="">
             </div>
             <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <br><br>
@@ -167,7 +167,7 @@
                             <li>
                                 <div class="radio-option paypal">
                                     
-                                    <label for="payment-3"><span class="image"><img style="margin-top: 15px;" src="../assets/images/paypal.png" alt=""></span></label>
+                                    <label for="payment-3"><span class="image"><img style="margin-top: 15px;" src="{{asset('resources/assets/knitfitEcommerce/assets/images/paypal.png') }}" alt=""></span></label>
                                 </div>
                             </li>
                         </ul>
@@ -206,10 +206,22 @@
 		$(document).on('click','#addNew',function(){
 			$(".no-visible").toggle(1000);
 			$("#userAddress").toggleClass("disabledbutton");
-			$('#local-pickup').prop('checked', function(index, attr){
-		        return attr == true ? null : true;
-		        //alert(attr);
-		    });
+                $("#local-pickup").prop('checked', function(ind, attr){
+                return attr == true ? null : true;
+                //alert(attr);
+                });
+			$("#add-form input").each(function(index, el) {
+                var attr = $(this)[0].hasAttribute('required');
+
+                if(attr == false){
+                    $(this).attr('required',true);
+                }else{
+                    $(this).removeAttr('required');
+                }     
+
+
+            });
+                
 		});
 
 	/*	$(document).on('click','#saveOrder',function(){

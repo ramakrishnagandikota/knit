@@ -336,10 +336,12 @@
 
 <div class="form-group row">
 <!-- <label class="col-sm-12 col-lg-12 col-form-label">Knitted For</label> -->
+@if($project_images->count() > 0)
 <?php foreach($project_images as $pi); ?>
 <div class="col-sm-12 col-lg-12">
-<img src="{{$pi->image_path}}" alt="" style="width:100%; ">
+<img src="{{$pi->image_path ? $pi->image_path : ''}}" alt="" style="width:100%; ">
 </div>
+@endif
 </div>
 </div>
 

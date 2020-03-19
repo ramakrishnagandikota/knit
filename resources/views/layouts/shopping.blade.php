@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-<title>KnitFit eCom | Shop patterns</title>
+<title>KnitFit | @yield('title')</title>
 <!-- HTML5 Shim and Respond.js IE10 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 10]>
@@ -99,11 +99,11 @@ Account <i class="feather icon-chevron-down"></i>
     <li  class="onhover-div shopping-menu">
             <ul class="show-div shopping-cart">
                 <!-- <li><a href="my-whislist.html">Wishlist</a></li> -->
-                <li><a href="#">Cart</a></li>
+                <li><a href="{{url('cart')}}">Cart</a></li>
                 <li><a href="{{url('my-account')}}">My account </a></li>
-                <li><a href="#">Wishlist</a></li>
+                <li><a href="{{url('wishlist')}}">Wishlist</a></li>
                 <!-- <li><a href="forget_pwd.html">Forget password</a></li> -->
-                <li><a href="#">Checkout</a></li>
+                <li><a href="{{url('checkout')}}">Checkout</a></li>
          
             </ul>
         </li>
@@ -271,6 +271,18 @@ Account <i class="feather icon-chevron-down"></i>
 </div>
 </div>
 </div>
+<style type="text/css">
+    .alert-success {
+    background-color: #fff;
+    border-color: #0d665c;
+    color: #0d665c;
+}
+.alert-danger {
+    background-color: #fff;
+    border-color: #bc7c8f;
+    color: #bc7c8f;
+}
+</style>
 <!-- latest jquery-->
 <script src="{{ asset('resources/assets/KnitfitEcommerce/assets/js/jquery-3.3.1.min.js') }}"></script>
 
@@ -488,12 +500,15 @@ document.addEventListener("click", closeAllSelect);
     $(function(){
         getCart();
 
+        var uel = '{{url()->current()}}';
+        
+
         $(document).on('click','.remove-item',function(){
         if(confirm('Are you sure want to remove item from cart ?')){
             var id = $(this).attr('data-id');
         $.get('{{url("remove-item")}}/'+id,function(res){
     getCart();
-    if(document.title == 'Knitfit - Checkout'){
+    if(uel == '{{url("/checkout")}}'){
         window.location.assign('{{url("shop-patterns")}}')
     }
     addProductCartOrWishlist('fa-check','Success','Product Successfully removed from cart');

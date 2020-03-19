@@ -78,6 +78,10 @@ class CartController extends Controller
     }
 
     function my_cart(Request $request){
+        if(!Session::has('cart')){
+            return redirect('shop-patterns');
+        }
+
     	$page = '';
     	$perPage = '';
         $oldCart = Session::get('cart');
@@ -116,11 +120,15 @@ class CartController extends Controller
     		return redirect('login');
     		exit;
     	}
+        if(!Session::has('cart')){
+            return redirect('shop-patterns');
+        }
     	$page = '';
     	$perPage = '';
     	$oldCart = Session::has('cart') ? Session::get('cart') : null;
         $cart = new Cart($oldCart);
         $data = $cart->items;
+
         $totalPrice = $cart->totalPrice;
     	return view('shopping.checkout',compact('page','perPage','data','totalPrice'));
     }
@@ -132,6 +140,35 @@ class CartController extends Controller
     	}
     	$address = UserAddress::where('user_id',Auth::user()->id)->get();
     	return view('shopping.useraddress',compact('address'));
+    }
+
+    function buy_now(Request $request){
+        $pid = $request->pid;
+        $pro = Products::where('pid',$pid)->first();
+        if($request->session()->exists('cart')){
+            Session::forget('cart');
+        }
+        
+        $oldCart = null;
+        
+
+        $cart = new Cart($oldCart);
+        $product = Products::find($pro->id);
+
+        $products = $cart->items;
+      /*  foreach($products as $pro){
+            $pid = $pro['item']['id'];
+            if($pid == $product->id){
+               Session::flash('error','This product is already added in cart.');
+               return redirect('/shop-patterns');
+               exit;
+            }
+        } */
+
+        $add = $cart->add($product,$pro->id);
+        $request->session()->put('cart',$cart); 
+
+        return redirect('checkout');
     }
 
     

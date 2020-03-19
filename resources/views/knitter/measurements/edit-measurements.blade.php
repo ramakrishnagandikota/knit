@@ -104,7 +104,10 @@
                                 <div class="row @if($me->user_meas_image == "https://via.placeholder.com/200X250") hide @endif " id="imageplace">
                                   
                                 <div class="box">
-                                  <img src="{{url($me->user_meas_image)}}" style="width: 150px;height: 200px;"><span style="margin-top: 8px;"><a href="javascript:;" class="icon1"></a><a href="javascript:;" data-id="{{$me->id}}" data-url="{{url($me->user_meas_image)}}" class="fa fa-trash-o pull-right icon2 delete-image"></a></span>
+                                  @if($me->user_meas_image)
+                                  <img src="{{$me->user_meas_image}}" style="width: 150px;height: 200px;">
+                                  @endif
+                                  <span style="margin-top: 8px;"><a href="javascript:;" class="icon1"></a><a href="javascript:;" data-id="{{$me->id}}" data-url="@if($me->user_meas_image){{$me->user_meas_image}}@endif" class="fa fa-trash-o pull-right icon2 delete-image"></a></span>
                                 </div>
                               
                                 </div>

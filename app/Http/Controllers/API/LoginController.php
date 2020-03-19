@@ -85,7 +85,7 @@ class LoginController extends Controller
             
             
             $success['access_token'] =  $user->createToken('MyApp')->accessToken;
-            $success['token_type'] =  'bearer';
+            $success['token_type'] =  'Bearer';
             $success['expires_in'] =  Carbon::now()->addDays(15);
             
             return $this->sendResponse($success, $this->successStatus);

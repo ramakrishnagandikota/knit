@@ -106,16 +106,16 @@ $form = 'block';
                   <input type="hidden" id="p_type1" value="">
                     <div class="form-group row">
                         <div class="col-sm-8 col-lg-8 m-t-10">
-                          @if($orders->count() > 0)
+                          @if($custom->count() > 0)
                             <select name="select"
                                 class="form-control form-control-default" id="pattern-list">
                                 <option value="0" selected>--Select Pattern--</option>
-                                @foreach($orders as $or)
-                                <option value="{{$or->pid}}">{{$or->product_name}}</option>
+                                @foreach($custom as $cs)
+                                <option value="{{$cs->pid}}">{{$cs->product_name}}</option>
                                 @endforeach
                             </select>
                             @else
-                            <p class="text-center">You dont have any products to show.</p>
+                            <p class="text-center">You dont have any custom products to show.</p>
                             @endif
                         </div>
                        
@@ -154,16 +154,16 @@ $form = 'block';
                   <input type="hidden" id="p_type2" value="">
                     <div class="form-group row">
                         <div class="col-sm-8 col-lg-8 m-t-10">
-                            @if($orders->count() > 0)
+                            @if($noncustom->count() > 0)
                             <select name="select"
                                 class="form-control form-control-default" id="pattern-list-non-custom">
                                 <option value="0" selected>--Select Pattern--</option>
-                                @foreach($orders as $or)
-                                <option value="{{$or->pid}}">{{$or->product_name}}</option>
+                                @foreach($noncustom as $nc)
+                                <option value="{{$nc->pid}}">{{$nc->product_name}}</option>
                                 @endforeach
                             </select>
                             @else
-                            <p class="text-center">You dont have any products to show.</p>
+                            <p class="text-center">You dont have any non custom products to show.</p>
                             @endif
                         </div>
                        

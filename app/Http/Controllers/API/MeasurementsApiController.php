@@ -29,6 +29,10 @@ class MeasurementsApiController extends Controller
         }
     }
 
+    function image_upload(){
+        
+    }
+
     public function index(){
     	return MeasurementResource::collection(Auth::user()->measurements()->latest()->get());
     }

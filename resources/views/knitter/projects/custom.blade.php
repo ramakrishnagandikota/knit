@@ -55,7 +55,7 @@
                             </label>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <textarea readonly rows="3" cols="1" name="description" class="form-control" placeholder="">{{$product->product_description}}</textarea>
+                                    <textarea readonly rows="3" cols="1" name="description" class="form-control" placeholder=""><?php echo strip_tags($product->product_description); ?></textarea>
                                     <span class="description red hide">Description is required.</span>
                                 </div>
 

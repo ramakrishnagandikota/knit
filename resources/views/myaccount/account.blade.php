@@ -28,15 +28,22 @@
                                 <h2>Account info</h2></div>
                             <div class="row">
                                 
-                                <div class="col-sm-12">
-                                    <div class="box b_n">
-                                        <div class="box-title">
-                                            <h3>Newsletters</h3><a href="#">Edit</a></div>
-                                        <div class="box-content">
-                                            <p>You are currently not subscribed to any newsletter.</p>
-                                        </div>
-                                    </div>
-                                </div>
+<div class="col-sm-12">
+<div class="box b_n">
+    <div class="box-title">
+        <h3>Newsletters</h3>
+    </div>
+    <div class="box-content">
+        @if(!$newsletters)
+        <p id="novalue">You are currently not subscribed to any newsletter. <a href="{{url('subscribe-newsletters')}}">Subscribe</a> now.</p>
+        @else
+        <p id="novalue">You are currently subscribed to knitfit newsletter. Don't want to receive newsletters, <a href="{{url('newsletter/unsubscribe/'.$newsletters->token)}}">Un subscribe</a> now.</p>
+        @endif
+    </div>
+</div>
+</div>
+
+
                             </div>
 
                         </div>

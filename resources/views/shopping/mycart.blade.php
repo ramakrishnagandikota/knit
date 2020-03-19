@@ -7,6 +7,7 @@
 <div class="container card p-10 m-t-10">
     <div class="row">
         <div class="col-sm-12">
+            <a class="btn theme-btn pull-right waves-effect waves-light mt-3" href="{{url('remove-all-items')}}" class="text-right">Remove all items</a>
             <table class="table cart-table table-responsive-xs">
                 <thead class="p-10">
                 <tr class="table-head">

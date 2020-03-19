@@ -1,5 +1,5 @@
 @extends('layouts.shopping')
-@section('title',' Dashboard')
+@section('title',$product->product_name)
 @section('content')
 
 <!-- section start -->
@@ -83,10 +83,23 @@ class="fa fa-twitter"></i></a>
 <!-- <li><a href="#"><i class="fa fa-instagram"></i></a></li>
 <li><a href="#"><i class="fa fa-rss"></i></a></li> -->
 </ul>
-<form class="d-inline-block">
-<button class="wishlist-btn"><i class="fa fa-heart"></i><span class="title-font">Add to
-wishlist</span></button>
-</form>
+<button class="wishlist-btn" data-id="{{$product->id}}">
+    @auth
+    <i class="fa fa-heart @if($wishlist) @if($wishlist->user_id == Auth::user()->id) fill @endif @endif"></i>
+    @if($wishlist) 
+    @if($wishlist->user_id == Auth::user()->id)
+    <span class="title-font">Remove from wishlist</span>
+    @endif
+    @else
+    <span class="title-font">Add to wishlist</span>
+    @endif
+
+    @else
+    <i class="fa fa-heart-o"></i>
+    <span class="title-font">Add to wishlist</span>
+    @endauth
+    
+</button>
 </div>
 <div class="row product-accordion card p-b-10">
 <div class="col-sm-12">
@@ -143,85 +156,7 @@ wishlist</span></button>
 </div>
 </div>
 </div>
-<div class="">
-<div class="card-header outline-row" style="margin-right:5px;margin-left: 5px;" id="headingfour" data-toggle="collapse" data-target="#collapsefour">
-<h5 class="mb-0"><button
-        class="btn btn-link collapsed"
-        type="button"
-        aria-expanded="false"
-        aria-controls="collapsefour">Read
-        reviews</button>
-</h5>
-<i class="fa fa-caret-down pull-right micro-icons m-t-15"></i>
-</div>
 
-<div id="collapsefour" class="collapse" aria-labelledby="headingfour" data-parent="#accordionExample">
-<div class="p-10 m-t-10">
-<div class="row">
-<div class="col-sm-12 img-padding">
-<img class="img-fluid" src="../../files/assets/images/avatar-3.jpg" alt="Generic placeholder image">
-</div>
-<div class="col-lg-8">
-<h6>Mark Jecno
-                <span>( 12
-                    Jannuary
-                    2018 at
-                    1:30AM
-                    )</span>
-            </h6>
-<ul class="comnt-sec">
-<li><a href="#"><i
-                            class="fa fa-thumbs-o-up"
-                            aria-hidden="true"></i><span>(14)</span></a>
-</li>
-<li>
-<a href="#">
-<div class="unlike">
-<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>(2)
-</div>
-</a>
-</li>
-</ul>
-</div>
-<div class="col-lg-12 m-t-15">
-<div class="media-body">
-<p>Donec rhoncus massa quis nibh imperdiet dictum. Vestibulum id est sit amet felis fringilla bibendum at at leo. Proin molestie ac nisi eu laoreet. Integer faucibus enim nec ullamcorper tempor. Aenean nec felis dui. Integer tristique odio mi, in volutpat metus posuere eu. Aenean suscipit ipsum nunc, id volutpat lorem hendrerit ac. Sed id elit quam. In ac mauris arcu. Praesent eget lectus sit amet diam vestibulum varius. Suspendisse dignissim mattis leo, nec facilisis erat tempor quis. Vestibulum eu vestibulum ex.
-</p>
-</div>
-</div>
-<div class="col-lg-12">
-<hr>
-</div>
-<div class="col-lg-12 img-padding">
-<img class="img-fluid" src="../../files/assets/images/avatar-3.jpg" alt="Generic placeholder image">
-</div>
-<div class="col-lg-8">
-<h6>Mark Jecno<span>( 12 Jannuary 2018 at 1:30AM )</span></h6>
-<ul class="comnt-sec">
-<li><a href="#"><i
-                            class="fa fa-thumbs-o-up"
-                            aria-hidden="true"></i><span>(14)</span></a>
-</li>
-<li>
-<a href="#">
-<div class="unlike">
-<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>(2)
-</div>
-</a>
-</li>
-</ul>
-</div>
-<div class="col-lg-12 m-t-15">
-<div class="media-body">
-<p>Donec rhoncus massa quis nibh imperdiet dictum. Vestibulum id est sit amet felis fringilla bibendum at at leo. Proin molestie ac nisi eu laoreet. Integer faucibus enim nec ullamcorper tempor. Aenean nec felis dui. Integer tristique odio mi, in volutpat metus posuere eu. Aenean suscipit ipsum nunc, id volutpat lorem hendrerit ac. Sed id elit quam. In ac mauris arcu. Praesent eget lectus sit amet diam vestibulum varius. Suspendisse dignissim mattis leo, nec facilisis erat tempor quis. Vestibulum eu vestibulum ex.
-</p>
-</div>
-
-</div>
-</div>
-</div>
-</div>
-</div>
 <div class="">
 <div class="card-header outline-row" style="margin-right:5px;margin-left: 5px;" id="headingfive" data-toggle="collapse" data-target="#collapsefive">
 <h5 class="mb-0"><button
@@ -236,34 +171,34 @@ wishlist</span></button>
 
 <div id="collapsefive" class="collapse" aria-labelledby="headingfive" data-parent="#accordionExample">
 <div class="p-10">
-<form class="theme-form">
+<form class="theme-form" id="comments-form">
 <div class="form-row">
 <div class="col-md-12">
 <div class="media">
 <label>Rating</label>
 <div class="media-body ml-3">
-<div class="rating three-star">
-<i class="fa fa-star"></i>
-<i class="fa fa-star"></i>
-<i class="fa fa-star"></i>
-<i class="fa fa-star"></i>
-<i class="fa fa-star"></i>
+<div class="three-star" id="demo">
+
+</div>
+<span class="red hide rating">Please add rating</span>
 </div>
 </div>
 </div>
-</div>
+<input type="hidden" name="rating" id="rating" value="0">
+<input type="hidden" name="id" value="{{base64_encode($product->id)}}">
 <div class="col-md-6 m-t-10">
 <label for="name">Name</label>
-<input type="text" class="form-control" id="name" placeholder="Enter your name" required>
+<input type="text" class="form-control" name="name" id="name" placeholder="Enter your name" required @auth value="{{Auth::user()->first_name}} {{Auth::user()->last_name}}"  readonly @endauth >
 </div>
 <div class="col-md-6 m-t-10">
 <label for="email">Email</label>
-<input type="text" class="form-control" id="email" placeholder="Email" required>
+<input type="text" class="form-control" name="email" id="email" placeholder="Email" required @auth value="{{Auth::user()->email}}" readonly @endauth>
 </div>
 <div class="col-md-12 m-b-10 m-t-15">
 <label for="review">Review title
 </label>
-<input type="text" class="form-control" id="review" placeholder="Enter your review title" required>
+<input type="text" class="form-control" name="comment" id="comment" placeholder="Enter your review title" required >
+<span class="red hide comment">Please add comment</span>
 </div>
 
 <div class="col-md-12 m-t-10">
@@ -280,6 +215,10 @@ wishlist</span></button>
 </div>
 </div>
 </div>
+
+
+
+
 </div>
 
 <div class="col-lg-3">
@@ -306,28 +245,72 @@ wishlist</span></button>
 
 </div>
 <div class="product-buttons" style="display: inline-flex;"><a href="#" data-toggle="modal" data-target="#addtocart" class="btn theme-outline-btn waves-effect waves-light addToCart" data-id="{{$product->id}}">Add to
-cart</a> <a href="#" class="btn theme-btn waves-effect waves-light">Buy now</a></div>
+cart</a> <a href="{{url('buynow/'.$product->pid)}}" class="btn theme-btn waves-effect waves-light">Buy now</a></div>
 </div>
 </div>
 </div>
 </div>
 </div>
 
+
+<div class="card">
+<div class="card-header outline-row" style="margin-right:5px;margin-left: 5px;">
+<h5 class="mb-0">Reviews</h5>
+</div>
+
+<div class="col-md-12" >
+<div class="p-10 m-t-10" id="product-comments">
+
+<img style="position: relative;height: 100px;left: 500px; z-index: 100000;" src="{{asset('resources/assets/login-gif-images-8.gif')}}" />
+</div>
+</div>
+</div>
 </section>
 <!-- Section ends -->
 
 @endsection
 @section('footerscript')
+<style type="text/css">
+    .hide{
+        display: none;
+    }
+    .red{
+        color: #bc7c8f;
+    font-weight: 500;
+    }
+    .fill{
+        color: #bb7c8f !important;
+    }
+</style>
     <!--Slick slider css-->
     <link rel="stylesheet" type="text/css" href="{{ asset('resources/assets/KnitfitEcommerce/assets/css/slick.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('resources/assets/KnitfitEcommerce/assets/css/slick-theme.css') }}">
 
     <!-- Zoom js-->
     <script src="{{ asset('resources/assets/KnitfitEcommerce/assets/js/jquery.elevatezoom.js') }}"></script>
-
+<script type="text/javascript" src="{{asset('resources/assets/rating/stars.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('resources/assets/readmore/readMoreJS.min.js')}}"></script>
 
     <script type="text/javascript">
         $(function(){
+
+            var product_id = {{$product->id}};
+            var URL = '{{url("get-comments")}}/'+product_id;
+            getComments(URL);
+
+           // getProductComments();
+
+            $("#demo").stars({
+            stars: 5,
+            emptyIcon  : 'fa-star-o',
+            filledIcon : 'fa-star',
+            color      : '#0d665c',
+            text : [],
+            click: function(index) {
+                $("#rating").val(index);
+            }
+            });
+
              $(document).on('click','.addToCart',function(){
         /* var is_login = $("#is_login").val();
         if(!is_login){
@@ -367,6 +350,130 @@ cart</a> <a href="#" class="btn theme-btn waves-effect waves-light">Buy now</a><
                 }
             }); 
     });
+
+
+
+$(document).on('submit','#comments-form',function(e){
+    e.preventDefault();
+    var Data = $("#comments-form").serializeArray();
+    var rating = $("#rating").val();
+    var comment = $("#comment").val();
+    var er = [];
+    var cnt = 0;
+
+    if(rating == 0){
+        $(".rating").removeClass('hide');
+        er+=cnt+1;
+    }else{
+        $(".rating").addClass('hide');
+    }
+
+    if(comment == 0){
+        $(".comment").removeClass('hide');
+        er+=cnt+1;
+    }else{
+        $(".comment").addClass('hide');
+    }
+    
+    if(er != ""){
+        return false;
+    }
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        url : '{{url("addComments")}}',
+        type : 'POST',
+        data : Data,
+        beforeSend : function(){
+            $(".loader-bg").show();
+        },
+        success : function(res){
+            if(res.fail){
+                addProductCartOrWishlist('fa-times','Oops!',res.fail); 
+            }else{
+                getComments(URL);
+                $("#comments-form")[0].reset();
+                addProductCartOrWishlist('fa-check','success',res.success); 
+            }
+        },
+        complete : function(){
+            $(".loader-bg").hide();
+        }
+    })
+});
+
+
+ $(document).on('click', '.pagination a', function(e) {
+        e.preventDefault();
+
+$('#product-comments').html('<img style="position: relative;height: 100px;left: 500px; z-index: 100000;" src="{{asset('resources/assets/login-gif-images-8.gif')}}" />');
+
+        var url = $(this).attr('href');
+        getComments(url);
+        //window.history.pushState("", "", url);
+    });
+
+$(document).on('click','#loadComments',function(){
+    $('#product-comments').html('<img style="position: relative;height: 100px;left: 500px; z-index: 100000;" src="{{asset('resources/assets/login-gif-images-8.gif')}}" />');
+    getComments(URL);
+});
+
+$(document).on('click','.wishlist-btn',function(){
+    var dd = $(this).find('i').hasClass('fill');
+    var id = $(this).attr('data-id');
+
+    if(dd){
+        $(this).find('i').removeClass('fill');
+        $(this).find('span').html('Add to wishlist');
+        var wishlist = 'remove';
+    }else{
+        $(this).find('i').addClass('fill');
+        $(this).find('span').html('Remove from wishlist');
+        var wishlist = 'add';
+    }
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.post('{{url("wishlist")}}',{ product_id: id,wishlist: wishlist },function(res){
+        if(res.success){
+            addProductCartOrWishlist('fa-check','success',res.success);
+        }else{
+            addProductCartOrWishlist('fa-times','Oops!',res.fail);
+        }
+    });
+    
+});
+
+
+$(document).on('click','.delete-comment',function(){
+    var id = $(this).attr('data-id');
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    if(confirm('Are you sure want to delete this comment ?')){
+        $.post('{{url("delete-comment")}}',{ product_id: id },function(res){
+        if(res.success){
+            getComments(URL);
+            addProductCartOrWishlist('fa-check','success',res.success);
+        }else{
+            addProductCartOrWishlist('fa-times','Oops!',res.fail);
+        }
+    });
+    }
+});
         });
 
 function addProductCartOrWishlist(icon,status,msg){
@@ -406,5 +513,19 @@ function addProductCartOrWishlist(icon,status,msg){
             '</div>'
         });
     }
+
+
+    function getComments(url) {
+        $.ajax({
+            url : url
+        }).done(function (data) {
+            $("#product-comments").html(data);
+        }).fail(function () {
+            var Data = '<div class="row"><div class="col-sm-12 text-center" style="margin:auto;">Unable to load the review`s. <a href="javascript:;" id="loadComments" >Click here</a> to load reviews.</div></div>';
+            $("#product-comments").html(Data);
+
+        });
+    }
+
     </script>
 @endsection

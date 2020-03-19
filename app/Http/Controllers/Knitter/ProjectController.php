@@ -39,8 +39,8 @@ class ProjectController extends Controller
 
     function home(){
     	$orders = DB::table('booking_process')
-		->join('products', 'booking_process.product_id', '=', 'products.id')
-		->join('product_images', 'products.id', '=', 'product_images.product_id')
+		->leftJoin('products', 'booking_process.product_id', 'products.id')
+		->leftJoin('product_images', 'products.id','product_images.product_id')
 		->select('booking_process.created_at','products.product_name', 'product_images.image_medium')
 		->where('booking_process.category_id', 1)
 		->where('booking_process.user_id', Auth::user()->id)
@@ -114,15 +114,22 @@ class ProjectController extends Controller
     function create_project(Request $request){
     	$measurements = Auth::user()->measurements->count();
     	$needlesizes = NeedleSizes::all();
-        $orders = DB::table('booking_process')
+        $custom = DB::table('booking_process')
         ->join('products', 'booking_process.product_id', '=', 'products.id')
-        //->join('product_images', 'products.id', '=', 'product_images.product_id')
         ->select('products.id as pid','products.product_name')
         ->where('booking_process.category_id', 1)
+        ->where('products.is_custom', 1)
+        ->where('booking_process.user_id', Auth::user()->id)
+        ->get();
+        $noncustom = DB::table('booking_process')
+        ->join('products', 'booking_process.product_id', '=', 'products.id')
+        ->select('products.id as pid','products.product_name')
+        ->where('booking_process.category_id', 1)
+        ->where('products.is_custom', 0)
         ->where('booking_process.user_id', Auth::user()->id)
         ->get();
         $projects = Auth::user()->projects()->where('is_deleted',0)->count();
-    	return view('knitter.projects.create-project',compact('measurements','needlesizes','orders','projects'));
+    	return view('knitter.projects.create-project',compact('measurements','needlesizes','custom','noncustom','projects'));
     }
 
     function delete_project(Request $request){
@@ -706,7 +713,7 @@ $rows1 = $worksheet->rangeToArray(
 
     /* Adding  a file */
 
-            $path = storage_path('Peekaboo Cabled Sweater Variables.xlsx');
+            $path = storage_path($product->measurement_file);
             //$url = Storage::url('Emily_s Sweater Variables.xlsx');
             $time = Auth::user()->id;
             
@@ -778,7 +785,7 @@ $rows1 = $worksheet->rangeToArray(
             $worksheet = $spreadsheet->getSheetByName('KnitVariables');
 
             $rows = $worksheet->rangeToArray(
-                'B2:B112',     // The worksheet range that we want to retrieve
+                'B2:B150',     // The worksheet range that we want to retrieve
                 NULL,        // Value that should be returned for empty cells
                 TRUE,        // Should formulas be calculated (the equivalent of getCalculatedValue() for each cell)
                 TRUE,        // Should values be formatted (the equivalent of getFormattedValue() for each cell)
@@ -787,7 +794,7 @@ $rows1 = $worksheet->rangeToArray(
 
 
 $rows1 = $worksheet->rangeToArray(
-                'C2:C112',     // The worksheet range that we want to retrieve
+                'C2:C150',     // The worksheet range that we want to retrieve
                 NULL,        // Value that should be returned for empty cells
                 TRUE,        // Should formulas be calculated (the equivalent of getCalculatedValue() for each cell)
                 TRUE,        // Should values be formatted (the equivalent of getFormattedValue() for each cell)

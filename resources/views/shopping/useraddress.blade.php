@@ -9,12 +9,12 @@
             <h3 class="p-l-10">
 <div class="form-radio radio radio-inline" id="radio">
     <label>
-        <input type="radio" @if($i ==0) checked @endif name="user_address" id="local-pickup" value="{{$add->id}}">
+        <input type="radio" required @if($add->is_default == 1) checked id="local-pickup"  @endif name="user_address" class="user_address" data-id="{{$i}}"  value="{{$add->id}}">
         <i class="helper"></i>
     </label>
 </div>
 
-             {{ucwords($add->first_name)}} {{ucwords($add->last_name)}} </h3><a href="#">Edit</a></div>
+             {{ucwords($add->first_name)}} {{ucwords($add->last_name)}} </h3><a href="{{url('edit-address/'.base64_encode($add->id))}}">Edit</a></div>
         <div class="box-content">
             <h6>{{$add->address}},{{$add->city}}</h6>
             <h6>{{$add->email}}</h6>
