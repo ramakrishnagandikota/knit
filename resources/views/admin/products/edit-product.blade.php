@@ -375,7 +375,7 @@
         <td>
           <div class="row">
       <div class="col-md-9">
-          <input type="file" id="uploadImage1" class="uploadImage" data-id="1" ><input type="hidden" name="measurement_image[]" id="measurement_image1">
+          <input type="file" id="uploadImage{{$i}}" class="uploadImage" data-id="{{$i}}" ><input type="hidden" name="measurement_image[]" id="measurement_image{{$i}}">
       </div>
         <div class="col-md-3"><span class="mytooltip tooltip-effect-2"> <span class="tooltip-item">?</span> <span class="tooltip-content clearfix"> <img src="{{asset($ms->measurement_image) }}" />  <span class="tooltip-text">{{ucfirst($ms->measurement_description)}}</span></span> </span>
         </div>

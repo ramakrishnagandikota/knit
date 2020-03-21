@@ -428,12 +428,8 @@ $(document).on('click','.wishlist-btn',function(){
     var id = $(this).attr('data-id');
 
     if(dd){
-        $(this).find('i').removeClass('fill');
-        $(this).find('span').html('Add to wishlist');
         var wishlist = 'remove';
     }else{
-        $(this).find('i').addClass('fill');
-        $(this).find('span').html('Remove from wishlist');
         var wishlist = 'add';
     }
 
@@ -445,6 +441,15 @@ $(document).on('click','.wishlist-btn',function(){
 
     $.post('{{url("wishlist")}}',{ product_id: id,wishlist: wishlist },function(res){
         if(res.success){
+
+    if(dd){
+        $(this).find('i').removeClass('fill');
+        $(this).find('span').html('Add to wishlist');
+    }else{
+        $(this).find('i').addClass('fill');
+        $(this).find('span').html('Remove from wishlist');
+    }
+
             addProductCartOrWishlist('fa-check','success',res.success);
         }else{
             addProductCartOrWishlist('fa-times','Oops!',res.fail);

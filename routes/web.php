@@ -30,10 +30,10 @@ Route::match(array('GET','POST'),'register',[
     'as' => 'register'
 ]);
 
-Route::get('subscribe-newsletters','AccountController@subscribe_newsletters');
+Route::post('subscribe-newsletters','AccountController@subscribe_newsletters');
 Route::get('newsletter/unsubscribe/{token}','AccountController@newsletter_unscbscribe');
 
-Route::post('contact-us','Home\Frontendcontroller@contact_us');
+//Route::post('contact-us','Home\Frontendcontroller@contact_us');
 
 Route::get('logout',[
 	'uses' => 'Logincontroller@logout',
@@ -47,6 +47,8 @@ Route::get('reset-password','Logincontroller@reset_password');
 Route::post('password-reset','Logincontroller@send_reset_password_link');
 Route::get('validate/password/{token}','Logincontroller@validate_password');
 Route::post('validate/newpassword','Logincontroller@validate_newpassword');
+
+Route::match(array('GET','POST'),'change-password','AccountController@change_password');
 
 Route::get('subscription','SubscriptionController@subscription_view');
 Route::post('add-cart','SubscriptionController@add_to_cart');

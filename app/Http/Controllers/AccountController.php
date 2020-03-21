@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Session;
 use App\Mail\NewsletterMail;
 use DB;
+use Hash;
 
 class AccountController extends Controller
 {
@@ -167,9 +168,9 @@ class AccountController extends Controller
     }
 
     function subscribe_newsletters(Request $request){
-    	$count = DB::table('subscription')->count();
+    	$count = DB::table('subscription')->count()+1;
 
-    	$array = array('user_id' => Auth::user()->id,'token' => md5($count),'subscription_type' => 'newsletters','email' => Auth::user()->email,'ipaddress' => $_SERVER['REMOTE_ADDR']);
+    	$array = array('user_id' => Auth::user()->id,'token' => md5($count),'subscription_type' => 'newsletters','email' => $request->email,'ipaddress' => $_SERVER['REMOTE_ADDR']);
     	$ins = DB::table('subscription')->insertGetId($array);
     	$details = [
 		    'detail'=>'detail',
@@ -179,12 +180,51 @@ class AccountController extends Controller
 		];
 
             \Mail::to(Auth::user()->email)->send(new NewsletterMail($details));
-            return redirect()->back();
+           // return redirect()->back();
+        if($ins){
+            return response()->json(['success' => 'You have subscribed to our newsletters.']);
+        }else{
+            return response()->json(['fail' => 'Unable to subscribe to our newsletters, Trya again after some time.']);
+        }
     }
 
     function newsletter_unscbscribe(Request $request){
     	$token = $request->token;
     	$ins = DB::table('subscription')->where('token',$token)->delete();
     	return redirect()->back();
+    }
+
+    function change_password(Request $request){
+
+        if($request->isMethod('get')){
+            $page = '';
+            $perPage = '';
+            return view('myaccount.change-password',compact('page','perPage'));
+        }else{
+            $request->validate([
+                'new_password' => 'required|string|min:6|max:16|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/',
+                'confirm_new_password' => 'same:new_password'
+            ]);
+        
+            //print_r($request->all());
+            //exit;
+            $old_password = $request->old_password;
+
+            if (Hash::check($old_password, Auth::user()->password)) {
+                $user = User::find(Auth::user()->id);
+            $user->password = bcrypt($request->new_password);
+            $save = $user->save();
+            if($save){
+                Session::flash('success','Password changed successfully.');
+            }else{
+                Session::flash('fail','Unable to update password,Try again after some time.');
+            }
+            }else{
+                Session::flash('fail','Old password & new password are not same.');
+            }
+
+            
+            return redirect()->back();
+        }
     }
 }

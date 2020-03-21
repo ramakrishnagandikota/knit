@@ -22,9 +22,10 @@
 <div class="collection-mobile-back"><span class="filter-back"><i class="fa fa-angle-left" aria-hidden="true"></i> back</span></div>
 <div class="card block-content">
 <ul>
-    <li><a href="{{url('my-account')}}">Account info</a></li>
+    <li><a href="{{url('my-account')}}">Newsletter info</a></li>
     <li class="active" ><a href="{{url('my-address')}}">Address</a></li>
     <li><a href="{{url('my-orders')}}">My orders</a></li>
+    <li><a href="{{url('change-password')}}">Change Password</a></li>
 </ul>
 </div>
 </div>

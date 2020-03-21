@@ -63,6 +63,10 @@ class ShoppingController extends Controller
     	return view('shopping.shop-patterns',compact('products','page','perPage','orderBy','garmentType','garmentConstruction','designElements','shoulderConstruction')); 	 	
     }
 
+    function search_products(){
+        //$name = $request->
+    }
+
     function product_full_view(Request $request){
     	$page = '';
     	$perPage = '';
@@ -121,6 +125,10 @@ class ShoppingController extends Controller
     }
 
     function wishlist(Request $request){
+        if(!Auth::check()){
+            return response()->json(['fail' => 'Please login to add product to wishlist']);
+            exit;
+        }
         if($request->wishlist == 'add'){
             $wish = new ProductWishlist;
             $wish->user_id = Auth::user()->id;
@@ -149,6 +157,7 @@ if($del){
 
 
     function my_wishlist(){
+
         $page = '';
         $perPage = '';
         $wishlist = ProductWishlist::leftJoin('products','products.id','product_wishlist.product_id')

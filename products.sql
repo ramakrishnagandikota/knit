@@ -11,70 +11,7 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
--- Dumping structure for table knitfit.products
-DROP TABLE IF EXISTS `products`;
-CREATE TABLE IF NOT EXISTS `products` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
-  `pid` text,
-  `product_name` varchar(100) DEFAULT NULL,
-  `slug` longtext,
-  `short_description` text,
-  `product_description` longtext,
-  `additional_information` longtext,
-  `skill_level` varchar(100) DEFAULT NULL,
-  `category_id` int(11) DEFAULT NULL,
-  `sku` varchar(100) DEFAULT NULL,
-  `attribute_set` text,
-  `product_type` varchar(100) DEFAULT NULL,
-  `is_custom` int(11) DEFAULT NULL,
-  `design_type` int(11) DEFAULT NULL,
-  `product_go_live_date` date DEFAULT NULL,
-  `status` int(11) DEFAULT '1',
-  `price` float DEFAULT NULL,
-  `sale_price` float DEFAULT NULL,
-  `sale_price_start_date` date DEFAULT NULL,
-  `sale_price_end_date` date DEFAULT NULL,
-  `related_products` varchar(100) DEFAULT NULL,
-  `recommended_yarn` varchar(100) DEFAULT NULL,
-  `recommended_fiber_type` varchar(100) DEFAULT NULL,
-  `recommended_yarn_weight` varchar(100) DEFAULT NULL,
-  `recommended_needle_size` varchar(100) DEFAULT NULL,
-  `additional_tools` text,
-  `designer_recommended_uom` varchar(50) DEFAULT NULL,
-  `designer_recommended_ease_in` varchar(100) DEFAULT NULL,
-  `designer_recommended_ease_cm` varchar(100) DEFAULT NULL,
-  `recommended_stitch_gauge_in` float DEFAULT NULL,
-  `recommended_stitch_gauge_cm` float DEFAULT NULL,
-  `recommended_row_gauge_in` float DEFAULT NULL,
-  `recommended_row_gauge_cm` float DEFAULT NULL,
-  `garment_type` longtext,
-  `garment_construction` longtext,
-  `design_elements` longtext,
-  `shoulder_construction` longtext,
-  `measurement_file` text,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  `ipaddress` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  KEY `category_id` (`category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
-
--- Dumping data for table knitfit.products: ~6 rows (approximately)
-DELETE FROM `products`;
-/*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` (`id`, `user_id`, `pid`, `product_name`, `slug`, `short_description`, `product_description`, `additional_information`, `skill_level`, `category_id`, `sku`, `attribute_set`, `product_type`, `is_custom`, `design_type`, `product_go_live_date`, `status`, `price`, `sale_price`, `sale_price_start_date`, `sale_price_end_date`, `related_products`, `recommended_yarn`, `recommended_fiber_type`, `recommended_yarn_weight`, `recommended_needle_size`, `additional_tools`, `designer_recommended_uom`, `designer_recommended_ease_in`, `designer_recommended_ease_cm`, `recommended_stitch_gauge_in`, `recommended_stitch_gauge_cm`, `recommended_row_gauge_in`, `recommended_row_gauge_cm`, `garment_type`, `garment_construction`, `design_elements`, `shoulder_construction`, `measurement_file`, `created_at`, `updated_at`, `ipaddress`) VALUES
-	(5, 16, 'e4da3b7fbbce2345d7772b0674a318d5', 'Peekaboo Cabled Sweater', 'peekaboo-cabled-sweater', '<p>This simple and classic cabled sweater is a great addition to any winter wardrobe. Knit in the round from the bottom up with a set-in sleeve, it features an open cable on the sleeves and a peekaboo open cable just under the V neck.</p>', '<p>&quot;</p>\n\n<p>This sweater is meant to conform to your body shape. However, you may decide how tight or loose you want the sweater to be by selecting the ease you want added to your measurements:</p>\n\n<ul>\n	<li>\n	<p>Shapely: the pattern will be generated based on the measurements you entered and the sweater will fit closely;</p>\n	</li>\n	<li>\n	<p>Standard: 1.5 inches will be added to your measurements for a comfortable fit that glides over your body; or,</p>\n	</li>\n	<li>\n	<p>Casual: 3 inches will be added to your measurements for a loose fit.</p>\n	</li>\n</ul>\n\n<p>You will need the following measurements for this sweater:</p>\n\n<ul>\n	<li>Lower Edge Width</li>\n	<li>Length from Lower Edge to Underarm</li>\n	<li>Waist</li>\n	<li>Bust</li>\n	<li>Wrist Circumference</li>\n	<li>Forearm Circumference</li>\n	<li>Upper Arm Circumference</li>\n	<li>Length from Wrist to Underarm</li>\n	<li>Armhole Depth</li>\n</ul>\n\n<p>Designed in a DK&nbsp;weight alpaca on size 6 needles, your custom pattern can be written for any yarn from fingering to aran weight. Simply select your yarn, knit a gauge swatch as directed here at Knit Fit Couture and submit the gauge with your measurements.&nbsp;</p>\n\n<p>&quot;</p>', '<p><strong>Yarn Requirements:</strong></p>\n\n<p>The amount of yarn needed is estimated for sizes:</p>\n\n<p>32 (34, 36, 38, 40, 42, 44)</p>\n\n<p><strong>Fingering weight yarn</strong><br />\nYardage needed: 1900 (1900, 2000, 2200, 2200, 2400, 2400)<br />\n<strong>DK weight yarn</strong><br />\nYardage needed: 1100 (1200, 1300, 1350, 1500, 1600, 1600)<br />\n<strong>Worsted weight yarn</strong><br />\nYardage needed: 1300 (1400, 1500, 1600, 1600, 1700)</p>\n\n<p><strong>Tools:&nbsp;</strong></p>\n\n<ul>\n	<li>24&quot; or 36&quot; circular needle in the size that will give you a desirable fabric given the yarn that your choose.&nbsp;</li>\n	<li>Cable needles</li>\n	<li>Stitch Holders</li>\n	<li>Markers</li>\n</ul>\n\n<p>&quot;</p>', 'Easy', 1, 'kfc0001', NULL, NULL, 1, 1, '2020-03-17', 1, 10.99, 8.99, '2020-03-17', '2020-03-31', NULL, NULL, NULL, 'Lace', 'Select needle size', NULL, '0', NULL, '0', NULL, 0, NULL, 0, '', '', '', '', 'Peekaboo Cabled Sweater Variables.xlsx', '2020-03-17 12:59:03', '2020-03-17 13:18:04', '127.0.0.1'),
-	(7, 16, '8f14e45fceea167a5a36dedd4bea2543', 'The Boyfriend Sweater', 'the-boyfriend-sweater', '<p>The Boyfriend Sweater is a true classic; it is extremely comfortable and not at all fussy!</p>', '<p>&quot;</p>\n\n<p><strong>Ease</strong></p>\n\n<p>This sweater is meant to be comfortable and float over your body shape, however, you may decide how tight or loose you want the sweater to be by selecting the ease you want added to your measurements:</p>\n\n<ul>\n	<li>Standard: 1.5 inches will be added to your measurements for a comfortable fit that glides over your body; or,</li>\n	<li>Casual: 3 inches will be added to your measurements for a loose fit.</li>\n</ul>\n\n<p>You will need to take the following measurements for your custom pattern at checkout:</p>\n\n<ul>\n	<li>Lower Edge Width</li>\n	<li>Length from Lower Edge to Underarm</li>\n	<li>Waist</li>\n	<li>Bust</li>\n	<li>Wrist Circumference</li>\n	<li>Forearm Circumference</li>\n	<li>Upper Arm Circumference</li>\n	<li>Length from Wrist to Underarm</li>\n	<li>Armhole Depth</li>\n</ul>\n\n<p>The original design was created in a gauge of 5.5 stitches and 7 rows per inch in stockinette. However, you can select a yarn from fingering to aran weight if you&rsquo;d like. Just make sure that you have knit an accurate gauge swatch in the yarn you will be using.&nbsp;</p>\n\n<p>&quot;</p>', '<p>&quot;</p>\n\n<p><strong>Yarn Requirements:</strong><br />\nThe amount of yarn in the kit is estimated for sizes 32 (34, 36, 38, 40, 42, 44)<br />\n&nbsp;</p>\n\n<p><strong>Fingering weight yarn</strong></p>\n\n<p>Yardage needed: 1900 (1900, 2000, 2200, 2200, 2400, 2400)<br />\n&nbsp;</p>\n\n<p><strong>DK weight yarn</strong></p>\n\n<p>Yardage needed: 1100 (1200, 1300, 1350, 1500, 1600, 1600)</p>\n\n<p><strong>Worsted weight yarn</strong></p>\n\n<p>Yardage needed: 1300 (1400, 1500, 1600, 1600, 1700, 1700)<br />\n&nbsp;</p>\n\n<p><strong>Tools:&nbsp;</strong></p>\n\n<ul>\n	<li>24&quot; or 36&quot; circular needle in the size that will give you a desirable fabric given the yarn that your choose.&nbsp;</li>\n	<li>Markers</li>\n</ul>\n\n<p>&quot;</p>', 'Easy', 1, 'kfc0002', NULL, NULL, 1, 1, '2020-03-17', 1, 10.99, 8, '2020-03-17', '2020-03-17', NULL, NULL, NULL, 'Lace', 'Select needle size', NULL, '0', NULL, '0', NULL, 0, NULL, 0, '', '', '', '', 'Boyfriend Master Variables.xlsx', '2020-03-17 13:21:10', '2020-03-19 12:17:14', '127.0.0.1'),
-	(8, 16, 'c9f0f895fb98ab9159f51fd0297e236d', 'Marsha\'s Lacy Tee', 'marshas-lacy-tee', '<p>Light and airy mesh lace adds a delicate border and bodice to this summer tee.</p>', '<p>Marsha&#39;s Lacy Tee&nbsp;can be knit in cotton, linen, rayon, bamboo or any combination for a cool summer top. The longer length is slimming and fashionable over slender or wide-legged pants.</p>', '<p><strong>Yarn Requirements:</strong></p>\n\n<p>Estimated for sizes 32 (34, 36, 38, 40, 42, 44)</p>\n\n<p>Fingering weight:&nbsp;700 (750, 800, 900, 950, 1050, 1100)</p>\n\n<p>DK weight: 650 (700, 750, 800, 850, 900, 950)</p>\n\n<p>Worsted weight: 550 (600, 650, 700, 800, 850, 950)</p>\n\n<p>&quot;</p>', 'Easy', 1, 'kfc0003', NULL, NULL, 1, 1, '1970-01-01', 1, 10.99, 8.99, '2020-03-17', '2020-03-31', NULL, NULL, NULL, 'Lace', 'Select needle size', NULL, '0', NULL, '0', NULL, 0, NULL, 0, '', '', '', '', 'Marshas Lacy Tee Master Variables.xlsx', '2020-03-17 13:22:16', '2020-03-17 13:22:16', '127.0.0.1'),
-	(9, 16, '45c48cce2e2d7fbdea1afc51c7c6ad26', 'Off-the-Shoulder Ruffle Top', 'off-the-shoulder-ruffle-top', '<p>This &quot;cold-shoulder&quot; tee is the perfect flirty summer tee for all ages.&nbsp;The dressy lace details makes it the perfect top for summer parties and evenings out. Knit it without the shoulder lace&nbsp;if you like. It will still be a show-stopper!</p>', '<p>The lace is knit first, then stitches are picked up using an ingenious stitch placed at the edge of the lace. A second strip of lace is knit and attached to purl stitches knit into the top below the shoulder. This is a fun knit that you will be proud to wear.</p>', '<p><strong>Yarn Requirements:</strong></p>\n\n<p>Estimated for sizes 32 (34, 36, 38, 40, 42, 44)</p>\n\n<p>Fingering weight:&nbsp;700 (750, 800, 900, 950, 1050, 1100)</p>\n\n<p>DK weight: 650 (700, 750, 800, 850, 900, 950)</p>\n\n<p>Worsted weight: 550 (600, 650, 700, 800, 850, 950)</p>', 'Easy', 1, 'kfc0004', NULL, NULL, 1, 1, '2020-03-17', 1, 10.99, 8.99, '2020-03-17', '2020-03-31', NULL, NULL, NULL, 'Lace', 'Select needle size', NULL, '0', NULL, '0', NULL, 0, NULL, 0, '', '', '', '', 'Off-the-shoulder RuffleTee Master Variables.xlsx', '2020-03-17 13:23:21', '2020-03-19 12:20:21', '127.0.0.1'),
-	(10, 16, 'd3d9446802a44259755d38e6d163e820', 'Emily\'s Sweater', 'emilys-sweater', '<p>Feminine and versitle, Emily&#39;s sweater will flatter any body shape.</p>', '<p>Emily&rsquo;s Sweater is your opportunity to knit a sweater that truly fits! Not only is this pattern written for your measurements, but you can choose from 4 different levels of fit within the custom pattern. Each fit is described below, and the pattern leads you to customize this very feminine, all season top.</p>\n\n<p>This sweater can be knit in dk or worsted weight yarn. The sample is knit in Cascade Venezia worsted.</p>\n\n<p>In very warm climates, try a linen blend in fingering weight.</p>\n\n<p>&quot;</p>', '<p>&quot;</p>\n\n<p><strong>Yarn Requirements:</strong></p>\n\n<p>The amount of yarn in the kit is estimated for sizes 32 (34, 36, 38, 40, 42, 44)</p>\n\n<p>DK weight yarn, size 6 circular 24&rdquo; or 32&rdquo; needles</p>\n\n<p>Yardage needed: 1100 (1200, 1300, 1350, 1500, 1600, 1600)</p>\n\n<p>Worsted weight yarn, size 7 needle</p>\n\n<p>Yardage needed: 1300 (1400, 1500, 1600, 1600, 1700, 1700)</p>\n\n<p>&quot;</p>', 'Easy', 1, 'kfc0005', NULL, NULL, 1, 1, '2020-03-17', 1, 10.99, 8.99, '2020-03-17', '2020-03-31', NULL, NULL, NULL, 'Lace', 'Select needle size', NULL, '0', NULL, '0', NULL, 0, NULL, 0, '', '', '', '', 'Emilys Sweater Variables.xlsx', '2020-03-17 13:24:19', '2020-03-19 11:02:37', '127.0.0.1'),
-	(11, 16, '6512bd43d9caa6e02c990b0a82652dca', 'Trevor\'s V-neck', 'trevors-v-neck', '<p>Simple. Masculine. It&#39;s just the kind of sweater every man wants with just enough detail to be interesting but easy to knit. Trevor&#39;s V-Neck Sweater includes vertical texture with knit and purl &quot;stripes&quot;.&nbsp;</p>', '<p>If he&rsquo;s anything like mine, your son wants a comfortable, no fuss sweater. This is a true classic, with just enough pattern to make it an interesting but not complicated knit. The pattern is written for standard sizing plus one inch of ease for a relaxed fit. If your guy is a &ldquo;Hipster&rdquo;, you might try a &ldquo;Shapely Fit&rdquo; for a tighter sweater. However, you can specify &ldquo;Casual&rdquo; for a more loose fit. Self striping yarn adds additional interest to this classic.</p>', '<p>Materials:</p>\n\n<p>1 - 24 or 32&rdquo; Circular needle in the size used to knit the gauge swatch.</p>\n\n<p>1 - 24 or 32&rdquo; Circular needle in the size 2 sizes smaller than that used to knit the gauge swatch.</p>\n\n<p>8 - stitch markers</p>\n\n<p>2 - stitch markers different from the 8 for side markers.</p>\n\n<p>Yarn estimated for sizes 32 (34, 36, 38, 40, 42, 44)</p>\n\n<p>Fingering weight yarn, size 4 needle</p>\n\n<p>Yardage needed: 1900 (1900, 2000, 2200, 2200, 2400, 2400)</p>\n\n<p>DK weight yarn, size US 6 circular 24&rdquo; or 32&rdquo; needles</p>\n\n<p>Yardage needed: 1100 (1200, 1300, 1350, 1500, 1600, 1600)</p>\n\n<p>Worsted weight yarn, size 7 needle</p>\n\n<p>Yardage needed: 1300 (1400, 1500, 1600, 1600, 1700, 1700)</p>\n\n<p>&quot;</p>', 'Easy', 1, 'kfc0006', NULL, NULL, 1, 1, '2020-03-17', 1, 10.99, 8.99, '2020-03-17', '2020-03-31', NULL, NULL, NULL, 'Lace', 'Select needle size', NULL, '0', NULL, '0', NULL, 0, NULL, 0, '', '', '', '', NULL, '2020-03-17 13:25:17', '2020-03-17 13:25:17', '127.0.0.1');
-/*!40000 ALTER TABLE `products` ENABLE KEYS */;
-
 -- Dumping structure for table knitfit.product_comments
-DROP TABLE IF EXISTS `product_comments`;
 CREATE TABLE IF NOT EXISTS `product_comments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
@@ -99,7 +36,6 @@ INSERT INTO `product_comments` (`id`, `user_id`, `product_id`, `rating`, `name`,
 /*!40000 ALTER TABLE `product_comments` ENABLE KEYS */;
 
 -- Dumping structure for table knitfit.product_designer_measurements
-DROP TABLE IF EXISTS `product_designer_measurements`;
 CREATE TABLE IF NOT EXISTS `product_designer_measurements` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
@@ -139,39 +75,7 @@ INSERT INTO `product_designer_measurements` (`id`, `user_id`, `product_id`, `mea
 	(20, 16, 9, 'lower_edge_to_waist', NULL, 'text', 'Lower edge to waist', NULL, 1, '2020-03-19 12:20:21', '2020-03-19 12:20:21', '127.0.0.1');
 /*!40000 ALTER TABLE `product_designer_measurements` ENABLE KEYS */;
 
--- Dumping structure for table knitfit.product_images
-DROP TABLE IF EXISTS `product_images`;
-CREATE TABLE IF NOT EXISTS `product_images` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
-  `product_id` int(11) NOT NULL,
-  `image_small` text,
-  `image_medium` text,
-  `image_large` text,
-  `image_description` text,
-  `main_photo` int(11) DEFAULT NULL,
-  `created_by` int(11) DEFAULT '1',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `updated_by` int(11) DEFAULT '1',
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`),
-  KEY `product_id` (`product_id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
-
--- Dumping data for table knitfit.product_images: ~4 rows (approximately)
-DELETE FROM `product_images`;
-/*!40000 ALTER TABLE `product_images` DISABLE KEYS */;
-INSERT INTO `product_images` (`id`, `user_id`, `product_id`, `image_small`, `image_medium`, `image_large`, `image_description`, `main_photo`, `created_by`, `created_at`, `updated_by`, `updated_at`, `status`) VALUES
-	(1, 16, 1, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1584166988-p3.jpg', 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1584166988-p3.jpg', 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1584166988-p3.jpg', NULL, 1, 1, '2020-03-14 06:23:13', 1, '2020-03-14 06:23:13', 1),
-	(2, 16, 1, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1584166988-p2.jpg', 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1584166988-p2.jpg', 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1584166988-p2.jpg', NULL, NULL, 1, '2020-03-14 06:23:13', 1, '2020-03-14 06:23:13', 1),
-	(3, 16, 1, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1584166988-p4.jpg', 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1584166988-p4.jpg', 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1584166988-p4.jpg', NULL, NULL, 1, '2020-03-14 06:23:13', 1, '2020-03-14 06:23:13', 1),
-	(4, 16, 1, 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1584166988-p1.jpg', 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1584166988-p1.jpg', 'https://s3.us-east-2.amazonaws.com/knitfitcoall/knitfit/1584166988-p1.jpg', NULL, NULL, 1, '2020-03-14 06:23:13', 1, '2020-03-14 06:23:13', 1);
-/*!40000 ALTER TABLE `product_images` ENABLE KEYS */;
-
 -- Dumping structure for table knitfit.product_pdf
-DROP TABLE IF EXISTS `product_pdf`;
 CREATE TABLE IF NOT EXISTS `product_pdf` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
@@ -200,7 +104,6 @@ INSERT INTO `product_pdf` (`id`, `user_id`, `product_id`, `content`, `e_content`
 /*!40000 ALTER TABLE `product_pdf` ENABLE KEYS */;
 
 -- Dumping structure for table knitfit.product_wishlist
-DROP TABLE IF EXISTS `product_wishlist`;
 CREATE TABLE IF NOT EXISTS `product_wishlist` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,

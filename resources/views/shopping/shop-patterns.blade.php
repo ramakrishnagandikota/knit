@@ -333,10 +333,10 @@ if($pro->is_custom == 1){
     <div class="img-wrapper">
         @if($product_images)
         <div class="front">
-            <a href="#"><img src="{{ $product_images->image_small }}" class="img-fluid blur-up lazyload bg-img" alt=""></a>
+            <a href="#" style="background-image: url('{{$product_images->image_small}}');" ><img src="{{$product_images->image_small}}" class="img-fluid blur-up lazyload bg-img" alt=""></a>
         </div>
         <div class="back">
-            <a href="#"><img src="{{ $product_images->image_small }}" class="img-fluid blur-up lazyload bg-img" alt=""></a>
+            <a href="#" style="background-image: url('{{$product_images->image_small}}');" ><img src="{{$product_images->image_small}}" class="img-fluid blur-up lazyload bg-img" alt=""></a>
         </div>
         @else
         <div class="front">

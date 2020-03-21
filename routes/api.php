@@ -30,3 +30,8 @@ Route::group(['middleware' => 'auth:api'], function(){
 	Route::apiResource('/measurements','API\MeasurementsApiController');
 	Route::post('checkMeasurementTitle','API\MeasurementsApiController@check_measurement_name');
 });
+
+Route::get('product-filters','API\ProductsController@get_all_filters');
+Route::get('products','API\ProductsController@get_products_data');
+
+Route::apiResource('product','API\ProductsController');

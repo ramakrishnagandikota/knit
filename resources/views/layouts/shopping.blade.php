@@ -104,7 +104,7 @@ Account <i class="feather icon-chevron-down"></i>
                 <li><a href="{{url('wishlist')}}">Wishlist</a></li>
                 <!-- <li><a href="forget_pwd.html">Forget password</a></li> -->
                 <li><a href="{{url('checkout')}}">Checkout</a></li>
-         
+                <li><a href="{{url('change-password')}}">Change password</a></li>         
             </ul>
         </li>
 </ul>
@@ -142,7 +142,7 @@ Account <i class="feather icon-chevron-down"></i>
 </li>
 @else
     <li>
-    <a href="{{url('login?p='.URL::previous())}}">Login</a>
+    <a href="{{url('login')}}">Login</a>
     </li>
     
     <li>
