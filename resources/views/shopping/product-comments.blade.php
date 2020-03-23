@@ -1,5 +1,9 @@
 @if($comments->count() > 0)
 @foreach($comments as $pc)
+<?php
+$voteCount = DB::table('product_vote_unvote')->where('comment_id',$pc->id)->where('product_id',$pc->product_id)->where('vote',1)->count();
+$unvoteCount = DB::table('product_vote_unvote')->where('comment_id',$pc->id)->where('product_id',$pc->product_id)->where('unvote',1)->count();
+?>
 <div class="row">
 <div class="col-sm-1 img-padding">
 	@php
@@ -26,18 +30,35 @@
 	?>
 
     </h6>
+
+@auth
+<?php 
+$vote = DB::table('product_vote_unvote')->where('user_id',Auth::user()->id)->where('comment_id',$pc->id)->where('product_id',$pc->product_id)->where('vote',1)->count();
+$unvote = DB::table('product_vote_unvote')->where('user_id',Auth::user()->id)->where('comment_id',$pc->id)->where('product_id',$pc->product_id)->where('unvote',1)->count();
+?>
 <ul class="comnt-sec">
-<li><a href="#"><i class="fa fa-thumbs-o-up"aria-hidden="true"></i><span>(14)</span></a>
+<li><a href="javascript:;" class="voteCheck" data-name="vote" data-id="{{$pc->id}}"><i class="fa @if($vote == 1) fa-thumbs-up @else fa-thumbs-o-up @endif"aria-hidden="true"></i></a>
+	(<span id="vote{{$pc->id}}">{{$voteCount}}</span>)
 </li>
 <li>
-<a href="#">
-<div class="unlike">
-<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>(2)
-</div>
-</a>
+<a href="javascript:;" class="unvoteCheck" data-name="unvote" data-id="{{$pc->id}}">
+<i class="fa @if($unvote == 1) fa-thumbs-down @else fa-thumbs-o-down @endif" aria-hidden="true"></i></a>
+(<span id="unvote{{$pc->id}}">{{$unvoteCount}}</span>)
 </li>
 </ul>
-
+@else
+<ul class="comnt-sec">
+<li><a href="javascript:;"><i class="fa fa-thumbs-o-up"aria-hidden="true"></i></a>
+	(<span>{{$voteCount}}</span>)
+</li>
+<li>
+<a href="javascript:;" >
+<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+</a>
+(<span>{{$unvoteCount}}</span>)
+</li>
+</ul>
+@endauth
 </div>
 <div class="col-lg-7 ">
 @auth

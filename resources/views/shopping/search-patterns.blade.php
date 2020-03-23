@@ -277,7 +277,7 @@
 <div class="col-lg-3">
     <form class="form-horizontal" action="{{url('search-products')}}" method="GET">
         <div class="form-group">
-            <input type="text" class="form-control" style="margin-top: 15px;height:36px;border-radius: 3px;"  id="pwd" placeholder="Search" name="search">
+            <input type="text" class="form-control" style="margin-top: 15px;height:36px;border-radius: 3px;" value="{{$name}}"  id="pwd" placeholder="Search" name="search">
             <button type="submit" id="search-btn-insider"><i class="fa fa-search"></i></button>
         </div>
 
@@ -542,7 +542,7 @@ for (k = 0; k < y.length; k++) {
 y[k].removeAttribute("class");
 }
 this.setAttribute("class", "same-as-selected");
-window.location.assign('{{url("shop-patterns?perPage=")}}'+this.innerHTML.replace(/[^\d.]/g, '' )+'&page='+page);
+window.location.assign('{{url("search-products?search=".$name)}}'+'&perPage='+this.innerHTML.replace(/[^\d.]/g, '' )+'&page='+page);
 break;
 }
 }
@@ -624,7 +624,7 @@ y[k].removeAttribute("class");
 }
 this.setAttribute("class", "same-as-selected");
 var dd = this.innerHTML;
-window.location.assign('{{url("shop-patterns?perPage=")}}'+perPage+'&page='+page+'&orderBy='+dd.split(' ').join('_'));
+window.location.assign('{{url("search-products?search=".$name)}}'+'&perPage='+perPage+'&page='+page+'&orderBy='+dd.split(' ').join('_'));
 break;
 }
 }
@@ -666,7 +666,6 @@ x[i].classList.add("select-hide");
 then close all select boxes:*/
 document.addEventListener("click", closeAllSelect);
 </script>
-
 <script type="text/javascript">
     var sections = $('.sectionContent');
 
@@ -679,15 +678,16 @@ document.addEventListener("click", closeAllSelect);
         });
 
 		var perPage = '{{$perPage}}';
+        var search = '{{$name}}';
 		setTimeout(function(){
 			var pageLink = $(".page-item a");
 			var pageLinks = $(".page-item a").attr('href');
 			pageLink.each(function() {
 			    var url = $(this).attr('href');
-			    $(this).attr('href',url+'&perPage='+perPage);
+			    $(this).attr('href',url+'&search='+search+'&perPage='+perPage);
 			});
 			
-		},3000);
+		},1000);
 
 
 		$(document).on('click','.pattern-popup',function(){

@@ -63,8 +63,34 @@ class ShoppingController extends Controller
     	return view('shopping.shop-patterns',compact('products','page','perPage','orderBy','garmentType','garmentConstruction','designElements','shoulderConstruction')); 	 	
     }
 
-    function search_products(){
-        //$name = $request->
+    function search_products(Request $request){
+        $name = $request->get('search');
+        $perPage = ($request->get('perPage')) ? $request->get('perPage') : 25;
+        $page = ($request->get('page')) ? $request->get('page') : 1;
+        $orderBy = ($request->get('orderBy')) ? $request->get('orderBy') : 'Newest_first';
+
+        $pro = Products::where('product_name','LIKE','%'.$name.'%');
+        if($orderBy == '_Newest_first'){
+            $products = $pro->orderBy('id','DESC')->paginate($perPage);
+        }else if($orderBy == 'Low_to_high'){
+            $products = $pro->orderBy('price','ASC')->paginate($perPage);
+        }else if($orderBy == 'High_to_low'){
+            $products = $pro->orderBy('price','DESC')->paginate($perPage);
+        }else if($orderBy == 'Popular'){
+            $products = $pro->select('products.*',DB::raw("SUM(product_comments.rating)/COUNT(product_comments.rating) as rate"))
+        ->leftjoin("product_comments","product_comments.product_id","=","products.id")->orderBy('rate','DESC')
+        ->groupBy("products.id")
+        ->paginate($perPage);
+        }else{
+            $products = $pro->orderBy('id','ASC')->paginate($perPage);
+        }
+
+        $garmentType = MasterList::where('type','garment_type')->get();
+        $garmentConstruction = MasterList::where('type','garment_construction')->get();
+        $designElements = MasterList::where('type','design_elements')->get();
+        $shoulderConstruction = MasterList::where('type','shoulder_construction')->get();
+    
+        return view('shopping.search-patterns',compact('products','page','perPage','orderBy','garmentType','garmentConstruction','designElements','shoulderConstruction','name'));
     }
 
     function product_full_view(Request $request){
@@ -77,6 +103,7 @@ class ShoppingController extends Controller
         }
     	$product_images = Product_images::where('product_id',$product->id)->get();
     	$wishlist = ProductWishlist::where('product_id',$product->id)->first();
+
     	return view('shopping.product-fullview',compact('page','perPage','product','product_images','wishlist'));
     }
 
@@ -115,9 +142,10 @@ class ShoppingController extends Controller
         $id = $request->id;
       // $comments = ProductComments::where('product_id',$id)->paginate(2);
       $comments = ProductComments::leftJoin('users','users.id','product_comments.user_id')
-        ->select('users.picture','product_comments.id','product_comments.user_id','product_comments.name','product_comments.comment','product_comments.created_at','product_comments.rating')
+        ->select('users.picture','product_comments.id','product_comments.user_id','product_comments.name','product_comments.comment','product_comments.product_id','product_comments.created_at','product_comments.rating')
         ->where('product_comments.status',1)
-        ->where('product_comments.product_id',$id)->orderBy('product_comments.id','DESC')->paginate(2);
+        ->where('product_comments.product_id',$id)->orderBy('product_comments.id','DESC')->paginate(1);
+        
        if ($request->ajax()) {
             return view('shopping.product-comments', ['comments' => $comments])->render();  
         }
@@ -188,4 +216,54 @@ if($del){
             return response()->json(['fail' => 'Unable to delete comment, Try again after sometime.']);
         }
     }
+
+
+    function vote_for_comment(Request $request){
+        $user_id = Auth::user()->id;
+        $comment_id = $request->comment_id;
+        $product_id = $request->product_id;
+
+        $voteCheck = DB::table('product_vote_unvote')->where('user_id',$user_id)->where('comment_id',$comment_id)->where('product_id',$product_id)->where('vote',1)->count();
+
+        if($voteCheck == 0){
+            $arr = array('user_id' => $user_id,'comment_id' => $comment_id,'product_id' => $product_id,'vote' => 1,'created_at' => Carbon::now(),'ipaddress' => $_SERVER['REMOTE_ADDR']);
+            $ins = DB::table('product_vote_unvote')->insert($arr);
+            $msg = 'You have voted successfully.';
+        }else{
+            $ins = DB::table('product_vote_unvote')->where('user_id',$user_id)->where('comment_id',$comment_id)->where('vote',1)->delete();
+            $msg = 'Removed your vote successfully.';
+        }
+
+if($ins){
+    return response()->json(['success' => $msg]);
+}else{
+    return response()->json(['fail' => 'Unable to vote for this comment.']);
+}
+
+}
+
+
+function unvote_for_comment(Request $request){
+    $user_id = Auth::user()->id;
+        $comment_id = $request->comment_id;
+        $product_id = $request->product_id;
+
+    $unvoteCheck = DB::table('product_vote_unvote')->where('user_id',$user_id)->where('comment_id',$comment_id)->where('product_id',$product_id)->where('unvote',1)->count();
+
+    if($unvoteCheck == 0){
+        $arr3 = array('user_id' => $user_id,'comment_id' => $comment_id,'product_id' => $product_id,'unvote' => 1,'created_at' => Carbon::now(),'ipaddress' => $_SERVER['REMOTE_ADDR']);
+        $ins2 = DB::table('product_vote_unvote')->insert($arr3);
+        $msg = 'You have unvoted successfully.';
+    }else{
+        $ins2 = DB::table('product_vote_unvote')->where('user_id',$user_id)->where('comment_id',$comment_id)->where('unvote',1)->delete();
+        $msg = 'You have removed you unvote successfully.';
+    }
+
+    if($ins2){
+    return response()->json(['success' => $msg]);
+    }else{
+    return response()->json(['fail' => 'Unable to remove unvote for this comment.']);
+}
+}
+
 }

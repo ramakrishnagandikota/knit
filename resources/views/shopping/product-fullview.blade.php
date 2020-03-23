@@ -479,6 +479,109 @@ $(document).on('click','.delete-comment',function(){
     });
     }
 });
+
+
+$(document).on('click','.voteCheck',function(){
+    var name = $(this).attr('data-name');
+    var comment_id = $(this).attr('data-id');
+    var voteCount = $('#vote'+comment_id).html();
+    var unvoteCount = $('#unvote'+comment_id).html();
+    var alreadyVoted = $(this).find('i').hasClass('fa-thumbs-up');
+    var vcount;
+
+if(alreadyVoted == true){
+    $(this).find('i').removeClass('fa-thumbs-up').addClass('fa-thumbs-o-up');
+    vcount=parseInt(voteCount)-1;
+    $('#vote'+comment_id).html(vcount);
+    var vote = 0;
+}else{
+    $(this).find('i').removeClass('fa-thumbs-o-up').addClass('fa-thumbs-up');
+    vcount=parseInt(voteCount)+1;
+    $('#vote'+comment_id).html(vcount);
+    var vote = 1;
+}
+
+
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    var Data = 'vote='+vote+'&comment_id='+comment_id+'&product_id='+product_id;
+
+    $.ajax({
+        url : '{{url("voteCheck")}}',
+        type : 'POST',
+        data : Data,
+        beforeSend : function(){
+
+        },
+        success : function(res){
+            if(res){
+                addProductCartOrWishlist('fa-check','success',res.success);
+            }else{
+                addProductCartOrWishlist('fa-times','error',res.fail);
+            }
+        },
+        complete : function(){
+
+        }
+    });
+});
+
+
+
+$(document).on('click','.unvoteCheck',function(){
+    var name = $(this).attr('data-name');
+    var comment_id = $(this).attr('data-id');
+    var unvoteCount = $('#unvote'+comment_id).html();
+    var alreadyunVoted = $(this).find('i').hasClass('fa-thumbs-down');
+    var vcount;
+
+if(alreadyunVoted == true){
+    $(this).find('i').removeClass('fa-thumbs-down').addClass('fa-thumbs-o-down');
+    vcount=parseInt(unvoteCount)-1;
+    $('#unvote'+comment_id).html(vcount);
+    var unvote = 0;
+}else{
+    $(this).find('i').removeClass('fa-thumbs-o-down').addClass('fa-thumbs-down');
+    vcount=parseInt(unvoteCount)+1;
+    $('#unvote'+comment_id).html(vcount);
+    var unvote = 1;
+}
+
+
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    var Data = 'unvote='+unvote+'&comment_id='+comment_id+'&product_id='+product_id;
+
+    $.ajax({
+        url : '{{url("unvoteCheck")}}',
+        type : 'POST',
+        data : Data,
+        beforeSend : function(){
+
+        },
+        success : function(res){
+            if(res){
+                addProductCartOrWishlist('fa-check','success',res.success);
+            }else{
+                addProductCartOrWishlist('fa-times','error',res.fail);
+            }
+        },
+        complete : function(){
+
+        }
+    });
+});
+
         });
 
 function addProductCartOrWishlist(icon,status,msg){

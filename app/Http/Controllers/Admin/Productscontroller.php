@@ -280,8 +280,8 @@ class Productscontroller extends Controller
 
 
     	$pro = Products::find($request->id);
-    	$pro->user_id = Auth::user()->id;
-    	$pro->pid = md5($pcount);
+    	//$pro->user_id = Auth::user()->id;
+    	//$pro->pid = md5($pcount);
     	$pro->product_name = $request->name;
     	$pro->slug = Str::slug($request->name);
     	$pro->short_description = $request->short_description;

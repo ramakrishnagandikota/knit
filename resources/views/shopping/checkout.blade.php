@@ -221,6 +221,16 @@
 
 
             });
+
+            $(".user_address").each(function(index, el) {
+                var attr = $(this)[0].hasAttribute('required');
+
+                if(attr == false){
+                    $(this).attr('required',true);
+                }else{
+                    $(this).removeAttr('required');
+                }
+            });
                 
 		});
 

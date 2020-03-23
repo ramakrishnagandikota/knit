@@ -70,12 +70,15 @@ Route::get('pattern-popup/{pid}',[
 	'uses' => 'ShoppingController@pattern_popup',
     'as' => 'pattern-popup/{pid}'
 ]);
+Route::get('search-products','ShoppingController@search_products');
 Route::post('addComments','ShoppingController@add_comments');
 Route::get('get-comments/{id}','ShoppingController@getproduct_comments');
 Route::post('wishlist','ShoppingController@wishlist');
 Route::get('wishlist','ShoppingController@my_wishlist');
 Route::get('remove-wishlist/{id}','ShoppingController@remove_wishlist');
 Route::post('delete-comment','ShoppingController@delete_comment');
+Route::post('voteCheck','ShoppingController@vote_for_comment');
+Route::post('unvoteCheck','ShoppingController@unvote_for_comment');
 /* cart items */
 Route::get('load-cart','CartController@get_cart');
 Route::post('add-to-cart','CartController@add_to_cart');
