@@ -348,7 +348,8 @@ if($pro->is_custom == 1){
         @endif
         <div class="cart-info cart-wrap">
             <button class="addToCart" data-id="{{$pro->id}}" title="Add to cart"><i class="typcn typcn-shopping-cart" ></i></button>  
-            <a href="#" data-toggle="modal" class="pattern-popup" data-id="{{$pro->pid}}" data-target="#quick-view" title="Quick View"><i class="ti-search" aria-hidden="true"></i></a></div>
+            <a href="#" data-toggle="modal" class="pattern-popup" data-id="{{$pro->pid}}" data-target="#quick-view" title="Quick View"><i class="ti-search" aria-hidden="true"></i></a>
+        </div>
     </div>
     <div class="product-detail">
         <div>

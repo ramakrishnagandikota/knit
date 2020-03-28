@@ -121,6 +121,9 @@ class Logincontroller extends Controller
 		    if(! $validator){
 	            return redirect()->back();
 	        }else{
+
+    $userCount = User::count() + 1;
+
 	        	 $y = date('Y') + 1; $m = date('m'); $d = date('d');
             	 $exp = $y.'-'.$m.'-'.$d;
 				 
@@ -134,11 +137,12 @@ class Logincontroller extends Controller
             $user->email = $request->email;
             $user->password = bcrypt($request->password);
             $user->enc_email = $md5email;
-            $user->picture = 'resources/assets/user.png';
+            $user->picture = 'https://via.placeholder.com/150?text='.$request->first_name;
             $user->oauth_picture = $this->random_color();
             $user->subscription_type = 1;
             $user->sub_exp = Carbon::now()->addDays(30);
             $user->created_at = date('Y-m-d H:i:s');
+            $user->remember_token = bcrypt($userCount);
             $user->save();
 
             $user->subscription()->attach(['1']);

@@ -223,9 +223,14 @@ class ProjectController extends Controller
     		$project->ease = $request->ease_in;
     	}
     	$project->user_verify = $request->user_verify;
-    	$project->status = 1;
+        if($request->pattern_type == 'custom'){
+            $project->status = 1;
+        }else{
+            $project->status = 2;
+        }
     	$project->created_at = Carbon::now();
     	$project->updated_at = Carbon::now();
+        $project->ipaddress = $_SERVER['REMOTE_ADDR'];
     	$save = $project->save();
 
     		

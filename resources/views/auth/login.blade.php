@@ -28,10 +28,10 @@
                                     <span class="red">@if($errors->first('username')) {{$errors->first('username')}} @endif</span>
                                 </div>
                                 <div class="form-group form-primary">
-                                    <input type="password" name="password" class="form-control" >
+                                    <input type="password" id="password-field" name="password" class="form-control" >
                                     <!-- <i class="fa fa-info pophover" data-trigger="hover" data-container="body" data-toggle="popover" data-placement="right" data-content="Your password must be more than 8 characters long, should contain at least 1 Uppercase, 1 Lowercase, 1 Numeric and 1 special character."></i> -->
                                     <span class="form-bar"></span>
-                                    <label class="float-label text-muted">Password</label> <!--<span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span> -->
+                                    <label class="float-label text-muted">Password</label> <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span> 
                                     <span class="red">@if($errors->first('password')) {{$errors->first('password')}} @endif</span>
                                 </div>
                                 <div class="row text-left">
@@ -92,6 +92,8 @@
 
 
 });
+
+
     $(".toggle-password").click(function() {
 
 $(this).toggleClass("fa-eye fa-eye-slash");

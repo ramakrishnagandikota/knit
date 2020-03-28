@@ -17,7 +17,7 @@
       <meta name="keywords" content="bootstrap, bootstrap admin template, admin theme, admin dashboard, dashboard template, admin template, responsive" />
       <meta name="author" content="Phoenixcoded" />
       <!-- Favicon icon -->
-  <script src="{{ asset('public/js/app.js') }}" defer></script>
+  <!-- <script src=" asset('public/js/app.js') }}" defer></script> -->
       <link rel="icon" href="{{ asset('resources/assets/files/assets/images/favicon.ico') }}" type="image/x-icon">
       <!-- Google font-->     
       <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">

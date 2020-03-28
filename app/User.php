@@ -13,12 +13,20 @@ use Illuminate\Auth\MustVerifyEmail;
 use Auth;
 use App\Models\UserAddress;
 use App\Models\Subscription;
+use App\Models\Friends;
+use App\Models\Follow;
+use App\Models\Friendrequest;
 use App\Models\SubscriptionProperties;
+use App\Traits\FriendRequestableTrait;
+use App\Traits\FriendRequestAcceptableTrait;
+use App\Traits\FollowTrait;
+use App\Models\Userprofile;
+use App\Models\UserSettings;
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 
 class User extends Authenticatable implements MustVerifyEmailContract
 {
-    use Notifiable, HasApiTokens;
+    use Notifiable, HasApiTokens, FriendRequestableTrait,FriendRequestAcceptableTrait, FollowTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -107,9 +115,10 @@ class User extends Authenticatable implements MustVerifyEmailContract
 
         return $sub;
     }
+
     
     function feedback(){
-        return $this->hasMany('App\Models\Feedback','user_id')->orderBy('id','desc');
+    return $this->hasMany('App\Models\Feedback','user_id')->orderBy('id','desc');
     }
 
     function projects(){
@@ -130,6 +139,22 @@ class User extends Authenticatable implements MustVerifyEmailContract
 
    function bookings(){
     return $this->hasMany(Booking_process::class)->where('product_category',1);
+   }
+
+   function friends(){
+    return $this->hasMany(Friends::class);
+   }
+
+   function follow(){
+    return $this->hasMany(Follow::class);
+   }
+
+   function profile(){
+    return $this->hasOne(Userprofile::class);
+   }
+
+   function settings(){
+    return $this->hasMany(UserSettings::class);
    }
     
 }

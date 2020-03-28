@@ -249,7 +249,7 @@ Account <i class="feather icon-chevron-down"></i>
 <div class="col-lg-6 col-6"> <a href="{{url('shop-patterns')}}"><figure class="no-bg"><img class="icon-img" src="{{ asset('resources/assets/files/assets/icon/custom-icon/Shop-Design.png') }}" /></a><figcaption class="text-muted text-center">Shop</figcaption></figure></div>
 </div>
 <div class="row right-menubar">
-<div class="col-lg-6 col-6"> <figure class="no-bg"><a href="#"><img class="icon-img" src="{{ asset('resources/assets/files/assets/icon/custom-icon/Timeline.png') }}" /></a><figcaption class="text-muted text-center">Connect</figcaption></figure></div>
+<div class="col-lg-6 col-6"> <figure class="no-bg"><a href="{{url('connect')}}"><img class="icon-img" src="{{ asset('resources/assets/files/assets/icon/custom-icon/Timeline.png') }}" /></a><figcaption class="text-muted text-center">Connect</figcaption></figure></div>
 
 <div class="col-lg-6 col-6"> <a href="{{url('knitter/measurements')}}"><figure  class="no-bg"><img class="icon-img" src="{{ asset('resources/assets/files/assets/icon/custom-icon/Measurement.png') }}" /></a><figcaption class="text-muted text-center ">Measurement</figcaption></figure></div>
 </div>

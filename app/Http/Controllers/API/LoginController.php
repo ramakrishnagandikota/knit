@@ -112,9 +112,11 @@ class LoginController extends Controller
         if ($validator->fails()) {
             return $this->sendError($validator->errors(), 401);            
         }
+            $userCount = User::count() + 1;
 
             $md5email = md5($request->email);
             $user = new User;
+            $user->enc_id = md5($userCount);
             $user->name = $request->username;
             $user->first_name = $request->first_name;
             $user->last_name = $request->last_name;
@@ -122,8 +124,7 @@ class LoginController extends Controller
             $user->email = $request->email;
             $user->password = bcrypt($request->password);
             $user->enc_email = $md5email;
-            $user->picture = 'resources/assets/user.png';
-            
+            $user->picture = 'https://via.placeholder.com/150?text='.$request->first_name;
             $user->subscription_type = 1;
             $user->sub_exp = Carbon::now()->addDays(30);
             $user->created_at = date('Y-m-d H:i:s');
@@ -201,5 +202,164 @@ class LoginController extends Controller
            return $this->sendResponse($success, $this->successStatus);
         }
     }
+
+
+    function login_google(Request $request){
+        $email = $request->email;
+        $dd = explode('@',$email);
+
+        if($request->displayName){
+            $name = $request->displayName;
+        }else{
+            $name = $dd[0];
+        }
+
+        if($request->givenName){
+            $first_name = $request->givenName;
+        }else{
+            $first_name = $dd[0];
+        }
+
+        if($request->familyName){
+            $last_name = $request->familyName;
+        }else{
+            $last_name = $dd[0];
+        }
+
+        if($request->userId){
+            $oauth_uid = $request->userId;
+        }else{
+            $oauth_uid = $dd[0];
+        }
+
+        if($request->imageUrl){
+            $picture = $request->imageUrl;
+        }else{
+            $picture = 'https://via.placeholder.com/150?text='.$first_name;
+        }
+
+
+        $oauth_provider = 'Google';
+        
+        $userCount = User::where('email',$email)->first();
+
+        if($userCount){
+            $success['access_token'] =  $userCount->createToken('MyApp')->accessToken;
+            $success['token_type'] =  'Bearer';
+            $success['expires_in'] =  Carbon::now()->addDays(15);
+             
+        }else{
+            $userCount = User::count() + 1;
+
+            $user = new User;
+            $user->enc_id = md5($userCount);
+            $user->name = $name;
+            $user->first_name = $first_name;
+            $user->last_name = $last_name;
+            $user->username = $dd[0].$userCount;
+            $user->email = $email;
+            $user->oauth_provider = $oauth_provider;
+            $user->oauth_uid = $oauth_uid;
+            $user->picture = $picture;
+            $user->subscription_type = 1;
+            $user->sub_exp = Carbon::now()->addDays(30);
+            $user->created_at = date('Y-m-d H:i:s');
+            $user->save();
+
+            $user->subscription()->attach(['1']);
+        
+            $arr = array('user_id' => $user->id,'role_id' => 2,'created_at' => date('Y-m-d H:i:s'));
+            $dd = DB::table('user_role')->insert($arr);
+
+            $arr = array('user_id' => $user->id);
+            //$ii = DB::table('user_measurements')->insert($arr);
+            $up = DB::table('user_profile')->insert($arr);
+
+            $success['access_token'] =  $user->createToken('MyApp')->accessToken;
+            $success['token_type'] =  'Bearer';
+            $success['expires_in'] =  Carbon::now()->addDays(15);
+        }
+
+        return $this->sendResponse($success, $this->successStatus);
+    }
     
+/*
+    email:"dshendkar@yahoo.in"
+    first_name:"Dattatray"
+    picture:"https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=2783228471767882&height=720&width=720&ext=1587629507&hash=AeTNVpfmPL-FbYLh"
+    username:"Dattatray Shendkar"
+*/
+    function login_facebook(Request $request){
+        $email = $request->email;
+        $dd = explode('@',$email);
+        $usersCount = User::count() + 1;
+
+        if($request->email){
+            $email = $request->email;
+        }else{
+            return response()->json(['error' => 'Invalid email.']);
+            exit;
+        }
+
+        if($request->first_name){
+            $first_name = $request->first_name
+        }else{
+            $first_name = ;
+        }
+
+        if($request->username){
+            $username = $request->username
+        }else{
+            $username = $dd[0].$usersCount;
+        }
+
+        if($request->picture){
+            $picture = $request->picture
+        }else{
+            $picture ='https://via.placeholder.com/150?text='.$first_name;
+        }
+
+        $email = $request->email;
+        $oauth_provider = 'Facebook';
+
+        $userCount = User::where('email',$email)->first();
+
+        if($userCount){
+            $success['access_token'] =  $userCount->createToken('MyApp')->accessToken;
+            $success['token_type'] =  'Bearer';
+            $success['expires_in'] =  Carbon::now()->addDays(15);
+             
+        }else{
+            
+
+            $user = new User;
+            $user->enc_id = md5($usersCount);
+            $user->name = $first_name;
+            $user->first_name = $first_name;
+            $user->username = $username;
+            $user->email = $email;
+            $user->oauth_provider = $oauth_provider;
+            $user->oauth_uid = '';
+            $user->picture = $picture;
+            $user->subscription_type = 1;
+            $user->sub_exp = Carbon::now()->addDays(30);
+            $user->created_at = date('Y-m-d H:i:s');
+            $user->save();
+
+            $user->subscription()->attach(['1']);
+        
+            $arr = array('user_id' => $user->id,'role_id' => 2,'created_at' => date('Y-m-d H:i:s'));
+            $dd = DB::table('user_role')->insert($arr);
+
+            $arr = array('user_id' => $user->id);
+            //$ii = DB::table('user_measurements')->insert($arr);
+            $up = DB::table('user_profile')->insert($arr);
+
+            $success['access_token'] =  $user->createToken('MyApp')->accessToken;
+            $success['token_type'] =  'Bearer';
+            $success['expires_in'] =  Carbon::now()->addDays(15);
+        }
+
+        return $this->sendResponse($success, $this->successStatus);
+    }
 }

@@ -577,10 +577,11 @@
                 <?php 
                 $name = strtolower($pm->measurement_name);
                 $smallname = Str::slug($name,'_');
+                $original_name = str_replace('_', ' ', $pm->measurement_name);
                 ?>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="col-form-label"> {{ucfirst($pm->measurement_name)}}
+                            <label class="col-form-label"> {{ucfirst($original_name)}}
                                 <span class="mytooltip tooltip-effect-2">
 <span class="tooltip-item">?</span>
                                 <span class="tooltip-content clearfix">

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Traits;
 use Auth;
 use App\Models\Friends;
 
@@ -15,13 +15,13 @@ trait FriendRequestAcceptableTrait
     {
         $friend = new Friends();
         $friend->user_id = Auth::user()->id;
-        $friend->friend_id = $request->id;
+        $friend->friend_id = $request->friend_id;
         $friend->ipaddress = $_SERVER['REMOTE_ADDR'];
         $this->friendrequestaccept()->save($friend);
 
         $friends = new Friends();
         $friends->friend_id = Auth::user()->id;
-        $friends->user_id = $request->id;
+        $friends->user_id = $request->friend_id;
         $friends->ipaddress = $_SERVER['REMOTE_ADDR'];
         $this->friendrequestaccept()->save($friends);
 

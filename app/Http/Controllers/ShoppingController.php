@@ -144,7 +144,7 @@ class ShoppingController extends Controller
       $comments = ProductComments::leftJoin('users','users.id','product_comments.user_id')
         ->select('users.picture','product_comments.id','product_comments.user_id','product_comments.name','product_comments.comment','product_comments.product_id','product_comments.created_at','product_comments.rating')
         ->where('product_comments.status',1)
-        ->where('product_comments.product_id',$id)->orderBy('product_comments.id','DESC')->paginate(1);
+        ->where('product_comments.product_id',$id)->orderBy('product_comments.id','DESC')->paginate(10);
         
        if ($request->ajax()) {
             return view('shopping.product-comments', ['comments' => $comments])->render();  

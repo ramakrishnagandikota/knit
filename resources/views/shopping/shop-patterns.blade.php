@@ -328,6 +328,7 @@ if($pro->is_custom == 1){
     $custom = 'non-custom';
 }
 @endphp
+
 <div class="col-xl-3 col-md-6 col-grid-box sectionContent knit-fit-couture {{$gartype}} {{$garcons}} {{$desielem}} {{$shouldcons}} {{$custom}}">
 <div class="product-box">
     <div class="img-wrapper">
@@ -671,6 +672,9 @@ document.addEventListener("click", closeAllSelect);
     var sections = $('.sectionContent');
 
 	$(function(){
+
+        
+        
         updateContentVisibility();
 
         $(document).on('click','.pattern-popup',function(){
@@ -687,7 +691,7 @@ document.addEventListener("click", closeAllSelect);
 			    $(this).attr('href',url+'&perPage='+perPage);
 			});
 			
-		},3000);
+		},1000);
 
 
 		$(document).on('click','.pattern-popup',function(){

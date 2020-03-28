@@ -73,7 +73,7 @@ class Productscontroller extends Controller
 
          $s3 = \Storage::disk('s3');
         //exit;
-        $filepath = 'knitfit/'.$filename;
+        $filepath = 'knitfit/'.strtolower($filename);
 
         
         $ext = 'jpg';

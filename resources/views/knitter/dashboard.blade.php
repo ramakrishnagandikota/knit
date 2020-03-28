@@ -35,7 +35,7 @@
 						</li>
 						<li>
 							<figure>
-								<a href="#"> <img class="dashboard-icons" src="{{ asset('resources/assets/files/assets/icon/custom-icon/Timeline.png')}}" /></a>
+								<a href="{{url('connect')}}"> <img class="dashboard-icons" src="{{ asset('resources/assets/files/assets/icon/custom-icon/Timeline.png')}}" /></a>
 								<figcaption class="text-muted">Connect</figcaption>
 							</figure>
 						</li>
