@@ -302,19 +302,19 @@ class LoginController extends Controller
         }
 
         if($request->first_name){
-            $first_name = $request->first_name
+            $first_name = $request->first_name;
         }else{
-            $first_name = ;
+            $first_name = '';
         }
 
         if($request->username){
-            $username = $request->username
+            $username = $request->username;
         }else{
             $username = $dd[0].$usersCount;
         }
 
         if($request->picture){
-            $picture = $request->picture
+            $picture = $request->picture;
         }else{
             $picture ='https://via.placeholder.com/150?text='.$first_name;
         }

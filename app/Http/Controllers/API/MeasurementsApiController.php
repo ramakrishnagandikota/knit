@@ -11,6 +11,12 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Models\UserMeasurements;
 use Auth;
 use App\User;
+use File;
+use Image;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Input;
+use DB;
+use DateTime;
 
 class MeasurementsApiController extends Controller
 {
@@ -29,8 +35,37 @@ class MeasurementsApiController extends Controller
         }
     }
 
-    function image_upload(){
-        
+    function image_upload(Request $request){
+        $image = $request->file('file');
+        for ($i=0; $i < count($image); $i++) { 
+            $filename = time().'-'.$image[$i]->getClientOriginalName();
+            $ext = $image[$i]->getClientOriginalExtension();
+
+         $s3 = \Storage::disk('s3');
+        //exit;
+        $filepath = 'knitfit/'.$filename;
+
+        if($ext == 'pdf'){
+            $pu = $s3->put('/'.$filepath, file_get_contents($image[$i]),'public');
+        }else{
+        $ext = $ext;
+        $img = Image::make($image[$i]);
+        $height = Image::make($image[$i])->height();
+        $width = Image::make($image[$i])->width();
+        $img->orientate();
+        $img->resize($width, $height, function ($constraint) {
+            //$constraint->aspectRatio();
+        });
+        $img->encode('jpg');
+        $pu = $s3->put('/'.$filepath, $img->__toString(), 'public');
+        }
+
+       if($pu){
+         return response()->json(['path1' => $filepath, 'path' => 'https://s3.us-east-2.amazonaws.com/knitfitcoall/'.$filepath,'ext' => $ext]);
+     }else{
+        echo 'error';
+     }
+        }
     }
 
     public function index(){

@@ -135,7 +135,8 @@ $request->session()->put('measurement_id', $data);
         
         $image = $request->file('file');
         for ($i=0; $i < count($image); $i++) { 
-            $filename = time().'-'.$image[$i]->getClientOriginalName();
+            $fname = str_replace(' ', '-', $image[$i]->getClientOriginalName()); 
+            $filename = time().'-'.$fname;
             $ext = $image[$i]->getClientOriginalExtension();
 
          $s3 = \Storage::disk('s3');
@@ -145,7 +146,7 @@ $request->session()->put('measurement_id', $data);
         if($ext == 'pdf'){
             $pu = $s3->put('/'.$filepath, file_get_contents($image[$i]),'public');
         }else{
-        $ext = 'jpg';
+        $ext = $ext;
         $img = Image::make($image[$i]);
         $height = Image::make($image[$i])->height();
         $width = Image::make($image[$i])->width();

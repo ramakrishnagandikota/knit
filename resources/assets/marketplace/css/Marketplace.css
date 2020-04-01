@@ -176,3 +176,18 @@ a:focus, a:hover {
 .skills-list li{display: inline-block;}
 .theme-txt{color: #0d665c;}
 .nav-right li a:hover{color: #0d665c!important;}
+#profile-img {
+    width: auto;
+    height: 140px!important;
+    border-radius: 6px;
+}
+#profile-img-main {
+    width: auto;
+    height: 140px!important;
+    border-radius: 6px;
+}
+.profile-upload {
+    position: absolute;
+    right: 52px;
+    top: 20px;
+}

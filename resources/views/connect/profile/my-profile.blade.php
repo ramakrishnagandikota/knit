@@ -8,7 +8,7 @@
 <div class="rounded-card user-card">
 <div class="card">
 <div class="img-hover">
-<img class="img-fluid img-radius" src="{{ asset('resources/assets/files/assets/images/user-card/user17.jpg') }}" alt="round-img">
+<img class="img-fluid img-radius" src="{{ Auth::user()->picture }}" alt="round-img">
 <div class="img-overlay img-radius">
 <span>
 <a href="#" class="btn btn-sm btn-primary" data-popup="lightbox"><i class="fa fa-eye"></i></a>
@@ -17,8 +17,8 @@
 </div>
 </div>
 <div class="user-content">
-<h4 class="">Barbara Davis</h4>
-<p class="m-b-0 text-muted m-b-10">Technical designer</p>
+<h4 class=""> {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h4>
+<p class="m-b-0 text-muted m-b-10">Knitter</p>
 </div>
 </div>
 </div>
@@ -75,7 +75,11 @@
 <button id="view-about-btn" type="button" class="btn btn-sm waves-effect waves-light">
 <i class="fa fa-pencil"></i>
 </button>
-<p class="f-14 m-t-5" id="aboutmeContent">{{Auth::user()->profile->aboutme ? Auth::user()->profile->aboutme : 'Tell me about your self.' }}</p>
+<p class="f-14 m-t-5" id="aboutmeContent">
+    @if(Auth::user()->profile)
+    {{ Auth::user()->profile->aboutme ? Auth::user()->profile->aboutme : 'Tell me about your self.' }}
+    @endif
+</p>
 </div>
 
 <div class="m-0" id="edit-about">
@@ -85,7 +89,8 @@
 </button>
 </p>
 <form id="aboutme">
-    <p><textarea name="aboutme" id="abtme" rows="4" cols="1" style="width: 100%;">{{Auth::user()->profile->aboutme}}</textarea></p>
+    <p><textarea name="aboutme" id="abtme" rows="4" cols="1" style="width: 100%;">
+        @if(Auth::user()->profile){{Auth::user()->profile->aboutme}}@endif</textarea></p>
 </form>
 
 <div class="text-center">
@@ -147,75 +152,11 @@
 
 <div class="tab-pane " id="interest" role="tabpanel">
 <div id="view-interest">
-<p class="text-right m-b-0"><button id="view-interest-btn" type="button" class="btn btn-sm waves-effect waves-light">
-<i class="fa fa-pencil"></i>
-</button></p>
-<h5 class="m-l-30 m-b-20 m-t-10">I Knit for </h5>
-<div class="m-l-30">
-<ul>
-<li style="display: list-item;color: #0d665b;"><i class="fa fa-check m-r-10"></i>Myself</li>
-<li style="display: list-item;color: #0d665b;"><i class="fa fa-check m-r-10"></i>Charity</li>
-<li style="display: list-item;color: #0d665b;"><i class="fa fa-check m-r-10"></i>Family</li>
-</ul>
-</div>
-<br>
-<h5 class="m-l-30 m-b-20">I am here for </h5>
-<div class="m-l-30">
-<ul>
-    <li style="display: list-item;color: #0d665b;"><i class="fa fa-check m-r-10"></i>Knitting</li>
-    <li style="display: list-item;color: #0d665b;"><i class="fa fa-check m-r-10"></i>Learning</li>
-    <li style="display: list-item;color: #0d665b;"><i class="fa fa-check m-r-10"></i>Casual Friends</li>
-</ul>
-</div>
+
+
+
 </div>   
-<div id="edit-interest">
-<p class="text-right"><button id="edit-interest-btn" type="button" class="btn btn-sm waves-effect waves-light">
-<i class="icofont icofont-close"></i>
-</button></p>
-<h5 class="m-l-30 m-b-20 m-t-10">I Knit for </h5>
-<div class="m-l-30">
-    <div class="checkbox-color checkbox-default">
-            <input id="checkbox21" type="checkbox" checked="">
-            <label for="checkbox21">
-                Myself
-            </label>
-        </div>
-        <div class="checkbox-color checkbox-default">
-            <input id="checkbox22" type="checkbox" checked="">
-            <label for="checkbox22">
-                Charity
-            </label>
-        </div>
-        <div class="checkbox-color checkbox-default">
-            <input id="checkbox23" type="checkbox" checked="">
-            <label for="checkbox23">
-                Family
-            </label>
-        </div>
-</div>
-<br>
-<h5 class="m-l-30 m-b-20">I am here for </h5>
-<div class="m-l-30">
-        <div class="checkbox-color checkbox-default">
-                <input id="checkbox24" type="checkbox" checked="">
-                <label for="checkbox24">
-                   Knitting 
-                </label>
-            </div>
-            <div class="checkbox-color checkbox-default">
-                    <input id="checkbox25" type="checkbox" checked="">
-                    <label for="checkbox25">
-                       Learning 
-                    </label>
-                </div>
-                <div class="checkbox-color checkbox-default">
-                        <input id="checkbox26" type="checkbox" checked="">
-                        <label for="checkbox26">
-                                Casual Friends 
-                        </label>
-                    </div>
-</div>
-</div>                                                                                
+
 </div>
 <div class="tab-pane" id="settings3" role="tabpanel">
 <!--profile cover end-->
@@ -223,68 +164,19 @@
 <div class="col-lg-12">
 <div class="list-group panel">
 <!--New Accordion-->
-<div class="row m-l-5 m-r-5" id="first-card">
-<div class="col-lg-12 text-right">
-<button id="edit-btn" type="button" class="btn btn-sm waves-effect waves-light">
-<i class="fa fa-pencil"></i>
-</button>
-</div>
-</div>
-<div class="collapse show" id="Personal-info">
+
+<div class="collapse show">
 <div class="list-group-item">
 <div class="col-lg-12 Profession">
 <div class="view-info">
 <div class="row">
 <div class="col-lg-12">
-<div class="general-info">
-<div class="row">
-    <div class="col-lg-12 col-xl-6">
-        <div class="table-responsive">
-            <table class="table m-0">
-                <tbody>
-                    <tr>
-                        <th scope="row">Name</th>
-                        <td>Barbara Devis</td>
-                        <!-- <td><i class="fa fa-eye"></i></td> -->
-                    </tr>
-                  
-                    <tr>
-                        <th scope="row">Contact number</th>
-                        <td>(01**) - 45*****</td>
-                        <!-- <td><i class="fa fa-eye-slash"></i></td> -->
-                    </tr>
-                    <tr>
-                        <th scope="row">Postal address</th>
-                        <td>NA</td>
-                        <!-- <td><i class="fa fa-eye-slash"></i></td> -->
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <!-- end of table col-lg-6 -->
-    <div class="col-lg-12 col-xl-6">
-        <div class="table-responsive">
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <th scope="row">E-mail</th>
-                        <td>barbara@knitfitco.com</td>
-                        <!-- <td><i class="fa fa-eye-slash"></i></td> -->
-                    </tr>
-                    <tr>
-                        <th scope="row">website</th>
-                        <td>www.knitfitco.com</td>
-                    </tr>
-                   
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <!-- end of table col-lg-6 -->
-</div>
+<div class="general-info" id="view-details">
+
 <!-- end of row -->
 </div>
+
+
 <!-- end of general info -->
 </div>
 <!-- end of col-lg-12 -->
@@ -292,92 +184,6 @@
 <!-- end of row -->
 </div>
 <!-- end of view-info -->
-<div class="edit-info">
-<div class="row">
-<div class="col-lg-12">
-<div class="general-info form-material">
-<div class="row">
-    <div class="col-lg-6 ">
-        <div class="material-group">
-            <div class="material-addone">
-                <i class="icofont icofont-user"></i>
-            </div>
-            <div class="form-group form-primary">
-                <input type="text" name="footer-email" class="form-control" required="">
-                <span class="form-bar"></span>
-                <label class="float-label">Name</label>
-                <span class="privacy" data-toggle="modal" data-target="#myModal"><i class="icofont icofont-settings-alt"></i></span>
-            </div>
-        </div>
-
-        <div class="material-group">
-            <div class="material-addone">
-                    <i class="icofont icofont-mobile-phone"></i>
-            </div>
-            <div class="form-group form-primary">
-                <input type="text" name="footer-email" class="form-control" required="">
-                <span class="form-bar"></span>
-                <label class="float-label">Contact Number</label>
-                <span class="privacy" data-toggle="modal" data-target="#myModal"><i class="icofont icofont-settings-alt"></i></span>
-            </div>
-        </div>
-
-        <div class="material-group">
-            <div class="material-addone">
-                <i class="icofont icofont-location-pin"></i>
-            </div>
-            <div class="form-group form-primary">
-                <input type="text" name="footer-email" class="form-control" required="">
-                <span class="form-bar"></span>
-                <label class="float-label">Postal address</label>
-                <span class="privacy" data-toggle="modal" data-target="#myModal"><i class="icofont icofont-settings-alt"></i></span>
-            </div>
-        </div>
-</div>
-<!-- end of table col-lg-6 -->
-<div class="col-lg-6">
-
-    <div class="material-group">
-        <div class="material-addone">
-                <i class="icofont icofont-ui-message" style="color:black"></i>
-        </div>
-        <div class="form-group form-primary">
-            <input type="text" name="footer-email" class="form-control" required="">
-            <span class="form-bar"></span>
-            <label class="float-label">e-mail</label>
-            <span class="privacy" data-toggle="modal" data-target="#myModal"><i class="icofont icofont-settings-alt"></i></span>
-        </div>
-    </div>
-    <div class="material-group">
-        <div class="material-addone">
-                <i class="icofont icofont-globe"></i>
-        </div>
-        <div class="form-group form-primary">
-            <input type="text" id="ontype-textbox" name="footer-email" class="form-control" required="">
-            <span class="form-bar"></span>
-            <label class="float-label">Website</label><div id="target"></div>
-        </div>
-    </div>
-
-   
-    <div class="material-group m-t-30">
-      
-</div>
-<!-- end of table col-lg-6 -->
-</div>
-</div>
-<!-- end of row -->
-<div class="text-center">
-<a href="#!" class="btn theme-btn btn-primary waves-effect waves-light m-r-20">Save</a>
-<a href="#!" id="edit-cancel" class="btn btn-default waves-effect">Cancel</a>
-</div>
-</div>
-<!-- end of edit info -->
-</div>
-<!-- end of col-lg-12 -->
-</div>
-<!-- end of row -->
-</div>
 
 </div>
 </div>
@@ -395,6 +201,51 @@
 </div>
 </div>                                       
 </div>
+
+
+
+<div class="modal fade" id="myModal" role="dialog" style="z-index: 10000;">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h6 class="modal-title">Privacy settings</h6>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+            <div class="modal-body m-t-15">
+                <div class="row">
+                    <div class="form-radio m-l-30">
+                <div class="group-add-on">
+                    <div class="radio radiofill radio-inline">
+                        <label>
+                            <input type="radio" class="updatePrivacy" name="privacy" id="public" value="public"><i class="helper"></i> Public
+                        </label>
+                    </div>
+                    <div class="radio radiofill radio-inline">
+                        <label>
+                            <input type="radio" class="updatePrivacy" name="privacy" id="friends" value="friends"><i class="helper"></i> Friends
+                        </label>
+                    </div>
+                    <div class="radio radiofill radio-inline">
+                            <label>
+                                <input type="radio" class="updatePrivacy" name="privacy" id="followers" value="followers"><i class="helper"></i> Followers
+                            </label>
+                        </div>
+                    <div class="radio radiofill radio-inline">
+                        <label>
+                            <input type="radio" class="updatePrivacy" name="privacy" id="only-me" value="only-me"><i class="helper"></i> Only Me
+                        </label>
+                    </div>
+                </div>
+            </div>
+                </div>  
+            </div>
+            <!-- <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div> -->
+          </div>
+        </div>
+</div>
+
 @endsection
 @section('footerscript')
 <style>
@@ -508,8 +359,6 @@ button, html [type="button"], [type="reset"], [type="submit"]{background-color: 
           -webkit-box-sizing:border-box;
         border: 5px solid #0d665b;
     }
-    .fbphotobox-main-container{margin-top: 35px;}
-    
 </style>
 
 
@@ -529,6 +378,7 @@ button, html [type="button"], [type="reset"], [type="submit"]{background-color: 
     <script src="{{ asset('resources/assets/files/assets/pages/filer-modified/jquery.fileuploads.init.js') }}" type="text/javascript"></script>
 <script type="text/javascript" src="{{ asset('resources/assets/files/bower_components/jquery-ui/js/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('resources/assets/marketplace/js/fbphotobox.js') }}"></script>
+<script type="text/javascript" src="{{asset('resources/assets/rating/stars.min.js')}}"></script>
 
     <script type="text/javascript">
          $(document).ready(function() {
@@ -547,47 +397,9 @@ button, html [type="button"], [type="reset"], [type="submit"]{background-color: 
                     $(".fbphotobox-image-content").html('<div class="card-block b-b-theme b-t-theme social-msg"> <a href="#"> <i class="icofont icofont-heart-alt text-muted"> </i> <span class="b-r-theme">Like (20)</span> </a> <a href="#"> <i class="icofont icofont-comment text-muted"> </i> <span class="b-r-theme">Comments (25)</span> </a> </div><div class="card-block user-box"> <div class="p-b-20 m-t-15"> <span class="f-14"><a href="#">Comments (110)</a> </span> <span class="float-right"><a href="#!">See all comments</a></span><hr> </div><div class="media"> <a class="media-left p-r-0" href="#"> <img class="media-object img-radius m-r-20" src="../files/assets/images/avatar-1.jpg" alt="Generic placeholder image"> </a> <div class="media-body b-b-theme social-client-description"> <div class="chat-header">About Marta Williams<span class="text-muted">Jane 04, 2015</span></div><p class="text-muted">Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p></div></div><div class="media"> <a class="media-left p-r-0" href="#"> <img class="media-object img-radius m-r-20" src="../files/assets/images/avatar-2.jpg" alt="Generic placeholder image"> </a> <div class="media-body b-b-theme social-client-description"> <div class="chat-header">About Marta Williams<span class="text-muted">Jane 10, 2015</span></div><p class="text-muted">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p></div></div><div class="media"> <a class="media-left p-r-0" href="#"> <img class="media-object img-radius m-r-20" src="../files/assets/images/avatar-1.jpg" alt="Generic placeholder image"> </a> <div class="media-body"> <form class="form-material right-icon-control"> <div class="form-group form-default"> <textarea class="form-control" required=""></textarea> <span class="form-bar"></span> <label class="float-label">Write something...</label> </div><div class="form-icon "> <button class="btn theme-outline-btn btn-icon waves-effect waves-light"> <i class="fa fa-paper-plane "></i> </button> </div></form> </div></div></div><p><br></p>');
                 }
             });
+
         });
 
-$("#edit-about,#edit-interest,#edit-portfolio").hide();
-$("#view-about-btn").click(function()
-{
-    $("#edit-about").show();
-    $("#view-about").hide();
-}
-)
-$(".edit-about-btn").click(function()
-{
-    $("#view-about").show();
-    $("#edit-about").hide();
-}
-)
-
-$("#view-interest-btn").click(function()
-{
-    $("#edit-interest").show();
-    $("#view-interest").hide();
-}
-)
-$("#edit-interest-btn").click(function()
-{
-    $("#view-interest").show();
-    $("#edit-interest").hide();
-}
-)
-
-$("#view-portfolio-btn").click(function()
-{
-    $("#edit-portfolio").show();
-    $("#view-portfolio").hide();
-}
-)
-$("#edit-portfolio-btn").click(function()
-{
-    $("#view-portfolio").show();
-    $("#edit-portfolio").hide();
-}
-)
 
 
  $(document).on('click', '[data-toggle="lightbox"]', function(event) {
@@ -595,16 +407,24 @@ $("#edit-portfolio-btn").click(function()
         $(this).ekkoLightbox();
     });
 
-    $(".connect").click(function()
-    {
-        $('#myModal').modal('toggle');
-        setTimeout(function(){ $('#myModal').modal('toggle'); },2000);
-    })
 
 
 $(function(){
 
+$("#edit-about").hide();
+$("#view-about-btn").click(function(){
+    $("#view-about").hide();
+    $("#edit-about").show();
+});
+
+$(".edit-about-btn").click(function(){
+    $("#view-about").show();
+    $("#edit-about").hide();
+});
+
     getSkillset();
+    getInterest();
+    getDetails();
 
     $(document).on('click','#saveAbout',function(){
         var Data = $("#aboutme").serializeArray();
@@ -648,6 +468,134 @@ $(function(){
             $(".loader-bg").hide();
         });
     });
+
+
+    $(document).on('click','#saveskillSet',function(){
+        var Data = $("#UpdateskillSet").serializeArray();
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            url : '{{url("connect/addskillSet")}}',
+            type : 'POST',
+            data : Data,
+            beforeSend : function(){
+                $(".loader-bg").show();
+            },
+            success: function(res){
+                if(res.success){
+                    getSkillset();
+                    addProductCartOrWishlist('fa-check','Success',res.success);
+                }else{
+                    addProductCartOrWishlist('fa-times','error',res.error);
+                }
+            },
+            complete : function(){
+                $(".loader-bg").hide();
+            }
+        });
+ 
+    });
+
+$(document).on('click','#editInterest',function(){
+    $(".loader-bg").show();
+    $.get('{{url("connect/editInterest")}}',function(res){
+        $("#view-interest").html(res);
+        $(".loader-bg").hide();
+    });
+});
+
+
+    $(document).on('click','#saveInterest',function(){
+        var Data = $("#UpdateInterest").serializeArray();
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            url : '{{url("connect/addInterest")}}',
+            type : 'POST',
+            data : Data,
+            beforeSend : function(){
+                $(".loader-bg").show();
+            },
+            success: function(res){
+                if(res.success){
+                    getInterest();
+                    addProductCartOrWishlist('fa-check','Success',res.success);
+                }else{
+                    addProductCartOrWishlist('fa-times','error',res.error);
+                }
+            },
+            complete : function(){
+                $(".loader-bg").hide();
+            }
+        });
+ 
+    });
+
+
+$(document).on('click','#editDetails',function(){
+    $(".loader-bg").show();
+    $.get('{{url("connect/editDetails")}}',function(res){
+        $("#view-details").html(res);
+        $(".loader-bg").hide();
+    });
+});
+
+$(document).on('click','#saveDetails',function(){
+        var Data = $("#updateDetails").serializeArray();
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            url : '{{url("connect/addDetails")}}',
+            type : 'POST',
+            data : Data,
+            beforeSend : function(){
+                $(".loader-bg").show();
+            },
+            success: function(res){
+                if(res.success){
+                    getDetails();
+                    addProductCartOrWishlist('fa-check','Success',res.success);
+                }else{
+                    addProductCartOrWishlist('fa-times','error',res.error);
+                }
+            },
+            complete : function(){
+                $(".loader-bg").hide();
+            }
+        });
+ 
+    });
+
+    $(document).on('click','.privacy',function(){
+        $('input.active').removeClass('active');
+        var id = $(this).attr('data-id');
+        var inputVal = $("#"+id+"_privacy").val();
+        $("#"+id+"_privacy").addClass('active');
+        if(inputVal != 0){
+            $("#"+inputVal).prop('checked',true);
+        }
+    });
+
+    $(document).on('click','.updatePrivacy',function(){
+        var id =  $(this).attr('id');
+        $('input.active').val(id);
+    });
+
 });
 
 
@@ -655,6 +603,22 @@ function getSkillset(){
     $(".loader-bg").show();
     $.get('{{url("connect/getSkillset")}}',function(res){
         $("#skillSet").html(res);
+        $(".loader-bg").hide();
+    });
+}
+
+function getInterest(){
+    $(".loader-bg").show();
+    $.get('{{url("connect/getInterest")}}',function(res){
+        $("#view-interest").html(res);
+        $(".loader-bg").hide();
+    });
+}
+
+function getDetails(){
+    $(".loader-bg").show();
+    $.get('{{url("connect/getDetails")}}',function(res){
+        $("#view-details").html(res);
         $(".loader-bg").hide();
     });
 }

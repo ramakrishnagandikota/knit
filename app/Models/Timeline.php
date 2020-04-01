@@ -4,17 +4,34 @@ namespace App\Models;
 use Auth;
 use App\User;
 use App\Models\Timelinecomments;
+use App\Models\TimelineImages;
+use App\Models\Timelinelikes;
+use App\Traits\PostLikableTrait;
+use App\Traits\PostCommentableTrait;
 
 
 use Illuminate\Database\Eloquent\Model;
 
 class Timeline extends Model
 {
-	use CommentableTrait,PostlikableTrait;
+	use PostLikableTrait,PostCommentableTrait;
+
     protected $table = 'timeline';
 
       public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    function comments(){
+    	return $this->hasMany(Timelinecomments::class);
+    }
+
+    function images(){
+    	return $this->hasMany(TimelineImages::class);
+    }
+
+    function likes(){
+        return $this->hasMany(Timelinelikes::class);
     }
 }

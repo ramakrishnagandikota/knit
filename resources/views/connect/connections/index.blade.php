@@ -107,19 +107,19 @@ $follow = App\Models\Follow::where('user_id',Auth::user()->id)->where('follow_us
 
 ?>
 
-<div class="col-lg-4 col-xl-3 col-md-4 hidethis sectionContent friends @if($follow == 1) followers @endif " >
+<div class="col-lg-4 col-xl-3 col-md-4 hidethis sectionContent friends @if($follow == 1) followers @endif " id="friend{{$friend->user_id}}">
 	<div class="rounded-card user-card">
 		<div class="card">
 			<div class="img-hover">
 			<img class="img-fluid img-radius p-10" src="{{$picture}}" alt="round-img">
 			<div class="img-overlay img-radius"> 
 				<span>
-			        <a href="#" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Unfriend"data-popup="lightbox"> <i class="fa fa-user-times"></i></a>
+			        <a href="javascript:;" class="btn btn-sm btn-primary unfriend" data-toggle="tooltip" data-placement="top" title="Unfriend"data-popup="lightbox"  data-id="{{$friend->user_id}}" > <i class="fa fa-user-times"></i></a>
 					
 					@if($follow == 1)
-					<a href="" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Unfollow" ><i class="icofont icofont-undo"></i></a>
-					@else
-			        <a href="" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Follow" ><i class="fa icofont icofont-ui-social-link"></i></a>
+			        <a href="javascript:;" id="follow{{$friend->user_id}}" class="btn btn-sm btn-primary unfollow" data-id="{{$friend->user_id}}" data-toggle="tooltip" data-placement="top" title="Unfollow" ><i class="fa icofont icofont-undo"></i></a>
+			        @else
+					<a href="javascript:;" id="follow{{$friend->user_id}}" class="btn btn-sm btn-primary follow" data-id="{{$friend->user_id}}" data-toggle="tooltip" data-placement="top" title="Follow" ><i class="fa icofont icofont-ui-social-link"></i></a>
 			        @endif
 			    </span>
 			</div>
@@ -168,6 +168,129 @@ $follow = App\Models\Follow::where('user_id',Auth::user()->id)->where('follow_us
 		updateContentVisibility();
 
 		$("#collection-filter :checkbox").click(updateContentVisibility);
+
+
+		$(document).on('click','.unfriend',function(){
+	var id = $(this).attr('data-id');
+
+	$.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+
+Swal.fire({
+  title: '',
+  text: "Are you sure want to remove this user from friend list ?",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, Remove'
+}).then((result) => {
+  if (result.value) {
+    
+    $.ajax({
+		url : '{{url("connect/removeFriend")}}',
+		type : 'POST',
+		data : 'friend_id='+id,
+		beforeSend : function(){
+			$(".loader-bg").show();
+			$("#friend"+id).find('i').removeClass('fa-user-times').addClass('fa-spinner fa-spin');
+		},
+		success : function(res){
+			if(res.success){
+				$("#friend"+id).remove();
+				addProductCartOrWishlist('fa fa-check','success',res.success);
+			}else{
+				$("#friend"+id).find('i').removeClass('fa-spinner fa-spin').addClass('fa-user');
+				addProductCartOrWishlist('fa fa-times','error',res.error);
+			}
+		},
+		complete : function(){
+			$(".loader-bg").hide();
+		}
+	});
+
+
+  }
+});
+});
+
+$(document).on('click','.follow',function(){
+	var id = $(this).attr('data-id');
+
+	$.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+
+	$.ajax({
+		url : '{{url("connect/follow")}}',
+		type : 'POST',
+		data : 'follow_user_id='+id,
+		beforeSend : function(){
+			$(".loader-bg").show();
+			$("#follow"+id).find('i').removeClass('icofont icofont-ui-social-link').addClass('fa-spinner fa-spin');
+		},
+		success : function(res){
+			if(res.success){
+				$("#follow"+id).find('i').removeClass('fa-spinner fa-spin').addClass('icofont icofont-undo');
+		$("#follow"+id).attr('data-original-title','Unfollow');
+		$("#follow"+id).removeClass('follow').addClass('unfollow');
+				addProductCartOrWishlist('fa fa-check','success',res.success);
+			}else{
+				$("#follow"+id).find('i').removeClass('fa-spinner fa-spin').addClass('icofont-undo');
+				addProductCartOrWishlist('fa fa-times','error',res.error);
+			}
+		},
+		complete : function(){
+			$(".loader-bg").hide();
+		}
+	});
+
+});
+
+
+$(document).on('click','.unfollow',function(){
+	var id = $(this).attr('data-id');
+
+	$.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+
+	$.ajax({
+		url : '{{url("connect/unfollow")}}',
+		type : 'POST',
+		data : 'follow_user_id='+id,
+		beforeSend : function(){
+			$(".loader-bg").show();
+			$("#follow"+id).find('i').removeClass('icofont-undo').addClass('fa-spinner fa-spin');
+		},
+		success : function(res){
+			if(res.success){
+				$("#follow"+id).find('i').removeClass('fa-spinner fa-spin').addClass('icofont-ui-social-link');
+		$("#follow"+id).attr('data-original-title','Follow');
+		$("#follow"+id).removeClass('unfollow').addClass('follow');
+				addProductCartOrWishlist('fa fa-check','success',res.success);
+			}else{
+				$("#follow"+id).find('i').removeClass('fa-spinner fa-spin').addClass('icofont-ui-social-link');
+				addProductCartOrWishlist('fa fa-times','error',res.error);
+			}
+		},
+		complete : function(){
+			$(".loader-bg").hide();
+		}
+	});
+
+});
+
 	});
 
 
@@ -191,5 +314,43 @@ $follow = App\Models\Follow::where('user_id',Auth::user()->id)->where('follow_us
      }
         
 }
+
+function addProductCartOrWishlist(icon,status,msg){
+        $.notify({
+            icon: 'fa '+icon,
+            title: status+'!',
+            message: msg
+        },{
+            element: 'body',
+            position: null,
+            type: "info",
+            allow_dismiss: true,
+            newest_on_top: false,
+            showProgressbar: true,
+            placement: {
+                from: "top",
+                align: "right"
+            },
+            offset: 20,
+            spacing: 10,
+            z_index: 10000,
+            delay: 3000,
+            animate: {
+                enter: 'animated fadeInDown',
+                exit: 'animated fadeOutUp'
+            },
+            icon_type: 'class',
+            template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+            '<span data-notify="icon"></span> ' +
+            '<span data-notify="title">{1}</span> ' +
+            '<span data-notify="message">{2}</span>' +
+            '<div class="progress" data-notify="progressbar">' +
+            '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+            '</div>' +
+            '<a href="{3}" target="{4}" data-notify="url"></a>' +
+            '</div>'
+        });
+    }
 </script>
 @endsection

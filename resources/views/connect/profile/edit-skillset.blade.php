@@ -2,53 +2,22 @@
     <button id="" onclick="getSkillset();" type="button" class="btn btn-sm waves-effect waves-light">
 <i class="icofont icofont-close"></i>
 </button></p>
-
+<form id="UpdateskillSet">
+<?php $exp = explode(',', Auth::user()->profile->professional_skills); ?>
+@if($master_list->count() > 0)
         <ul class="checked-edit-list">
-            <li><input type="checkbox" id="cb1" />
-                  <label for="cb1"><img src="../files/assets/icon/custom/Crocheting.png" />
-                  <div class="text-center">Crocheting</div>
-                </label>
-            </li>
-            <li><input type="checkbox" id="cb2" />
-                <label for="cb2"><img src="../files/assets/icon/custom/Dying.png" />
-                <div class="text-center">Dying</div></label>
-            </li>
-            <li><input type="checkbox" id="cb3" />
-                <label for="cb3"><img src="../files/assets/icon/custom/Embroidery.png" />
-                <div class="text-center">Embroidery</div>
-                </label>
-            </li>
-            <li><input type="checkbox" id="cb4" />
-                <label for="cb4"><img src="../files/assets/icon/custom/Knitting.png" />
-                <div class="text-center">Knitting</div>
-                </label>
-            </li>
-            <li><input type="checkbox" id="cb5" />
-                <label for="cb5"><img src="../files/assets/icon/custom/Needlepoint.png" />
-                <div class="text-center">Needlepoint</div>
-                </label>
-            </li>
-            <li><input type="checkbox" id="cb6" />
-                <label for="cb6"><img src="../files/assets/icon/custom/Quilting.png" />
-                <div class="text-center">Quilting</div>
-                </label>
-            </li>
-            <li><input type="checkbox" id="cb7" />
-            <label for="cb7"><img src="../files/assets/icon/custom/Sewing.png" />
-            <div class="text-center">Sewing</div>
+@php $i=1; @endphp
+    @foreach($master_list as $ml)
+        <li><input type="checkbox" @for($k=0;$k<count($exp);$k++) @if($ml->name == $exp[$k]) checked @endif @endfor id="cb{{$i}}" name="professional_skills[]" value="{{$ml->name}}" />
+            <label for="cb{{$i}}">
+                <img src="{{ asset('resources/assets/files/assets/icon/custom/'.$ml->name.'.png') }}" />
+                <div class="text-center">{{$ml->name}}</div>
             </label>
-            </li>
-            <li><input type="checkbox" id="cb8" />
-            <label for="cb8"><img src="../files/assets/icon/custom/Spinning.png" />
-            <div class="text-center">Spinning</div>
-            </label>
-            </li>
-            <li><input type="checkbox" id="cb9" />
-            <label for="cb9"><img src="../files/assets/icon/custom/Weaving.png" />
-            <div class="text-center">Weaving</div>
-            </label>
-            </li>
+        </li>
+@php $i++; @endphp
+    @endforeach
         </ul>
+@endif
         <p></p>
         <hr>
         <h5 class="m-l-30 m-b-20">As a Knitter I am </h5>
@@ -56,17 +25,17 @@
                 <div class="group-add-on">
                     <div class="radio radiofill radio-inline">
                         <label>
-                            <input type="radio" name="radio" checked><i class="helper"></i> Still learning
+                            <input type="radio" name="as_a_knitter_i_am" checked value="Still learning"><i class="helper"></i> Still learning
                         </label>
                     </div>
                     <div class="radio radiofill radio-inline">
                         <label>
-                            <input type="radio" name="radio"><i class="helper"></i> A Designer
+                            <input type="radio" name="as_a_knitter_i_am" value="A Designer"><i class="helper"></i> A Designer
                         </label>
                     </div>
                     <div class="radio radiofill radio-inline">
                             <label>
-                                <input type="radio" name="radio"><i class="helper"></i> A Teacher
+                                <input type="radio" name="as_a_knitter_i_am" value="A Teacher"><i class="helper"></i> A Teacher
                             </label>
                         </div>
                 </div>
@@ -78,21 +47,33 @@
             <div class="m-l-30">
             <div class="stars-example-css review-star">
                     <label for="checkbox3">Knitting Skills</label>&nbsp;&nbsp;
-                    <i class="icofont icofont-star"></i>
-                    <i class="icofont icofont-star"></i>
-                    <i class="icofont icofont-star"></i>
-                    <i class="icofont icofont-star"></i>
-                    <i class="icofont icofont-star"></i>
-                    <label for="checkbox3">&nbsp; (1- Beginner , 2- Advance beginner, 3- Novice, 4- Proficient, 5-Expert )</label>
+                    <div id="demo"></div>
+                    <input type="hidden" id="rating" name="rate_yourself" value="0">
+                    <label for="checkbox3">&nbsp; (1- Beginner , 2- Advance beginner, 3- Experienced, 4- Very experienced, 5-Expert )</label>
             </div>
             </div>
 <p></p>
 <p></p>
 <hr>
-             
+             </form>
 <!-- end of row --><p></p><p></p>
 <div class="text-center">
-<a href="#!" class="btn btn-primary waves-effect waves-light theme-btn">Save</a>
-<a href="#!" id="edit-cancel1" class="btn btn-default waves-effect" onclick="getSkillset();" >Cancel</a>
+<a href="javascript:;" id="saveskillSet" class="btn btn-primary waves-effect waves-light theme-btn">Save</a>
+<a href="javascript:;" id="edit-cancel1" class="btn btn-default waves-effect" onclick="getSkillset();" >Cancel</a>
 </div>
 <p></p>
+
+<script type="text/javascript">
+    var rate = '{{ Auth::user()->profile->rate_yourself ? Auth::user()->profile->rate_yourself : 0 }}';
+    $("#demo").stars({
+        stars: 5,
+        emptyIcon  : 'fa-star-o',
+        filledIcon : 'fa-star',
+        color      : '#0d665c',
+        value      : rate,
+        text : [],
+        click: function(index) {
+            $("#rating").val(index);
+        }
+    });
+</script>

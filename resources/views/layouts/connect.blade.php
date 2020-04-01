@@ -35,6 +35,7 @@
 <!-- Font Awesome -->
 <link rel="stylesheet" type="text/css" href="{{ asset('resources/assets/files/assets/icon/font-awesome/css/font-awesome.min.css') }}">
 <!-- Style.css -->
+      <link rel="stylesheet" type="text/css" href="{{ asset('resources/assets/files/assets/icon/material-design/css/material-design-iconic-font.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('resources/assets/files/assets/css/style.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('resources/assets/files/assets/css/pages.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('resources/assets/marketplace/css/Marketplace.css') }}">
@@ -379,8 +380,9 @@ Photos
 <!-- Bootstrap Notification js-->
 <script src="{{ asset('resources/assets/KnitfitEcommerce/assets/js/bootstrap-notify.min.js') }}"></script>
 
-<!-- Todo js -->
-<script type="text/javascript" src="{{ asset('resources/assets/files/assets/pages/todo/todo.js') }}"></script>
+<!-- Bootstrap Notification js-->
+<script src="{{ asset('resources/assets/KnitfitEcommerce/assets/js/bootstrap-notify.min.js') }}"></script>
+
 <script src="{{ asset('resources/assets/files/assets/js/pcoded.min.js') }}"></script>
 <script src="{{ asset('resources/assets/files/assets/js/vertical/vertical-layout.min.js') }}"></script>
 <script src="{{ asset('resources/assets/files/assets/js/jquery.mCustomScrollbar.concat.min.js') }}"></script>

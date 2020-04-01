@@ -1,5 +1,11 @@
 $(document).ready(function(){
 
+	$.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+      });
+
 	//Example 2
 	$("#filer_input2").filer({
 		limit: null,
@@ -11,6 +17,8 @@ $(document).ready(function(){
 		templates: {
 			box: '<ul class="jFiler-items-list jFiler-items-grid"></ul>',
 			item: '<li class="jFiler-item">\
+			<input type="hidden" name="image[]" id="image" value="" >\
+            <input type="hidden" name="ext[]" id="ext" value="" >\
 						<div class="jFiler-item-container">\
 							<div class="jFiler-item-inner">\
 								<div class="jFiler-item-thumb">\
@@ -80,7 +88,7 @@ $(document).ready(function(){
 			dragContainer: null,
 		},
 		uploadFile: {
-			url: "./php/ajax_upload_file.php",
+			url: URL,
 			data: null,
 			type: 'POST',
 			enctype: 'multipart/form-data',
@@ -92,7 +100,8 @@ $(document).ready(function(){
 					filerKit = inputEl.prop("jFiler");
 
         		filerKit.files_list[id].name = new_file_name;
-
+        		itemEl.find("#image").val(data.path);
+                itemEl.find("#ext").val(data.ext);
 				itemEl.find(".jFiler-jProgressBar").fadeOut("slow", function(){
 					$("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow");
 				});
@@ -122,7 +131,7 @@ $(document).ready(function(){
 			var filerKit = inputEl.prop("jFiler"),
 		        file_name = filerKit.files_list[id].name;
 
-		    $.post('../php/ajax_remove_file.php', {file: file_name});
+		    $.post(URL1, {file: file_name});
 		},
 		onEmpty: null,
 		options: null,

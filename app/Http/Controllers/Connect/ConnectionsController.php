@@ -20,6 +20,8 @@ use App\Traits\FollowTrait;
 use App\Notifications\FollowNotification;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Encryption\DecryptException;
+use App\Models\Userprofile;
+use App\Models\UserSettings;
 
 class ConnectionsController extends Controller
 {
@@ -196,7 +198,15 @@ class ConnectionsController extends Controller
 
     function profile_addAboutme(Request $request){
         $array = array('aboutme' => $request->aboutme);
+        if(Auth::user()->profile){
         $send = Auth::user()->profile->update($array);
+        }else{
+        $profile = new Userprofile;
+        $profile->user_id = Auth::user()->id;
+        $profile->aboutme = $request->aboutme;
+        $send = $profile->save();
+        }
+
         if($send){
             return response()->json(['success' => 'About me added successfully.']);
         }else{
@@ -204,12 +214,146 @@ class ConnectionsController extends Controller
         }
     }
 
-    function profile_getSkillset(){
+    function profile_getSkillset(Request $request){
         return view('connect.profile.show-skillset');
     }
 
-    function profile_editSkillset(){
-        return view('connect.profile.edit-skillset');
+    function profile_editSkillset(Request $request){
+        $master_list = MasterList::where('type','user_skill_set')->get();
+        return view('connect.profile.edit-skillset',compact('master_list'));
     }
+
+    function profile_addskillSet(Request $request){
+        $ps = implode(',', $request->professional_skills);
+        $array = array('professional_skills' => $ps,'as_a_knitter_i_am' => $request->as_a_knitter_i_am,'rate_yourself' => $request->rate_yourself);
+        if(Auth::user()->profile){
+        $send = Auth::user()->profile->where('user_id',Auth::user()->id)->update($array);
+        }else{
+        $profile = new Userprofile;
+        $profile->user_id = Auth::user()->id;
+        $profile->professional_skills = $ps;
+        $profile->as_a_knitter_i_am = $request->as_a_knitter_i_am;
+        $profile->rate_yourself = $request->rate_yourself;
+        $send = $profile->save();
+        }
+
+        if($send){
+            return response()->json(['success' => 'skill set me added successfully.']);
+        }else{
+            return response()->json(['error' => 'Unable to add, Try again after sometime.']);
+        }
+    }
+
+    function profile_getInterest(Request $request){
+        return view('connect.profile.show-interest');
+    }
+
+    function profile_editInterest(Request $request){
+        return view('connect.profile.edit-interest');
+    }
+
+    function profile_addInterest(Request $request){
+
+        $a = implode(',', $request->i_knit_for);
+        $b = implode(',', $request->i_am_here_for);
+
+        $array = array('i_knit_for' => $a,'i_am_here_for' => $b);
+        if(Auth::user()->profile){
+        $send = Auth::user()->profile->where('user_id',Auth::user()->id)->update($array);
+        }else{
+        $profile = new Userprofile;
+        $profile->user_id = Auth::user()->id;
+        $profile->i_knit_for = $a;
+        $profile->i_am_here_for = $b;
+        $send = $profile->save();
+        }
+
+        if($send){
+            return response()->json(['success' => 'Interests added successfully.']);
+        }else{
+            return response()->json(['error' => 'Unable to add, Try again after sometime.']);
+        }
+    }
+
+    function profile_getDetails(Request $request){
+        return view('connect.profile.show-details');
+    }
+
+    function profile_editDetails(Request $request){
+        return view('connect.profile.edit-details');
+    }
+
+    function profile_addDetails(Request $request){
+        $mobile = Auth::user()->settings->where('name','mobile_privacy')->count();
+        $email = Auth::user()->settings->where('name','email_privacy')->count();
+        $address = Auth::user()->settings->where('name','address_privacy')->count();
+        $website = Auth::user()->settings->where('name','website_privacy')->count();
+
+        //echo $request->mobile_privacy.' - '.$email.' - '.$address.' - '.$website;
+        //exit;
+
+        $user = User::find(Auth::user()->id);
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->mobile = $request->mobile;
+        $user->address = $request->address;
+        $save = $user->save();
+
+        $array = array('website' => $request->website);
+        Auth::user()->profile->where('user_id',Auth::user()->id)->update($array);
+
+        
+        if($mobile){
+            $mb = array('value' => $request->mobile_privacy);
+            UserSettings::where('user_id',Auth::user()->id)->where('name','mobile_privacy')->update($mb);
+        }else{
+            $mb = array('user_id' => Auth::user()->id, 'name' => 'mobile_privacy' ,'value' => $request->mobile_privacy,'created_at' => Carbon::now());
+            UserSettings::insert($mb);
+        }
+
+        
+        if($email){
+            $em = array('value' => $request->email_privacy);
+            UserSettings::where('user_id',Auth::user()->id)->where('name','email_privacy')->update($em);
+        }else{
+            $em = array('user_id' => Auth::user()->id, 'name' => 'email_privacy' ,'value' => $request->email_privacy,'created_at' => Carbon::now());
+            UserSettings::insert($em);
+        }
+
+        
+        if($address){
+            $add = array('value' => $request->address_privacy);
+            UserSettings::where('user_id',Auth::user()->id)->where('name','address_privacy')->update($add);
+        }else{
+            $add = array('user_id' => Auth::user()->id, 'name' => 'address_privacy' ,'value' => $request->address_privacy,'created_at' => Carbon::now());
+            UserSettings::insert($add);
+        }
+
+        
+        if($website){
+            $wb = array('value' => $request->website_privacy);
+            UserSettings::where('user_id',Auth::user()->id)->where('name','website_privacy')->update($wb);
+        }else{
+            $wb = array('user_id' => Auth::user()->id, 'name' => 'website_privacy' ,'value' => $request->website_privacy,'created_at' => Carbon::now());
+            UserSettings::insert($wb);
+        }
+
+        if($save){
+            return response()->json(['success' => 'Profile added successfully.']);
+        }else{
+            return response()->json(['error' => 'Unable to add, Try again after sometime.']);
+        } 
+    }
+
+
+/*
+function maskPhoneNumber($number){
     
+    $mask_number =  str_repeat("*", strlen($number)-4) . substr($number, -4);
+    
+    return $mask_number;
+}
+echo maskPhoneNumber('08066417364');
+
+    */
 }

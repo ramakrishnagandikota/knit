@@ -22,11 +22,12 @@ use App\Traits\FriendRequestAcceptableTrait;
 use App\Traits\FollowTrait;
 use App\Models\Userprofile;
 use App\Models\UserSettings;
+use App\Traits\PostLikableTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 
 class User extends Authenticatable implements MustVerifyEmailContract
 {
-    use Notifiable, HasApiTokens, FriendRequestableTrait,FriendRequestAcceptableTrait, FollowTrait;
+    use Notifiable, HasApiTokens, FriendRequestableTrait,FriendRequestAcceptableTrait, FollowTrait,PostLikableTrait;
 
     /**
      * The attributes that are mass assignable.

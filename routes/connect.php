@@ -3,6 +3,7 @@
 Route::group(['middleware' => 'web','prefix' => 'connect'], function () {
 	/* Timeline controller */
 	Route::get('/','Connect\TimelineController@index');
+	Route::get('getData/{id}','Connect\TimelineController@show_more');
 
 	/* Timeline Controller */
 
@@ -23,6 +24,29 @@ Route::group(['middleware' => 'web','prefix' => 'connect'], function () {
 	Route::post('addAboutme','Connect\ConnectionsController@profile_addAboutme');
 	Route::get('getSkillset','Connect\ConnectionsController@profile_getSkillset');
 	Route::get('editSkillset','Connect\ConnectionsController@profile_editSkillset');
+	Route::post('addskillSet','Connect\ConnectionsController@profile_addskillSet');
+	Route::get('getInterest','Connect\ConnectionsController@profile_getInterest');
+	Route::get('editInterest','Connect\ConnectionsController@profile_editInterest');
+	Route::post('addInterest','Connect\ConnectionsController@profile_addInterest');
+
+	Route::get('getDetails','Connect\ConnectionsController@profile_getDetails');
+	Route::get('editDetails','Connect\ConnectionsController@profile_editDetails');
+	Route::post('addDetails','Connect\ConnectionsController@profile_addDetails');
+
+	Route::post('addPost','Connect\TimelineController@timeline_addDetails');
+	Route::post('updatePost','Connect\TimelineController@timeline_updateDetails');
+	Route::post('addLike','Connect\TimelineController@timeline_addLike');
+	Route::post('unLikePost','Connect\TimelineController@timeline_unLikePost');
+	Route::post('deletePost','Connect\TimelineController@timeline_deletePost');
+	Route::post('addComment','Connect\TimelineController@timeline_addComment');
+	Route::post('UpdateComment','Connect\TimelineController@timeline_UpdateComment');
+	Route::post('savePrivacy','Connect\TimelineController@timeline_savePrivacy');
+
+	Route::get('showAddPost','Connect\TimelineController@showAddPost');
+	Route::get('editAddPost/{id}','Connect\TimelineController@editAddPost');
+
+	Route::post('imageUpload','Connect\TimelineController@imageUpload');
+	Route::get('users','Connect\TimelineController@users');
 	/* Connections controller */
 	
 });

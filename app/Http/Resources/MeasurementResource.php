@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Carbon\Carbon;
 
 class MeasurementResource extends JsonResource
 {
@@ -19,7 +20,7 @@ class MeasurementResource extends JsonResource
             'm_title' => $this->m_title,
             'slug' => $this->slug,
             'm_description' => $this->m_description,
-            'm_date' => $this->m_date,
+            'm_date' => date('Y-m-d',strtotime($this->m_date)),
             'measurement_preference' => $this->measurement_preference,
             'user_meas_image' => $this->user_meas_image,
             'ext' => $this->ext,
@@ -44,8 +45,9 @@ class MeasurementResource extends JsonResource
             'neck_circumference' => $this->neck_circumference,
             'neck_to_shoulder' => $this->neck_to_shoulder,
             'shoulder_to_shoulder' => $this->shoulder_to_shoulder,
-            'in_preview' => ($this->in_preview == 1) ? true : false,
-            'created_at' => $this->created_at
+            'in_preview' => $this->in_preview,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
         ];
     }
 }

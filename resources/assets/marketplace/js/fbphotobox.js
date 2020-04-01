@@ -150,7 +150,7 @@
 							'<div class="fbphotobox-container-right">',
 								'<div class="fbphotobox-close-btn">',
 									'<a title="Close" href="" style="float:right;margin:8px">',
-										'<img src="./images/close.png" style="height:10px;width:10px"/>',
+										'<img src="'+CLOSE+'" style="height:10px;width:10px"/>',
 									'</a>',
 									'<div style="clear:both"></div>',
 								'</div>',

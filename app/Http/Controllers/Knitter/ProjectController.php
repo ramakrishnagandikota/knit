@@ -40,8 +40,7 @@ class ProjectController extends Controller
     function home(){
     	$orders = DB::table('booking_process')
 		->leftJoin('products', 'booking_process.product_id', 'products.id')
-		->leftJoin('product_images', 'products.id','product_images.product_id')
-		->select('booking_process.created_at','products.product_name', 'product_images.image_medium')
+		->select('booking_process.created_at','products.id as pid','products.product_name')
 		->where('booking_process.category_id', 1)
 		->where('booking_process.user_id', Auth::user()->id)
 		->get();
@@ -59,8 +58,7 @@ class ProjectController extends Controller
     function archive(){
     	$orders = DB::table('booking_process')
 		->join('products', 'booking_process.product_id', '=', 'products.id')
-		->join('product_images', 'products.id', '=', 'product_images.product_id')
-		->select('booking_process.created_at','products.product_name', 'product_images.image_medium')
+		->select('booking_process.created_at','products.id as pid','products.product_name')
 		->where('booking_process.category_id', 1)
 		->where('booking_process.user_id', Auth::user()->id)
 		->get();
@@ -147,7 +145,8 @@ class ProjectController extends Controller
     function project_images(Request $request){
     	$image = $request->file('file');
     	for ($i=0; $i < count($image); $i++) { 
-            $filename = time().'-'.$image[$i]->getClientOriginalName();
+            $fname = str_replace(' ', '-', $image[$i]->getClientOriginalName());
+            $filename = time().'-'.$fname;
             $ext = $image[$i]->getClientOriginalExtension();
 
          $s3 = \Storage::disk('s3');

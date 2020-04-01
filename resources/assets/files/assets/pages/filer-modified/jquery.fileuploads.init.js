@@ -10,6 +10,12 @@ $(document).ready(function(){
 
 	'use-strict';
 
+    $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+      });
+
     //Example single
     $('#filer_input_single').filer({
         extensions: ['jpg', 'jpeg', 'png', 'gif', 'psd'],
@@ -39,6 +45,8 @@ $(document).ready(function(){
         templates: {
             box: '<ul class="jFiler-items-list jFiler-items-grid"></ul>',
             item: '<li class="jFiler-item">\
+            <input type="hidden" name="image[]" id="image" value="" >\
+            <input type="hidden" name="ext[]" id="ext" value="" >\
                         <div class="jFiler-item-container">\
                             <div class="jFiler-item-inner">\
                                 <div class="jFiler-item-thumb">\
@@ -98,13 +106,15 @@ $(document).ready(function(){
             drop: null,
         },
         uploadFile: {
-            url: "../files/assets/pages/filer/php/ajax_upload_file.php",
+            url: URL,
             data: null,
             type: 'POST',
             enctype: 'multipart/form-data',
             beforeSend: function(){},
             success: function(data, el){
                 var parent = el.find(".jFiler-jProgressBar").parent();
+                el.find("#image").val(data.path);
+                el.find("#ext").val(data.ext);
                 el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
                     $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow");
                 });
@@ -130,7 +140,7 @@ $(document).ready(function(){
         afterShow: null,
         onRemove: function(itemEl, file, id, listEl, boxEl, newInputEl, inputEl){
             var file = file.name;
-            $.post('../files/assets/pages/filer/php/ajax_remove_file.php', {file: file});
+            $.post(URL1, {file: file});
         },
         onEmpty: null,
         options: null,
@@ -148,4 +158,8 @@ $(document).ready(function(){
             }
         }
     });
+
+$('.jFiler-theme-dragdropbox').append("<i class='icofont icofont-ui-user text-muted' id='tagging' title='Tag'></i><i class='fa fa-location-arrow text-muted' id='locate' title='Share location'></i>");
+
 });
+

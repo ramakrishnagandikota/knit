@@ -4,6 +4,26 @@ namespace App\Http\Controllers\Connect;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Blade;
+use App\User;
+use DB;
+use App\Models\Timeline;
+use Carbon\Carbon;
+use Auth;
+use App\Traits\PostLikableTrait;
+use App\Notifications\LikeToPostNotification;
+use App\Models\Timelinelikes;
+use App\Models\Timelinecomments;
+use App\Models\TimelineImages;
+use App\Traits\PostCommentableTrait;
+use App\Notifications\CommentToPostNotification;
+use File;
+use Image;
+use Session;
+use Redirect;
+use Validator;
+use App\Models\Friends;
+use App\Models\Follow;
 
 class TimelineController extends Controller
 {
@@ -11,7 +31,251 @@ class TimelineController extends Controller
 		$this->middleware(['auth','roles','subscription']);
 	}
 
+	function users(Request $request){
+		$json = array();
+		$users = User::select('id','first_name','last_name')->get();
+		for ($i=0; $i < count($users); $i++) { 
+			$json[$i]["value"] = $users[$i]->id;
+			$json[$i]["text"] = $users[$i]->first_name;
+		}
+		return response()->json([$json]);
+		//return '[{"key": "hello world", "value": "hello world"}, {"key": "movies", "value": "movies"}, {"key": "ski", "value": "ski"}, {"key": "snowbord", "value": "snowbord"}, {"key": "computer", "value": "computer"}, {"key": "apple", "value": "apple"}, {"key": "pc", "value": "pc"}, {"key": "ipod", "value": "ipod"}, {"key": "ipad", "value": "ipad"}, {"key": "iphone", "value": "iphone"}, {"key": "iphon4", "value": "iphone4"}, {"key": "iphone5", "value": "iphone5"}, {"key": "samsung", "value": "samsung"}, {"key": "blackberry", "value": "blackberry"}]';
+	}
+
     function index(){
-    	return view('connect.timeline.index');
+
+    	$timeline = Timeline::leftJoin('users','users.id','timeline.user_id')
+    	->select('timeline.*','users.id as uid','users.first_name','users.last_name','users.picture')
+    	->where('timeline.status',1)
+    	->take(5)->orderBy('id','DESC')->get();
+    	$friends = Friends::where('user_id',Auth::user()->id)->select('user_id','friend_id')->get();
+    	$follow = Follow::where('user_id',Auth::user()->id)->select('user_id','follow_user_id')->get();
+    	//echo '<pre>';
+    	//print_r($follow);
+    	//echo '</pre>';
+    	//exit;
+    	return view('connect.timeline.index',compact('timeline','friends','follow'));
+    }
+
+    function show_more(Request $request){
+    	$id = $request->id;
+    	$timeline = Timeline::leftJoin('users','users.id','timeline.user_id')
+    	->select('timeline.*','users.id as uid','users.first_name','users.last_name','users.picture')
+    	->where('timeline.status',1)
+    	->where('timeline.id','<',$id)
+    	->take(2)->orderBy('id','DESC')->get();
+    	$friends = Friends::where('user_id',Auth::user()->id)->select('user_id','friend_id')->get();
+    	$follow = Follow::where('user_id',Auth::user()->id)->select('user_id','follow_user_id')->get();
+    	return view('connect.timeline.index-dummy',compact('timeline','friends','follow'));
+    }
+
+    function timeline_addDetails(Request $request){
+    	$timeline = new Timeline;
+    	$timeline->user_id = Auth::user()->id;
+    	$timeline->post_content = $request->post_content;
+    	$timeline->tag_friends = $request->tag_friends;
+    	$timeline->location = $request->location;
+    	$timeline->privacy = $request->post_privacy;
+    	$timeline->created_at = Carbon::now();
+    	$timeline->ipaddress = $_SERVER['REMOTE_ADDR'];
+    	$save = $timeline->save();
+    	if($save){
+    		if($request->image){
+    			for ($i=0; $i < count($request->image); $i++) { 
+    				$images = new TimelineImages;
+    				$images->user_id = Auth::user()->id;
+    				$images->timeline_id = $timeline->id;
+    				$images->image_path = $request->image[$i];
+    				$images->created_at = Carbon::now();
+    				$images->ipaddress = $_SERVER['REMOTE_ADDR'];
+    				$images->save();
+    			}
+    		}
+    	
+    		//$id = $request->id;
+    	$timeline = Timeline::leftJoin('users','users.id','timeline.user_id')
+    	->select('timeline.*','users.id as uid','users.first_name','users.last_name','users.picture')
+    	->where('timeline.status',1)
+    	->where('timeline.id','=',$timeline->id)->orderBy('id','DESC')
+    	->get();
+    	$friends = Friends::where('user_id',Auth::user()->id)->select('user_id','friend_id')->get();
+    	$follow = Follow::where('user_id',Auth::user()->id)->select('user_id','follow_user_id')->get();
+    	return view('connect.timeline.index-dummy',compact('timeline','friends','follow'));
+    	}else{
+    		return response()->json(['error' => 'Unable to add post,Try again after sometime.']);
+    	}
+    }
+
+    function timeline_updateDetails(Request $request){
+    	$timeline = Timeline::find($request->id);
+    	$timeline->post_content = $request->post_content;
+    	$timeline->tag_friends = $request->tag_friends;
+    	$timeline->location = $request->location;
+    	$timeline->privacy = $request->post_privacy;
+    	$timeline->updated_at = Carbon::now();
+    	$timeline->ipaddress = $_SERVER['REMOTE_ADDR'];
+    	$save = $timeline->save();
+    	if($save){
+    		if($request->image){
+    			for ($i=0; $i < count($request->image); $i++) { 
+    				$images = new TimelineImages;
+    				$images->user_id = Auth::user()->id;
+    				$images->timeline_id = $timeline->id;
+    				$images->image_path = $request->image[$i];
+    				$images->created_at = Carbon::now();
+    				$images->ipaddress = $_SERVER['REMOTE_ADDR'];
+    				$images->save();
+    			}
+    		}
+    	
+    		//$id = $request->id;
+    	$timeline = Timeline::leftJoin('users','users.id','timeline.user_id')
+    	->select('timeline.*','users.id as uid','users.first_name','users.last_name','users.picture')
+    	->where('timeline.status',1)
+    	->where('timeline.id','=',$timeline->id)->orderBy('id','DESC')
+    	->get();
+    	$friends = Friends::where('user_id',Auth::user()->id)->select('user_id','friend_id')->get();
+    	$follow = Follow::where('user_id',Auth::user()->id)->select('user_id','follow_user_id')->get();
+    	return view('connect.timeline.index-dummy',compact('timeline','friends','follow'));
+    	}else{
+    		return response()->json(['error' => 'Unable to add post,Try again after sometime.']);
+    	}
+    }
+
+    function timeline_addLike(Request $request, Timeline $timeline){
+    	 $likeCount = Timelinelikes::where('user_id',Auth::user()->id)->where('timeline_id',$request->timeline_id)->count();
+    	 if($likeCount > 0){
+    	 	return response()->json(['error' => 'You have already liked this post.']);
+    	 	exit;
+    	 }
+    	 $timeline  = Timeline::where('id',$request->timeline_id)->first();
+         $like = $timeline->addLike($request);
+         $timeline->user->notify(new LikeToPostNotification($timeline));
+        if($like){
+            return response()->json(['success' => 'Post liked successfully.']);
+        }else{
+            return response()->json(['error' => 'Unable to like post.']);
+        }
+    }
+
+    function timeline_unLikePost(Request $request){
+    	$user_id = Auth::user()->id;
+    	$timeline_id = $request->timeline_id;
+    	$unlike = Timelinelikes::where('user_id',$user_id)->where('timeline_id',$timeline_id)->delete();
+    	if($unlike){
+            return response()->json(['success' => 'Post unliked successfully.']);
+        }else{
+            return response()->json(['error' => 'Unable to unlike post,Try again after sometime.']);
+        }
+    }
+
+    function timeline_deletePost(Request $request){
+    	$timeline = Timeline::where('id',$request->timeline_id)->where('user_id',Auth::user()->id)->delete();
+    	if($timeline){
+    		$timelineComments = Timelinecomments::where('user_id',Auth::user()->id)->where('timeline_id',$request->timeline_id)->delete();
+    		$timelinelikes= Timelinelikes::where('user_id',Auth::user()->id)->where('timeline_id',$request->timeline_id)->delete();
+    		$timelineimages = TimelineImages::where('user_id',Auth::user()->id)->where('timeline_id',$request->timeline_id)->delete();
+            return response()->json(['success' => 'Post deleted successfully.']);
+        }else{
+            return response()->json(['error' => 'Unable to delete post,Try again after sometime.']);
+        }
+    }
+
+    function timeline_addComment(Request $request,Timeline $timeline){
+    	 $timeline  = Timeline::where('id',$request->timeline_id)->first();
+         $comment = $timeline->addComment($request);
+         $timeline->user->notify(new CommentToPostNotification($timeline));
+        if($comment){
+        	$com = Timelinecomments::leftJoin('users','users.id','timeline_comments.user_id')
+    	->select('timeline_comments.*','users.id as uid','users.first_name','users.last_name','users.picture')
+    	->where('timeline_comments.status',1)
+    	->where('timeline_comments.timeline_id',$request->timeline_id)
+    	->where('user_id',Auth::user()->id)
+    	->first();
+    	return view('connect.timeline.comments',compact('com'));
+            //return response()->json(['success' => 'Comment posted successfully.']);
+        }else{
+            return response()->json(['error' => 'Unable to post comment.']);
+        }
+    }
+
+    function timeline_UpdateComment(Request $request){
+    	$comment_id = $request->cid;
+    	$comment = $request->comment;
+
+    	$array = array('comment' => $comment,'updated_at' => Carbon::now());
+    	$save = Timelinecomments::where('id',$comment_id)->update($array);
+    	if($save){
+    		$com = Timelinecomments::leftJoin('users','users.id','timeline_comments.user_id')
+    	->select('timeline_comments.*','users.id as uid','users.first_name','users.last_name','users.picture')
+    	->where('timeline_comments.id',$comment_id)
+    	->first();
+    	return view('connect.timeline.comments',compact('com')); 
+            //return response()->json(['success' => 'Comment updated successfully.']);
+        }else{
+            return response()->json(['error' => 'Unable to update comment,Try again after sometime.']);
+        }
+    }
+
+    function imageUpload(Request $request){
+    	$image = $request->file('files');
+        for ($i=0; $i < count($image); $i++) { 
+            $fname = str_replace(' ', '-', $image[$i]->getClientOriginalName()); 
+            $filename = time().'-'.$fname;
+            $ext = $image[$i]->getClientOriginalExtension();
+
+         $s3 = \Storage::disk('s3');
+        //exit;
+        $filepath = 'knitfit/'.$filename;
+
+        if($ext == 'pdf'){
+            $pu = $s3->put('/'.$filepath, file_get_contents($image[$i]),'public');
+        }else{
+        $ext = $ext;
+        $img = Image::make($image[$i]);
+        $height = Image::make($image[$i])->height();
+        $width = Image::make($image[$i])->width();
+        $img->orientate();
+        $img->resize($width, $height, function ($constraint) {
+            //$constraint->aspectRatio();
+        });
+        $img->encode('jpg');
+        $pu = $s3->put('/'.$filepath, $img->__toString(), 'public');
+        }
+
+       if($pu){
+         return response()->json(['path1' => $filepath, 'path' => 'https://s3.us-east-2.amazonaws.com/knitfitcoall/'.$filepath,'ext' => $ext]);
+     }else{
+        echo 'error';
+     }
+        }
+    }
+
+    function timeline_savePrivacy(Request $request){
+    	$tid = $request->tid;
+
+    	$check = Timeline::where('user_id',Auth::user()->id)->where('id',$tid)->count();
+    	if($check == 0){
+    		return response()->json(['error' => 'You are unauthorized to make these changes.']);
+    		exit;
+    	}
+    	$timeline = Timeline::find($tid);
+    	$timeline->privacy = $request->privacy;
+    	$save = $timeline->save();
+    	if($save){
+    		return response()->json(['success' => 'Post privacy changed successfully.']);
+    	}else{
+    		return response()->json(['error' => 'Unable to update privacy,Try again after sometime.']);
+    	}
+    }
+
+    function showAddPost(){
+    	return view('connect.timeline.add-post');
+    }
+
+    function editAddPost(Request $request){
+    	$timeline = Timeline::where('id',$request->id)->first();
+    	$timeline_images = TimelineImages::where('timeline_id',$request->id)->get();
+    	return view('connect.timeline.edit-post',compact('timeline','timeline_images'));
     }
 }
