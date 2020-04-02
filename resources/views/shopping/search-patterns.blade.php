@@ -255,26 +255,26 @@
 <div class="col-12 card">
 <div class="row product-filter-content">
 
-<div class="col-lg-3">
+<div class="col-lg-1">
     <div class="collection-view">
         <ul>
             <li><i class="fa fa-th grid-layout-view"></i></li>
             <li><i class="fa fa-list-ul list-layout-view"></i></li>
-            <li style="margin-top: -2px;margin-left: 20px;"><span class="collection-grid-view">
+           <!-- <li style="margin-top: -2px;margin-left: 20px;"><span class="collection-grid-view">
              <ul>
                 <li><img src="{{ asset('resources/assets/KnitfitEcommerce/assets/images/icon/2.png') }}" alt="" class="product-2-layout-view"></li>
                 <li><img src="{{ asset('resources/assets/KnitfitEcommerce/assets/images/icon/3.png') }}" alt="" class="product-3-layout-view"></li>
                 <li style="margin-left: 20px;"><img src="{{ asset('resources/assets/KnitfitEcommerce/assets/images/icon/4.png') }}" alt="" class="product-4-layout-view"></li>
                 <li style="margin-left: 22px;"><img src="{{ asset('resources/assets/KnitfitEcommerce/assets/images/icon/6.png') }}" alt="" class="product-6-layout-view"></li>
                 </ul>   
-              </span> </li>
+              </span> </li> -->
         </ul>
 
     </div>
 
 </div>
 
-<div class="col-lg-3">
+<div class="col-lg-5">
     <form class="form-horizontal" action="{{url('search-products')}}" method="GET">
         <div class="form-group">
             <input type="text" class="form-control" style="margin-top: 15px;height:36px;border-radius: 3px;" value="{{$name}}"  id="pwd" placeholder="Search" name="search">

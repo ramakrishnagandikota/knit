@@ -80,10 +80,8 @@
 </div>
 <div class="form-group form-primary">
     <input type="text" id="ontype-textbox" name="website" class="form-control fill" value="{{Auth::user()->profile->website}}">
-    <input type="hidden" name="website_privacy" id="website_privacy" value="0">
     <span class="form-bar"></span>
     <label class="float-label">Website</label>
-    <span class="privacy" data-toggle="modal" data-id="website" data-target="#myModal"><i class="icofont icofont-settings-alt"></i></span>
 </div>
 </div>
 

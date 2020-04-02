@@ -359,8 +359,7 @@
 <!-- modernizr js -->
 <script type="text/javascript" src="{{ asset('resources/assets/files/bower_components/modernizr/js/modernizr.js')}}"></script>
 <script type="text/javascript" src="{{ asset('resources/assets/files/bower_components/modernizr/js/css-scrollbars.js')}}"></script>
-<!-- Todo js -->
-<script type="text/javascript" src="{{ asset('resources/assets/files/assets/pages/todo/todo.js')}}"></script>
+
 <script src="{{ asset('resources/assets/files/assets/js/pcoded.min.js')}}"></script>
 <script src="{{ asset('resources/assets/files/assets/js/vertical/vertical-layout.min.js')}}"></script>
 <script src="{{ asset('resources/assets/files/assets/js/jquery.mCustomScrollbar.concat.min.js')}}"></script>

@@ -122,12 +122,19 @@ Account <i class="feather icon-chevron-down"></i>
 
 </div>
 </li>
+@php 
+if(Auth::user()->picture){
+  $pic = Auth::user()->picture;
+}else{
+  $pic = 'https://via.placeholder.com/150?text='.Auth::user()->first_name;
+}
+@endphp
 <!-- <li class="mobile-wishlist p-0 m-l-10"><a href="my-whislist.html"><i class="fa fa-heart" aria-hidden="true"></i></a></li> -->
 @if(Auth::check())
 <li class="user-profile header-notification">
 <div class="dropdown-primary dropdown">
 <div class="dropdown-toggle" data-toggle="dropdown">
-<img src="{{ asset('resources/assets/files/assets/images/avatar-2.jpg') }}" class="img-radius" alt="User-Profile-Image">
+<img src="{{ $pic }}" class="img-radius" alt="User-Profile-Image">
 <span>{{ucfirst(Auth::user()->first_name)}}</span>
 <i class="feather icon-chevron-down"></i>
 </div>

@@ -64,6 +64,12 @@ Route::post('create-noncustom-project','Knitter\ProjectController@create_noncust
 Route::get('generate-noncustom-pattern/{id}/{slug}','Knitter\ProjectController@generate_noncustom_pattern');
 Route::get('generate-custom-pattern/{id}/{slug}','Knitter\ProjectController@generate_custom_pattern');
 
+Route::get('todo','Knitter\TodoController@index');
+Route::post('addTodo','Knitter\TodoController@todo_add');
+Route::post('todoComplete','Knitter\TodoController@todo_completed');
+Route::get('deleteTodo/{id}','Knitter\TodoController@todo_delete');
+Route::get('deleteAllTodo','Knitter\TodoController@todo_delete_all');
+
 Route::get('subscription','Knitter\SubscriptionController@index');
 
 Route::get('paypal/ec-checkout', 'Knitter\SubscriptionController@getExpressCheckout');

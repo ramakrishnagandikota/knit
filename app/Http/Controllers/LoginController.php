@@ -122,14 +122,15 @@ class Logincontroller extends Controller
 	            return redirect()->back();
 	        }else{
 
-    $userCount = User::count() + 1;
+            $userCount = User::count() + 1;
 
 	        	 $y = date('Y') + 1; $m = date('m'); $d = date('d');
             	 $exp = $y.'-'.$m.'-'.$d;
 				 
 				 $md5email = md5($request->email);
 
-            	 $user = new User;
+            $user = new User;
+            $user->enc_id = md5($userCount);
             $user->name = $request->username;
             $user->first_name = $request->first_name;
             $user->last_name = $request->last_name;

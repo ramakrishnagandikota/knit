@@ -47,6 +47,8 @@ Route::group(['middleware' => 'web','prefix' => 'connect'], function () {
 
 	Route::post('imageUpload','Connect\TimelineController@imageUpload');
 	Route::get('users','Connect\TimelineController@users');
+	Route::get('gallery','Connect\ConnectionsController@user_gallery');
+	Route::post('profile-picture','Connect\ConnectionsController@profile_picture');
 	/* Connections controller */
 	
 });

@@ -35,10 +35,18 @@ class MeasurementsApiController extends Controller
         }
     }
 
+    function clean($string) {
+       $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
+
+       return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+    }
+
     function image_upload(Request $request){
         $image = $request->file('file');
+
         for ($i=0; $i < count($image); $i++) { 
-            $filename = time().'-'.$image[$i]->getClientOriginalName();
+            $oname = $this->clean($image[$i]->getClientOriginalName());
+            $filename = time().'-'.$oname;
             $ext = $image[$i]->getClientOriginalExtension();
 
          $s3 = \Storage::disk('s3');
@@ -61,7 +69,7 @@ class MeasurementsApiController extends Controller
         }
 
        if($pu){
-         return response()->json(['path1' => $filepath, 'path' => 'https://s3.us-east-2.amazonaws.com/knitfitcoall/'.$filepath,'ext' => $ext]);
+         return response()->json(['path' => 'https://s3.us-east-2.amazonaws.com/knitfitcoall/'.$filepath,'ext' => $ext]);
      }else{
         echo 'error';
      }

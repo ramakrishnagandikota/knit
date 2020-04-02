@@ -15,7 +15,7 @@
 <div class="row form-group">
     <div class="col-md-6">
         <div class="form-group">
-            <label class="col-form-label">Name                                                                                                                
+            <label class="col-form-label">Name<span class="red">*</span>                                                                                                                
             </label>
             <div class="row">
                     <div class="col-md-12">
@@ -28,7 +28,7 @@
     </div> 
     <div class="col-md-6">
         <div class="form-group">
-            <label class="col-form-label">Description                                                                                                          
+            <label class="col-form-label">Description<span class="red">*</span>                                                                                                          
             </label>
             <div class="row">
                     <div class="col-md-12">
@@ -46,16 +46,17 @@
     <div class="form-group row">
         <div class="col-lg-12">             
 <!-- Upload  -->
-<label class="col-sm-12 col-form-label">Upload a file</label>
+<label class="col-sm-12 col-form-label">Upload a file<span class="red">*</span></label>
 <br>    <br>
         </div>
         
         <div class="col-lg-12 m-l-15">
             <div class="row">
                   <div class="col-lg-12">
-<input type="file" name="file[]" id="filer_input1" multiple="multiple" style="width: 600px;">
+<input required type="file" name="file[]" id="filer_input1" multiple="multiple" style="width: 600px;">
 <p class="image red hide">Upload atleast one image.</p>
 
+<span class="red" style="position: absolute;bottom: 24px;">*</span>
 <label class="container m-r-10" style="padding-top: 0 !important;">I verify that I have purchased this pattern and I have the right to use this pattern.
     <input type="checkbox" id="checkme" name="user_verify" value="1" />
     <span class="checkmark"></span>
@@ -261,7 +262,7 @@
             <div class="row">
                     <div class="col-md-12">
                         <select class="form-control" id="needle_size1" name="needle_size[]">
-                            <option selected >Select needle size</option>
+                            <option selected value="0">Select needle size</option>
                             @foreach($needlesizes as $ns)
                                 <option value="{{$ns->id}}">US {{$ns->us_size}}  {{ $ns->mm_size ? '- '.$ns->mm_size.' mm' : '' }}</option>
                             @endforeach
@@ -322,14 +323,14 @@
             <div class="row">
                     <div class="col-md-12">
                         <select class="form-control" name="stitch_gauge_in" id="stitch-sts-external">
-                            <option selected>Select value (inches)</option>
+                            <option selected value="0">Select value (inches)</option>
                             @foreach($gaugeconversion as $gc)
                             <option value="{{$gc->id}}">{{$gc->stitch_gauge_inch .' / 1 inches'}}</option>
                             @endforeach
                         </select>
 
                         <select class="form-control" name="stitch_gauge_cm" id="stitch-cm-external">
-                            <option selected>Select value (cm)</option>
+                            <option selected value="0">Select value (cm)</option>
                             @foreach($gaugeconversion as $gc1)
                             <option value="{{$gc1->id}}">{{$gc1->stitches_10_cm .' / 10cm'}}</option>
                             @endforeach
@@ -351,14 +352,14 @@
             <div class="row">
                     <div class="col-md-12">
                         <select class="form-control" name="row_gauge_in" id="row-sts-external">
-                            <option>Select value (inches)</option>
+                            <option value="0" >Select value (inches)</option>
                             @foreach($gaugeconversion as $gc2)
                             <option value="{{$gc2->id}}">{{$gc2->row_gauge_inch .' / 1 inches'}}</option>
                             @endforeach
                         </select>
 
                         <select class="form-control" name="row_gauge_cm" id="row-cm-external">
-                            <option selected>Select value (cm)</option>
+                            <option selected value="0">Select value (cm)</option>
                             <option>12 sts / 10 cm</option>
                             @foreach($gaugeconversion as $gc3)
                             <option value="{{$gc3->id}}">{{$gc3->rows_10_cm .' / 10cm'}}</option>
@@ -403,6 +404,7 @@ data-toggle="collapse" data-target="#section4-EXT">
                                         @endforeach
                                     @endif
                                 </select>
+                                <span class="red hide mprofile">Please select measurement profile.</span>
                             </div>
                         </div>
                 </div>
@@ -449,10 +451,10 @@ data-toggle="collapse" data-target="#section4-EXT">
 <div class="form-group row">
     <!-- <label class="col-sm-12 col-lg-12 col-form-label">Knitted For</label> -->
      <span class="profile-upload">
-            <label for="profile-upload">
-                    <img src="{{ asset('resources/assets/files/assets/images/pencil.png') }}"/>
+          <!--  <label for="profile-upload">
+                    <img src=" asset('resources/assets/files/assets/images/pencil.png') }}"/>
                 </label>
-        <input id="profile-upload" type='file' onchange="readprofileURL(this);" />
+        <input id="profile-upload" type='file' onchange="readprofileURL(this);" /> -->
             </span>
     <div class="col-sm-12 col-lg-12">
         <img id="profile-img-external-pattern" src="{{url('resources/assets/files/assets/images/user-card/pattern.jpg')}}"

@@ -22,10 +22,11 @@
                                     @if($product_image)
                                     <input type="hidden" name="image" value="{{$product_image->image_medium}}">
                                     @endif
+                                    <input type="hidden" name="project_name" value="{{$product->product_name}}">
                                     <select  name="project_name" id="project_name" class="form-control form-control-default">
                                         <option value="0" selected>--Select Pattern--</option>
                                         @foreach($orders as $or)
-                                        <option value="{{$product->product_name}}" @if($product->id == $or->pid) selected @endif >{{$product->product_name}}</option>
+                                        <option value="{{$or->pid}}" @if($product->id == $or->pid) selected @endif >{{$or->product_name}}</option>
                                         @endforeach
                                     </select>
                                     <span class="project_name red hide">Project name is required.</span>

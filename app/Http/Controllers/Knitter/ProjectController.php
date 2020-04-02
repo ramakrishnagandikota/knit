@@ -142,10 +142,16 @@ class ProjectController extends Controller
     	}
     }
 
+    function clean($string) {
+       $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
+
+       return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+    }
+
     function project_images(Request $request){
     	$image = $request->file('file');
     	for ($i=0; $i < count($image); $i++) { 
-            $fname = str_replace(' ', '-', $image[$i]->getClientOriginalName());
+            $fname = $this->clean($image[$i]->getClientOriginalName());
             $filename = time().'-'.$fname;
             $ext = $image[$i]->getClientOriginalExtension();
 
@@ -374,7 +380,8 @@ class ProjectController extends Controller
 
     	$image = $request->file('file');
     	for ($i=0; $i < count($image); $i++) { 
-            $filename = time().'-'.$image[$i]->getClientOriginalName();
+            $oname = $this->clean($image[$i]->getClientOriginalName());
+            $filename = time().'-'.$oname;
             $ext = $image[$i]->getClientOriginalExtension();
 
          $s3 = \Storage::disk('s3');

@@ -32,13 +32,19 @@
 @foreach($orders as $ord)
 <?php
 $images = App\Models\Product_images::where('product_id',$ord->pid)->first();
+if($images){
+  $image = $images->image_small;
+  }else{
+    $image = 'https://via.placeholder.com/200?text='.$ord->product_name;
+  }
  ?>
 <li>
   <div class="col-md-12 m-b-20">
       <div class="card-sub-custom">
           <div class="card-block">
               <div class="row">
-             <div class="col-lg-4"><img class="img-fluid" src="{{ $images->image_medium }}" alt="round-img"></div>
+             <div class="col-lg-4">
+              <img class="img-fluid" src="{{ $image }}" alt="round-img"></div>
              <div class="col-lg-8"><h6 class="card-title">{{ucfirst($ord->product_name)}}</h6>     
       </div>
           </div>

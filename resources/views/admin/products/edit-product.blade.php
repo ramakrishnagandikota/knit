@@ -167,7 +167,7 @@
                 <select class="form-control" id="recommended_stitch_gauge_in" name="recommended_stitch_gauge_in">
                   <option value="0">Select value (inches)</option>
                   @foreach($gaugeconversion as $gc2)
-                  <option value="{{$gc2->id}}" @if($product->recommended_stitch_gauge_in == $gc2->id) selected @endif  >{{$gc2->row_gauge_inch .' / 1 inches'}}</option>
+                  <option value="{{$gc2->id}}" @if($product->recommended_stitch_gauge_in == $gc2->id) selected @endif  >{{$gc2->stitch_gauge_inch .' / 1 inches'}}</option>
                   @endforeach
                 </select>
             </div>
@@ -204,7 +204,7 @@
                 <select class="form-control" id="recommended_stitch_gauge_cm" name="recommended_stitch_gauge_cm">
                   <option value="0">Select value (cm)</option>
                   @foreach($gaugeconversion as $gc3)
-                  <option value="{{$gc3->id}}" @if($product->recommended_stitch_gauge_cm == $gc3->id) selected @endif >{{$gc3->rows_10_cm .' / 10cm'}}</option>
+                  <option value="{{$gc3->id}}" @if($product->recommended_stitch_gauge_cm == $gc3->id) selected @endif >{{$gc3->stitches_10_cm .' / 10cm'}}</option>
                   @endforeach
                 </select>
             </div>

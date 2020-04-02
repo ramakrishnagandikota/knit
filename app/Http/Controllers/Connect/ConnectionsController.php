@@ -22,6 +22,9 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Encryption\DecryptException;
 use App\Models\Userprofile;
 use App\Models\UserSettings;
+use App\Models\TimelineImages;
+use App\Models\Timeline;
+use App\Models\Projectimages;
 
 class ConnectionsController extends Controller
 {
@@ -40,7 +43,7 @@ class ConnectionsController extends Controller
 				    ->select('friends.id','users.id as user_id','users.enc_id','users.username','users.first_name','users.last_name','users.email','users.picture')->paginate(12);
     	}else{
     		$friends = Friends::leftJoin('users','users.id','friends.friend_id')
-    				->where('friends.user_id',Auth::user()->id)->select('friends.id','users.id as user_id','users.first_name','users.last_name','users.email','users.picture')->paginate(12);
+    				->where('friends.user_id',Auth::user()->id)->select('friends.id','users.id as user_id','users.first_name','users.last_name','users.email','users.username','users.picture')->paginate(12);
     	
     	}
     	$skills = MasterList::where('type','skills')->get();
@@ -180,7 +183,8 @@ class ConnectionsController extends Controller
     }
 
     function my_profile(Request $request){
-        return view('connect.profile.my-profile');
+        $timeline_images = TimelineImages::where('user_id',Auth::user()->id)->get();
+        return view('connect.profile.my-profile',compact('timeline_images'));
     }
 
 
@@ -188,12 +192,16 @@ class ConnectionsController extends Controller
         $id = $request->id;
         try {
             $decrypted = decrypt($id);
-            $user = User::find($decrypted);
+            $user = User::where('id',$decrypted)->first();
+            $timeline_images = Timeline::leftJoin('timeline_images','timeline_images.timeline_id','timeline.id')
+                ->where('timeline_images.user_id',$user->id)
+                ->where('timeline.privacy','!=','only-me')
+                ->select('timeline_images.image_path')->get();
         } catch (DecryptException $e) {
             return view('notfound');
         }
-        
-        return view('connect.profile.userProfile',compact('user'));
+
+        return view('connect.profile.userProfile',compact('user','timeline_images'));
     }
 
     function profile_addAboutme(Request $request){
@@ -215,6 +223,7 @@ class ConnectionsController extends Controller
     }
 
     function profile_getSkillset(Request $request){
+        
         return view('connect.profile.show-skillset');
     }
 
@@ -345,15 +354,14 @@ class ConnectionsController extends Controller
         } 
     }
 
+    function user_gallery(){
+        $timeline_images = TimelineImages::where('user_id',Auth::user()->id)->get();
+        $project_images = Projectimages::where('user_id',Auth::user()->id)->get();
+        return view('connect.connections.gallery',compact('timeline_images','project_images'));
+    }
 
-/*
-function maskPhoneNumber($number){
-    
-    $mask_number =  str_repeat("*", strlen($number)-4) . substr($number, -4);
-    
-    return $mask_number;
-}
-echo maskPhoneNumber('08066417364');
+    function profile_picture(Request $request){
+        print_r($request->all());
+    }
 
-    */
 }

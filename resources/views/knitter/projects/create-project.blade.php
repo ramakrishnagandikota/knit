@@ -293,6 +293,9 @@ $form = 'block';
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+.progress{
+  max-width: 100% !important;
+}
 </style>
 <script type="text/javascript">
     var URL = '{{url('knitter/project-image')}}';
@@ -313,6 +316,8 @@ $form = 'block';
        <!-- notification js -->
 <script type="text/javascript" src="{{ asset('resources/assets/files/assets/js/bootstrap-growl.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('resources/assets/files/assets/pages/notification/notification.js') }}"></script>
+
+<script src="{{ asset('resources/assets/KnitfitEcommerce/assets/js/bootstrap-notify.min.js') }}"></script>
 
 <script type="text/javascript">
     $(function(){
@@ -341,6 +346,20 @@ $form = 'block';
             //}
         });
 
+$(document).on('change','#projectid',function(){
+  var id = $(this).val();
+    $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+      });
+    $(".loading").show();
+    $.post('{{url("knitter/create-project-custom")}}',{id: id},function(res){
+        $("#loadPatterns").html(res);
+        $("#cm-stitch-custom,#cm-row-custom,#sts-ease-prefer-custom,#cm-recom-ease,#cm-stitch-custom-user,#cm-row-custom-user").hide();
+        $(".loading").hide();
+    });
+})
 
 $(document).on('click','#saveCustom',function(){
     var p_type = $("#p_type1").val();
@@ -384,11 +403,15 @@ $(document).on('click',"#inches-external:radio",function() {
 $(document).on('click',"#inches-custom:radio",function() {
   $('#sts-stitch-custom,#sts-stitch-custom-user,#sts-row-custom-user,#sts-row-custom,#inches-ease-prefer-custom,#sts-recom-ease').show();
   $('#cm-stitch-custom,#cm-stitch-custom-user,#cm-row-custom-user,#cm-row-custom,#sts-ease-prefer-custom,#cm-recom-ease').hide();
+$(".cm-stitch-custom,.cm-row-custom").addClass('hide');
+$(".sts-ease-prefer-custom").addClass('hide');
 });
 
 $(document).on('click',"#cm-custom:radio",function() {
     $('#cm-stitch-custom,#cm-stitch-custom-user,#cm-row-custom-user,#cm-row-custom,#sts-ease-prefer-custom,#cm-recom-ease').show();
     $('#sts-stitch-custom,#sts-stitch-custom-user,#sts-row-custom-user,#sts-row-custom,#inches-ease-prefer-custom,#sts-recom-ease').hide();
+    $(".sts-stitch-custom,.sts-row-custom").addClass('hide');
+    $(".inches-ease-prefer-custom").addClass('hide');
 });
 
 
@@ -590,6 +613,7 @@ $(document).on('click','#save',function(e){
     var description = $("#description").val();
     var images = $(".jFiler-item").length;
     var checkme = $("#checkme").prop('checked');
+    var mprofile = $("#sel1").val();
     var er = [];
     var cnt = 0;
 
@@ -603,11 +627,25 @@ $(document).on('click','#save',function(e){
         $(".project_name").addClass('hide');
     }
 
+    if(images == 0){
+        $(".image").removeClass('hide');
+        er+=cnt+1;
+    }else{
+        $(".image").addClass('hide');
+    }
+
     if(description == ''){
         $(".description").removeClass('hide');
         er+=cnt+1;
     }else{
         $(".description").addClass('hide');
+    }
+
+    if(mprofile == ''){
+        $(".mprofile").removeClass('hide');
+        er+=cnt+1;
+    }else{
+        $(".mprofile").addClass('hide');
     }
 
     if(checkme == false){
@@ -619,17 +657,90 @@ $(document).on('click','#save',function(e){
 
     }else{
       var measurement = $("#sel1").val();
+      var radio = $("input[name='uom']:checked").val();
+      var m_name = $("input.m_name");
+      
+      for (var i = 0; i < m_name.length; i++) {
+          var mname = $(m_name[i]).val();
+          var inputName = $("#"+mname).val();
+
+          if(inputName == ""){
+            $("."+mname).removeClass('hide');
+            er+=cnt+1;
+          }else{
+            $("."+mname).addClass('hide');
+          }
+      }
+      
+
       if(measurement == 0){
         $(".measurement_profile").removeClass('hide');
         er+=cnt+1;
       }else{
         $(".measurement_profile").addClass('hide');
       }
+
+      if(radio == 'in'){
+        var stitch_gauge = $("select#sts-stitch-custom").val();
+        var row_gauge = $("select#sts-row-custom").val();
+        var ease = $("#inches-ease-prefer-custom").val();
+
+        if(stitch_gauge == 0){
+          $(".sts-stitch-custom").removeClass('hide');
+          er+=cnt+1;
+        }else{
+          $(".sts-stitch-custom").addClass('hide');
+        }
+
+        if(row_gauge == 0){
+          $(".sts-row-custom").removeClass('hide');
+          er+=cnt+1;
+        }else{
+          $(".sts-row-custom").addClass('hide');
+        }
+
+        if(ease == 0){
+          $(".inches-ease-prefer-custom").removeClass('hide');
+          er+=cnt+1;
+        }else{
+          $(".inches-ease-prefer-custom").addClass('hide');
+        }
+
+      }else{
+        var stitch_gauge = $("select#cm-stitch-custom").val();
+        var row_gauge = $("select#cm-row-custom").val();
+        var ease = $("#sts-ease-prefer-custom").val();
+
+        if(stitch_gauge == 0){
+          $(".cm-stitch-custom").removeClass('hide');
+          er+=cnt+1;
+        }else{
+          $(".cm-stitch-custom").addClass('hide');
+        }
+
+        if(row_gauge == 0){
+          $(".cm-row-custom").removeClass('hide');
+          er+=cnt+1;
+        }else{
+          $(".cm-row-custom").addClass('hide');
+        }
+
+        if(ease == 0){
+          $(".sts-ease-prefer-custom").removeClass('hide');
+          er+=cnt+1;
+        }else{
+          $(".sts-ease-prefer-custom").addClass('hide');
+        }
+
+      }
+
+
     }
 
     
 
     if(er != ""){
+      addProductCartOrWishlist('fa-times','error','Plese fill all the required fields.','danger');
         return false;
     }
 
@@ -692,46 +803,42 @@ $(document).on('click','.custom-link',function(){
         }
 
 
-    function notify(icon, type,title, msg){
-        $.growl({
-            icon: icon,
-            title: title,
-            message: msg,
-            url: ''
+function addProductCartOrWishlist(icon,status,msg,type){
+        $.notify({
+            icon: 'fa '+icon,
+            title: status+'!',
+            message: msg
         },{
             element: 'body',
+            position: null,
             type: type,
             allow_dismiss: true,
+            newest_on_top: false,
+            showProgressbar: true,
             placement: {
-                from: 'top',
-                align: 'right'
+                from: "top",
+                align: "right"
             },
-            offset: {
-                x: 30,
-                y: 30
-            },
+            offset: 20,
             spacing: 10,
-            z_index: 999999,
-            delay: 2500,
-            timer: 1000,
-            url_target: '_blank',
-            mouse_over: false,
+            z_index: 10000,
+            delay: 3000,
             animate: {
-                enter: 'animated fadeInRight',
-                exit: 'animated fadeOutRight'
+                enter: 'animated fadeInDown',
+                exit: 'animated fadeOutUp'
             },
             icon_type: 'class',
-            template: '<div data-growl="container" class="alert" role="alert">' +
-            '<button type="button" class="close" data-growl="dismiss">' +
-            '<span aria-hidden="true">&times;</span>' +
-            '<span class="sr-only">Close</span>' +
-            '</button>' +
-            '<span data-growl="icon"></span>' +
-            '<span data-growl="title"></span>' +
-            '<span data-growl="message"></span>' +
-            '<a href="#" data-growl="url"></a>' +
+            template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+            '<span data-notify="icon"></span> ' +
+            '<span data-notify="title">{1}</span> ' +
+            '<span data-notify="message">{2}</span>' +
+            '<div class="progress" data-notify="progressbar">' +
+            '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+            '</div>' +
+            '<a href="{3}" target="{4}" data-notify="url"></a>' +
             '</div>'
         });
-    };
+    }
 </script>
 @endsection

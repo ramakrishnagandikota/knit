@@ -2,8 +2,8 @@
 @if($address)
 <?php $i=0; ?>
 @foreach($address as $add)
-
-<div class="col-sm-4 col-md-4 col-xs-12 col-lg-4">
+<!-- col-sm-4 col-md-4 col-xs-12 col-lg-4 -->
+<div class="" style="width: 100% !important;">
     <div class="box">
         <div class="box-title">
             <h3 class="p-l-10">
@@ -17,7 +17,7 @@
              {{ucwords($add->first_name)}} {{ucwords($add->last_name)}} </h3><a href="{{url('edit-address/'.base64_encode($add->id))}}">Edit</a></div>
         <div class="box-content">
             <h6>{{$add->address}},{{$add->city}}</h6>
-            <h6>{{$add->email}}</h6>
+            <h6>{{$add->country}},{{$add->zipcode}},</h6>
             <h6 style="color: #0d665c;font-weight: bold;">{{ ($add->is_default == 1) ? 'Default' : ''  }}</h6></div>
     </div>
 </div>

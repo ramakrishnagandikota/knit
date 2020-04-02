@@ -37,27 +37,25 @@ Route::group(['middleware' => 'auth:api'], function(){
 
 	/* project library */
 
-	Route::get('project-library','API\ProjectsController@get_project_library');
-
-	Route::get('projects-library/generated','API\ProjectsController@get_generated_patterns');
-	Route::get('projects-library/workinprogress','API\ProjectsController@get_workinprogress_patterns');
-	Route::get('projects-library/completed','API\ProjectsController@get_completed_patterns');
-
+Route::get('project-library','API\ProjectsController@get_project_library');
+Route::get('projects-library/generated','API\ProjectsController@get_generated_patterns');
+Route::get('projects-library/workinprogress','API\ProjectsController@get_workinprogress_patterns');
+Route::get('projects-library/completed','API\ProjectsController@get_completed_patterns');
 Route::get('projects-archive','API\ProjectsController@get_project_library_archive');
-
+Route::get('delete-project/{id}','API\ProjectsController@project_delete');
 Route::get('move-to-project-library/{id}','API\ProjectsController@move_to_project_library');
 Route::get('move-to-archive/{id}','API\ProjectsController@move_to_archive');
-
 Route::get('move-to-generated/{id}','API\ProjectsController@move_to_generated');
 Route::get('move-to-workinprogress/{id}','API\ProjectsController@move_to_workinprogress');
 Route::get('move-to-completed/{id}','API\ProjectsController@move_to_completed');
 
 Route::get('available-products/{type}','API\ProjectsController@available_products');
 Route::get('productData/{id}','API\ProjectsController@get_products_data');
+Route::get('externalProjectData','API\ProjectsController@get_external_data');
 
 Route::post('create-custom-project','API\ProjectsController@create_custom_project');
-
-
+Route::post('create-non-custom-project','API\ProjectsController@create_custom_project');
+Route::post('create-external-project','API\ProjectsController@create_external_project');
 Route::get('generate-external-pattern/{id}','API\ProjectsController@generate_external_pattern');
 /* project library */
 

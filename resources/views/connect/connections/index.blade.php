@@ -124,7 +124,7 @@ $follow = App\Models\Follow::where('user_id',Auth::user()->id)->where('follow_us
 			    </span>
 			</div>
 			</div>
-		<div class="user-content"> <a href="{{url('connect/profile/'.$friend->username.'/'.$friend->enc_id)}}"><h4 class="">{{ucfirst($friend->first_name)}} {{strtolower($friend->last_name)}}</h4></a>
+		<div class="user-content"> <a href="{{url('connect/profile/'.$friend->username.'/'.encrypt($friend->user_id))}}"><h4 class="">{{ucfirst($friend->first_name)}} {{strtolower($friend->last_name)}}</h4></a>
 			<p class="m-b-0 text-muted">Pattern makers</p>
 		</div>
 		<p>

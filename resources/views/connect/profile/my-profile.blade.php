@@ -1,6 +1,13 @@
 @extends('layouts.connect')
 @section('title','My Profile')
 @section('content')
+@php 
+if(Auth::user()->picture){
+  $picture = Auth::user()->picture;
+}else{
+  $picture = 'https://via.placeholder.com/150?text='.Auth::user()->first_name;
+}
+@endphp
 <!-- Page-body start -->
 <div class="page-body m-t-15 m-r-40">
 <div class="row users-card">
@@ -8,7 +15,7 @@
 <div class="rounded-card user-card">
 <div class="card">
 <div class="img-hover">
-<img class="img-fluid img-radius" src="{{ Auth::user()->picture }}" alt="round-img">
+<img class="img-fluid img-radius" src="{{ $picture }}" alt="round-img">
 <div class="img-overlay img-radius">
 <span>
 <a href="#" class="btn btn-sm btn-primary" data-popup="lightbox"><i class="fa fa-eye"></i></a>
@@ -56,15 +63,21 @@
 <div class="tab-pane" id="feed" role="tabpanel">
 <div class="p-relative">
 
-<div class="card-block">
+@if($timeline_images->count() > 0)
 <div class="fbphotobox m-10 text-center">
-<a><img class="photo" fbphotobox-src="{{ asset('resources/assets/marketplace/images/1.jpg') }}" alt="Dummmy Image<br>Very Coool!" src="{{ asset('resources/assets/marketplace/images/1.jpg') }}"/></a>
-<a><img class="photo" fbphotobox-src="{{ asset('resources/assets/marketplace/images/2.jpg') }}" src="{{ asset('resources/assets/marketplace/images/2.jpg') }}"/></a>
-<a><img class="photo" fbphotobox-src="{{ asset('resources/assets/marketplace/images/3.jpg') }}" src="{{ asset('resources/assets/marketplace/images/3.jpg') }}"/></a>
-<div style="color: #bbd6bb;font-size: 16px;text-decoration: underline;"><a href="">Show more</a></div>
-</div>
 
+@foreach($timeline_images as $ti)
+<a class="hide">
+  <img class="photo"  fbphotobox-src="{{ $ti->image_path }}" alt="" src="{{ $ti->image_path }}"/>
+</a>
+@endforeach
+
+<div style="color: #bbd6bb;font-size: 16px;text-decoration: underline;"><a href="javascript:;" id="show-more">Show more</a></div>
 </div>
+@else
+<p>No images to show.</p>
+@endif
+
 </div>
 
 </div>
@@ -359,9 +372,14 @@ button, html [type="button"], [type="reset"], [type="submit"]{background-color: 
           -webkit-box-sizing:border-box;
         border: 5px solid #0d665b;
     }
+    .hide{
+      display: none;
+    }
 </style>
 
-
+<script type="text/javascript">
+  var CLOSE = '{{asset('resources/assets/marketplace/images/close.png')}}';
+</script>
  <!-- jquery file upload Frame work -->
 <link href="{{ asset('resources/assets/files/assets/pages/jquery.filer/css/jquery.filer.css') }}" type="text/css" rel="stylesheet" />
 <link href="{{ asset('resources/assets/files/assets/pages/jquery.filer/css/themes/jquery.filer-dragdropbox-theme.css') }}" type="text/css" rel="stylesheet" />
@@ -397,6 +415,31 @@ button, html [type="button"], [type="reset"], [type="submit"]{background-color: 
                     $(".fbphotobox-image-content").html('<div class="card-block b-b-theme b-t-theme social-msg"> <a href="#"> <i class="icofont icofont-heart-alt text-muted"> </i> <span class="b-r-theme">Like (20)</span> </a> <a href="#"> <i class="icofont icofont-comment text-muted"> </i> <span class="b-r-theme">Comments (25)</span> </a> </div><div class="card-block user-box"> <div class="p-b-20 m-t-15"> <span class="f-14"><a href="#">Comments (110)</a> </span> <span class="float-right"><a href="#!">See all comments</a></span><hr> </div><div class="media"> <a class="media-left p-r-0" href="#"> <img class="media-object img-radius m-r-20" src="../files/assets/images/avatar-1.jpg" alt="Generic placeholder image"> </a> <div class="media-body b-b-theme social-client-description"> <div class="chat-header">About Marta Williams<span class="text-muted">Jane 04, 2015</span></div><p class="text-muted">Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p></div></div><div class="media"> <a class="media-left p-r-0" href="#"> <img class="media-object img-radius m-r-20" src="../files/assets/images/avatar-2.jpg" alt="Generic placeholder image"> </a> <div class="media-body b-b-theme social-client-description"> <div class="chat-header">About Marta Williams<span class="text-muted">Jane 10, 2015</span></div><p class="text-muted">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p></div></div><div class="media"> <a class="media-left p-r-0" href="#"> <img class="media-object img-radius m-r-20" src="../files/assets/images/avatar-1.jpg" alt="Generic placeholder image"> </a> <div class="media-body"> <form class="form-material right-icon-control"> <div class="form-group form-default"> <textarea class="form-control" required=""></textarea> <span class="form-bar"></span> <label class="float-label">Write something...</label> </div><div class="form-icon "> <button class="btn theme-outline-btn btn-icon waves-effect waves-light"> <i class="fa fa-paper-plane "></i> </button> </div></form> </div></div></div><p><br></p>');
                 }
             });
+
+
+var x = 3;
+var totalImages = $(".fbphotobox a").length;
+//alert(totalImages);
+
+$(".fbphotobox a:lt("+x+")").removeClass('hide');
+
+$(document).on('click','#show-more',function(){
+  var hidden = $(".fbphotobox a.hide").length;
+  if(x < hidden){
+    x = 3;
+  }else{
+    x = hidden;
+  }
+  $(".fbphotobox a.hide:lt("+x+")").removeClass('hide');
+  
+  setTimeout(function(){
+    var hiddennew = $(".fbphotobox a.hide").length;
+    if(hiddennew == 0){
+      $("#show-more").addClass('hide');
+    }
+  },2000);
+});
+
 
         });
 

@@ -22,10 +22,11 @@
                                     @if($product_image)
                                     <input type="hidden" name="image" value="{{$product_image->image_medium}}">
                                     @endif
-                                    <select  name="project_name" id="project_name" class="form-control form-control-default">
+                                    <input type="hidden" name="project_name" value="{{$product->product_name}}">
+                                    <select  id="projectid" class="form-control form-control-default">
                                         <option value="0" selected>--Select Pattern--</option>
                                         @foreach($orders as $or)
-                                        <option value="{{$product->product_name}}" @if($product->id == $or->pid) selected @endif >{{$product->product_name}}</option>
+                                        <option value="{{$or->pid}}" @if($product->id == $or->pid) selected @endif >{{$or->product_name}}</option>
                                         @endforeach
                                     </select>
                                     <span class="project_name red hide">Project name is required.</span>
@@ -126,7 +127,10 @@
                             </label>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input type="text" class="form-control" id="recommended_needle_size" value="{{$product->recommended_needle_size}}" disabled>
+@php
+    $Needle = App\Models\NeedleSizes::where('id',$product->recommended_needle_size)->first();
+@endphp
+                                    <input type="text" class="form-control" id="recommended_needle_size" value="Us {{$Needle->us_size}} - {{$Needle->mm_size}} mm" disabled>
                                 </div>
                             </div>
                         </div>
@@ -382,9 +386,19 @@
                                     </label>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <input type="text" id="sts-stitch-custom" class="form-control" placeholder="" disabled value="{{$product->recommended_stitch_gauge_in}} sts / 1 inches">
-
-                                            <input type="text" id="cm-stitch-custom" class="form-control" placeholder="" disabled value="{{$product->recommended_stitch_gauge_cm}} sts / 10 cm">
+@php
+if($product->designer_recommended_uom == 'in'){
+$sgau_in = App\Models\GaugeConversion::where('id',$product->recommended_stitch_gauge_in)->first();
+$rgau_in = App\Models\GaugeConversion::where('id',$product->recommended_row_gauge_in)->first();
+}else{
+$sgau_cm = App\Models\GaugeConversion::where('id',$product->recommended_stitch_gauge_cm)->first();
+$rgau_cm = App\Models\GaugeConversion::where('id',$product->recommended_row_gauge_cm)->first();
+}
+@endphp
+                                            <input type="text" id="sts-stitch-custom" class="form-control" placeholder="" disabled value="{{$sgau_in->stitch_gauge_inch}} sts / 1 inches">
+                                            
+                                            <input type="text" id="cm-stitch-custom" class="form-control" placeholder="" disabled value="{{$sgau_in->stitches_10_cm}} sts / 10 cm">
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -395,9 +409,10 @@
                                     </label>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <input disabled type="text" id="sts-row-custom" class="form-control" placeholder="" value="{{$product->recommended_row_gauge_in}} sts / 1 inches">
-
-                                            <input disabled type="text" id="cm-row-custom" class="form-control" placeholder="" value="{{$product->recommended_row_gauge_cm}} sts / 10 cm">
+                                            <input disabled type="text" id="sts-row-custom" class="form-control" placeholder="" value="{{$rgau_in->row_gauge_inch}} sts / 1 inches">
+                                        
+                                            <input disabled type="text" id="cm-row-custom" class="form-control" placeholder="" value="{{$rgau_in->rows_10_cm}} sts / 10 cm">
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -429,18 +444,19 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <select class="form-control" id="sts-stitch-custom" name="stitch_gauge_in" >
-                                                <option selected>Select value (inches)</option>
+                                                <option selected value="0">Select value (inches)</option>
                                                 @foreach($gaugeconversion as $gc2)
                             <option value="{{$gc2->id}}">{{$gc2->row_gauge_inch .' / 1 inches'}}</option>
                             @endforeach
                                             </select>
-
+                                        <span class="red hide sts-stitch-custom">Please fill this field.</span>
                                             <select class="form-control" id="cm-stitch-custom" name="stitch_gauge_cm">
-                                                <option selected>Select value (cm)</option>
+                                                <option selected value="0" >Select value (cm)</option>
                                                  @foreach($gaugeconversion as $gc3)
                             <option value="{{$gc3->id}}">{{$gc3->rows_10_cm .' / 10cm'}}</option>
                             @endforeach
                                             </select>
+                                            <span class="hide red cm-stitch-custom">Please fill this field.</span>
                                         </div>
                                     </div>
                                 </div>
@@ -458,18 +474,19 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <select class="form-control" name="row_gauge_in" id="sts-row-custom">
-                                                <option>Select value (inches)</option>
+                                                <option value="0">Select value (inches)</option>
                                                 @foreach($gaugeconversion as $gc2)
                             <option value="{{$gc2->id}}">{{$gc2->row_gauge_inch .' / 1 inches'}}</option>
                             @endforeach
                                             </select>
-
+                            <span class="red hide sts-row-custom">Please fill this field.</span>
                                             <select class="form-control" name="row_gauge_cm" id="cm-row-custom" name="" >
-                                                <option selected>Select value (cm)</option>
+                                                <option selected value="0">Select value (cm)</option>
                                                 @foreach($gaugeconversion as $gc3)
                             <option value="{{$gc3->id}}">{{$gc3->rows_10_cm .' / 10cm'}}</option>
                             @endforeach
                                             </select>
+                                            <span class="hide red cm-row-custom">Please fill this field.</span>
                                         </div>
                                     </div>
                                 </div>
@@ -518,7 +535,7 @@
                             </label>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input type="text" disabled id="sts-recom-ease" class="form-control" placeholder="" value="{{$product->designer_recommended_ease_in}}">
+                                    <input type="text" disabled id="sts-recom-ease" class="form-control" placeholder="" value="{{$product->designer_recommended_ease_in}}``">
                                     <input type="text"class="form-control" id="cm-recom-ease" disabled value="{{$product->designer_recommended_ease_cm}}">
                                         
                                 </div>
@@ -532,20 +549,20 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <select id="inches-ease-prefer-custom" name="ease_in" class="form-control">
-                                    <option value="0" selected disabled >Select value (inches)</option>
+                                    <option value="0" selected  >Select value (inches)</option>
                                     @for($j=1;$j<= 20;$j+= 0.25)
                                         <option value="{{$j}}">{{$j}}"</option>
                                     @endfor
                                 </select>
-
+                            <span class="hide red inches-ease-prefer-custom">Please fill this field.</span>
                                     <select id="sts-ease-prefer-custom" name="ease_cm" class="form-control">
-                                    <option value="0" selected disabled >Select value (cm)</option>
+                                    <option value="0" selected  >Select value (cm)</option>
                                     @for($i=1;$i <= 20;$i++)
                                     <option value="{{$i}}">{{$i}} cm</option>
                                     @endfor
                                     
                                 </select>
-
+                                <span class="red hide sts-ease-prefer-custom">Please fill this field.</span>
                                 </div>
                             </div>
                         </div>
@@ -591,9 +608,10 @@
                                 </span>
                             </label>
                             <div class="row">
-                                <div class="col-md-12">
-                                    <input type="hidden" name="m_name[]" value="{{$smallname}}">
+                                <div class="col-md-12" >
+                                    <input type="hidden" class="m_name" name="m_name[]" value="{{$smallname}}">
                                     <input type="text" class="form-control" id="{{$smallname}}" name="{{$smallname}}" value="">
+                                    <span class="hide red {{$smallname}}">Please fill this field.</span>
                                 </div>
 
                             </div>

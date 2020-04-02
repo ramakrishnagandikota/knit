@@ -23,6 +23,7 @@ use App\Traits\FollowTrait;
 use App\Models\Userprofile;
 use App\Models\UserSettings;
 use App\Traits\PostLikableTrait;
+use App\Models\Todo;
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 
 class User extends Authenticatable implements MustVerifyEmailContract
@@ -156,6 +157,10 @@ class User extends Authenticatable implements MustVerifyEmailContract
 
    function settings(){
     return $this->hasMany(UserSettings::class);
+   }
+
+   function todo(){
+    return $this->hasMany(Todo::class);
    }
     
 }

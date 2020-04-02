@@ -2,7 +2,6 @@
 @section('title','My account')
 @section('content')
 <!-- section start -->
-
 @if(Session::has('success'))
 <div class="alert alert-success">{{Session::get('success')}}</div>
 @endif

@@ -140,14 +140,19 @@ Photos
 </div>
 </li>
 
-
-
+@php 
+if(Auth::user()->picture){
+  $pic = Auth::user()->picture;
+}else{
+  $pic = 'https://via.placeholder.com/150?text='.Auth::user()->first_name;
+}
+@endphp
 
 <li class="user-profile header-notification">
 <div class="dropdown-primary dropdown">
 <div class="dropdown-toggle" data-toggle="dropdown">
-<img src="{{ asset('resources/assets/files/assets/images/avatar-2.jpg') }}" class="img-radius" alt="User-Profile-Image">
-<span>{{Auth::user()->first_name}}</span>
+<img src="{{ $pic }}" class="img-radius" alt="User-Profile-Image">
+<span>{{ucfirst(Auth::user()->first_name)}}</span>
 <i class="feather icon-chevron-down"></i>
 </div>
 <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
@@ -169,25 +174,20 @@ Photos
 </a>
 </li>
 <li>
-<a href="#">
-<i class="feather icon-user"></i> <span>New profile</span>
-</a>
-</li>
-<li>
 <a data-toggle="modal" data-target="#myProfileModal">
 <i class="ti-user"></i> Update profile picture
 </a>
 </li>
 <li>
-<a href="#">
+<a href="{{url('change-password')}}">
 <i class="feather icon-settings"></i> Reset passowrd
 </a>
 </li>
-<li>
+<!-- <li>
 <a href="#">
 <i class="feather icon-user"></i> <span>Privacy</span>
 </a>
-</li>
+</li> -->
 <li>
 <a href="{{url('logout')}}">
 <i class="feather icon-log-out"></i> Logout
@@ -276,7 +276,7 @@ Photos
 </div>
 <div class="row right-menubar">
 <div class="col-lg-6 col-6">
-<a href="{{url('connect/todo')}}">
+<a href="{{url('knitter/todo')}}">
 <figure class="no-bg"><img class="icon-img" src="{{ asset('resources/assets/files/assets/icon/custom-icon/To-do.png') }}" /></a>
 <figcaption class="text-muted text-center ">To-Do</figcaption>
 </figure>
@@ -297,6 +297,7 @@ Photos
 <div class="modal fade" id="myProfileModal" role="dialog">
 <div class="modal-dialog modal-sm">
 <div class="modal-content">
+  <form id="uploadPicture" enctype="multipart/form-data">
 <div class="modal-header">
 <h6 class="modal-title">Change profile image</h6>
 <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -305,20 +306,22 @@ Photos
 <div class="">
 <!-- <p class="f-16">Change your profile image instantly</p> -->
 <a href="#" class="profile-image">
-<img class="" id="profile-img" src="{{ asset('resources/assets/files/assets/images/avatar-2.jpg') }}" alt="user-img">
+<img class="" id="profile-img" src="{{ $pic }}" alt="user-img">
 </a>
 <span class="profile-upload">
 <label for="profile-upload">
 <img src="{{ asset('resources/assets/files/assets/images/pencil.png') }}">
 </label>
-<input id="profile-upload" type="file" onchange="readprofileURL(this);">
+<input id="file" name="file" type="file" onchange="readprofileURL(this);">
 </span>
+</form>
 </div>
 </div>
 <div class="modal-footer">
 <button type="button" class="btn theme-outline-btn" data-dismiss="modal">Cancel</button>
-<button type="button" class="btn theme-btn" data-dismiss="modal">Update</button>
+<input type="submit" class="btn theme-btn" id="updateBth" value="Update">
 </div>
+
 </div>
 </div>
 </div>
@@ -394,47 +397,31 @@ Photos
 
 
 <script>
-var images = [
-'src/img/pic1.jpg',
-'src/img/pic2.jpg',
-'src/img/pic3.jpg',
-'src/img/pic4.jpg',
-'src/img/pic5.jpg'
-];
 
 $(function() {
 
-$('#gallery1').imagesGrid({
-images: images
-});
-$('#gallery2').imagesGrid({
-images: images.slice(0, 5)
-});
-$('#gallery3').imagesGrid({
-images: images.slice(0, 4)
-});
-$('#gallery4').imagesGrid({
-images: images.slice(0, 3)
-});
-$('#gallery5').imagesGrid({
-images: images.slice(0, 2)
-});
-$('#gallery6').imagesGrid({
-images: images.slice(0, 1)
-});
-$('#gallery7').imagesGrid({
-images: [
-'src/img/pic1.jpg',
-'src/img/pic2.jpg',
-'src/img/pic3.jpg',
-'src/img/pic4.jpg',
-'src/img/pic5.jpg'
-],
-align: true,
-getViewAllText: function(imgsCount) {
-return 'View all'
-}
-});
+
+$("#uploadPicture").on('submit',(function(e) {
+  alert()
+    e.preventDefault();
+    $.ajax({
+      url: "{{url('connect/profile-picture')}}",
+      type: "POST",
+      data:  new FormData(this),
+      beforeSend: function(){
+        //$("#body-overlay").show();
+      },
+      contentType: false,
+      processData:false,
+      success: function(data)
+        {
+      alert(data);
+      },
+        error: function() 
+        {
+        }           
+     });
+  }));
 
 
 });
@@ -444,6 +431,20 @@ function markAsRead(data){
       $.get('/connect/markAsRead');
     }
 }
+
+function readprofileURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#profile-img')
+                .attr('src', e.target.result);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
 </script>
 @yield('footerscript')
 </html>
