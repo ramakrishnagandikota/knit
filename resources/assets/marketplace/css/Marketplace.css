@@ -70,7 +70,7 @@ display: block;
 }
 .dropdown-menu{ padding-right: 24px;
 border: none;
-box-shadow: 0px 0px 2px 0px #ff9100;
+box-shadow: 0 2px 10px -1px rgba(69, 90, 100, 0.3);
 position: absolute;
 transform: translate3d(84px, 34px, 0px);
 }
@@ -81,7 +81,7 @@ transform: translate3d(84px, 34px, 0px);
 color: #392f5a !important;
 }
 .page-header-title .theme-btn{border-radius: 2px;}
-.nav-tabs{box-shadow:0px 4px 4px 1px #3ab7a91f;background: white;}
+.nav-tabs{background: white;}
 .md-tabs .nav-link {
     border: none;
     color: #0d665c;
@@ -172,6 +172,11 @@ a:focus, a:hover {
     width: 92%;
     top: 8px!important;
 } */
+.post-new-footer i{color: #0d665b!important;}
+#upload,#tag{border: 1px solid #0d665c;padding: 2px 10px 2px 10px;border-radius: 2px;color: #0d665b!important;}
+#location{font-size:17px;padding:  2px 10px 3px 10px;border: 1px solid #0d665c;border-radius: 2px;color: #0d665c!important;}
+#tag{font-size:15px;padding: 5px 12px 3px 12px;}
+#upload:hover,#tag:hover,#location:hover{color: white!important;background-color: #0d665b;}
 #button-addon1{font-size:12px;padding: 6px 19px;}
 .skills-list li{display: inline-block;}
 .theme-txt{color: #0d665c;}

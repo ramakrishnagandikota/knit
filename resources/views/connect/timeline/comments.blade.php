@@ -6,7 +6,7 @@ if($com->picture){
 }
 ?>
 
-<div class="media" id="comment{{$com->id}}">
+<div class="media @if($i > 3) hide @endif" id="comment{{$com->id}}">
     <a class="media-left" href="#">
         <img class="media-object img-radius m-r-20"
             src="{{$picture1}}"
@@ -24,8 +24,22 @@ if($com->picture){
     </div>
 </div>
 @endif
+<?php 
+if($com->username){
+    $username = $com->username;
+}else{
+    $na = explode('@', $com->email);
+    $username = $na[0];
+}
+?>
     <div class="media-body b-b-theme social-client-description">
-        <div class="chat-header">{{$com->first_name}} {{$com->last_name}}<span
+        <div class="chat-header">
+            @if($com->user_id == Auth::user()->id)
+        <a href="{{url('connect/myprofile')}}"> {{$com->first_name}} {{$com->last_name}}</a>
+            @else
+           <a href="{{url('connect/profile/'.$username.'/'.encrypt($com->uid))}}"> {{$com->first_name}} {{$com->last_name}}</a>
+           @endif
+            <span
                 class="text-muted">
                 @if(strtotime($com->updated_at) != strtotime($com->created_at))
                    Edited {{ \Carbon\Carbon::parse($com->updated_at)->diffForHumans()}}

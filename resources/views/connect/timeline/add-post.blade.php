@@ -24,9 +24,10 @@
                     
                         @csrf
                         <div class="col-md-10 col-xs-10">
-                            <textarea id="post-message-popup" class="form-control post-input m-b-10" name="post_content" style="border: 1px solid #ccc;"
+                            <textarea id="post_content" class="form-control post-input m-b-10" name="post_content" style="border: 1px solid #ccc;"
                                 rows="3" cols="10" required=""
                                 placeholder="Write something..."></textarea>
+                                <span class="hide red post_content">This field is required.</span>
                         </div>
                     
                 </div>
@@ -35,19 +36,30 @@
                     <div class="col-sm-11 col-lg-11 m-l-30 hide" id="with">
                         <div class="input-group">
                             <span class="input-group-prepend">
-                                <label class="input-group-text">With</label>
+                                <label class="input-group-text"><i class="icofont icofont-ui-user text-muted m-0"
+                                    title="Tag"></i></label>
                             </span>
-                            <input class="form-control" id="mySelect2" name="tag_friends" placeholder="Who are you with?">
-                               
+                            
+                            <select class="form-control" id="mySelect2" name="tag_friends[]" multiple >
+                                @if($friends->count() > 0)
+                                    @foreach($friends as $fri)
+                                    <option value="{{$fri->id}}">{{$fri->first_name}} {{$fri->last_name}}</option>
+                                    @endforeach
+                                @endif
+                            </select> 
                         </div>
+                        <span class="hide red mySelect2">This field is required.</span>
                     </div>
-                    <div class="col-sm-11 col-lg-11 m-l-30 hide" id="location">
+                    <div class="col-sm-11 col-lg-11 m-l-30 hide" id="locate">
                         <div class="input-group">
                             <span class="input-group-prepend">
-                                <label class="input-group-text">Location</label>
+                                <label class="input-group-text"> <i class="icofont icofont-location-pin text-muted m-0"
+                                    title="Share location"></i></label>
                             </span>
-                            <input type="text" class="form-control" name="location" placeholder="Share location">
+                            <input type="text" id="share_location" class="form-control" name="location" placeholder="Share location">
+                            
                         </div>
+                        <span class="hide red share_location">This field is required.</span>
                     </div>
 
                             <span class="image-upload m-r-15"
@@ -66,20 +78,34 @@
       </div>
         </div>
         <div class="modal-footer">
-            <select class="options m-l-20" name="post_privacy">
+            <select class="options m-l-20" id="post_privacy" name="post_privacy">
+                <option value="0">Privacy settings</option>
                 <option value="public">Public</option>   
-                <option value="friends">Friends</option>
+                <option value="friends" selected="selected"  >Friends</option>
                 <option value="followers">Followers</option>
                 <option value="only-me" >Only Me</option>
             </select>
-            
+            <span class="hide red post_privacy">This field is required.</span>
             <button class="btn theme-outline-btn float-right" data-dismiss="modal">Cancel</button>
-            <span><a href="javascript:;" id="post-new"
+            <span><button type="button" disabled id="post-new"
                 class="btn theme-btn waves-effect waves-light float-right"
-                >Post</a></span>
+                >Post</button></span>
           </div>
           </form>
 <!-- jquery file upload js -->
 <script src="{{ asset('resources/assets/files/assets/pages/jquery.filer/js/jquery.filer.min.js') }}"></script>
 
 <script src="{{ asset('resources/assets/files/assets/pages/filer-modified/jquery.fileuploads.init.js') }}" type="text/javascript"></script>
+
+<style type="text/css">
+    .select2-search__field{
+        width: 200px !important;
+        padding: 3px;
+    }
+    .select2{
+        width: 90% !important;
+    }
+    .select2-container .select2-selection--multiple{
+        min-height: 37px !important;
+    }
+</style>

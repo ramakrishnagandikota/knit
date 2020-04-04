@@ -42,6 +42,9 @@
 <link rel="stylesheet" href="{{ asset('resources/assets/marketplace/src/images-grid-custom.css') }}">
 
  <link rel="stylesheet" type="text/css" href="{{asset('node_modules/sweetalert2/dist/sweetalert2.min.css')}}">
+
+ <script type="text/javascript" src="{{ asset('resources/assets/files/bower_components/jquery/js/jquery.min.js') }}"></script>
+ 
 </head>
 <body >
 
@@ -122,9 +125,11 @@ Photos
 </li>
 
 @if(count(Auth::user()->unreadNotifications) > 0)
-  @foreach(Auth::user()->notifications  as $notification)
+  @foreach(Auth::user()->unreadNotifications  as $notification)
     @include('notification.'.class_basename($notification->type))
   @endforeach
+
+
 @else
 
 <li>
@@ -136,6 +141,7 @@ Photos
 </li>
 
 @endif
+
 </ul>
 </div>
 </li>
@@ -368,7 +374,7 @@ if(Auth::user()->picture){
 }
 </style>
 <!-- Required Jquery -->
-<script type="text/javascript" src="{{ asset('resources/assets/files/bower_components/jquery/js/jquery.min.js') }}"></script>
+
 <script type="text/javascript" src="{{ asset('resources/assets/files/bower_components/jquery-ui/js/jquery-ui.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('resources/assets/files/bower_components/popper.js/js/popper.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('resources/assets/files/bower_components/bootstrap/js/bootstrap.min.js') }}"></script>

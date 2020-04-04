@@ -694,11 +694,16 @@ $rows1 = $worksheet->rangeToArray(
 
     function generate_custom_pattern(Request $request){
 
-        $filename = storage_path('2-2020 Peekaboo Cabled Sweater Variables.xlsx');
+        
 
         $id = $request->id;
         $slug = $request->slug;
         $project = Project::where('token_key', $id)->first();
+        $product = Products::where('id',$project->product_id)->first();
+
+        $filename = storage_path($product->measurement_file);
+
+
         $project_images = $project->project_images;
         $project_yarn = $project->project_yarn;
         $project_needle = $project->project_needle()->leftJoin('needle_sizes','needle_sizes.id','projects_needle.needle_size')->select('needle_sizes.us_size','needle_sizes.mm_size','projects_needle.id as pnid')->get();
@@ -708,13 +713,18 @@ $rows1 = $worksheet->rangeToArray(
 'forearm_circumference','upperarm_circumference','shoulder_circumference','wrist_to_underarm','wrist_to_elbow','elbow_to_underarm',
 'wrist_to_top_of_shoulder','depth_of_neck','neck_width','neck_circumference','neck_to_shoulder','shoulder_to_shoulder']);
     $project_notes = $project->project_notes;
-    $product = Products::where('id',$project->product_id)->first();
+    
     
     $pdm = ProjectsDesignerMeasurements::where('project_id',$project->id)->get();
     $pdf = ProductPdf::where('product_id',$project->product_id)->first();
 
     $array = array('FIRST_NAME' => Auth::user()->first_name,'LAST_NAME' => Auth::user()->last_name,'EMAIL_ADDRESS' => Auth::user()->email);
-    $array1 = array('STITCH_GAUGE' =>$project->stitch_gauge,'ROW_GAUGE' => $project->row_gauge,'EASE' => $project->ease,'NEEDLE_SIZE' => 3);
+    if($project->uom == 'in'){
+        $array1 = array('STITCH_GAUGE' =>$stitch_gauge->stitch_gauge_inch,'ROW_GAUGE' => $row_gauge->row_gauge_inch,'EASE' => $project->ease,'NEEDLE_SIZE' => 3);
+    }else{
+        $array1 = array('STITCH_GAUGE' =>$stitch_gauge->stitches_10_cm,'ROW_GAUGE' => $row_gauge->rows_10_cm,'EASE' => $project->ease,'NEEDLE_SIZE' => 3);
+    }
+    
     //$m = (array) $measurements;
    // array_push($m,$array);
     //echo '<pre>';

@@ -39,7 +39,7 @@ $(document).ready(function(){
         limit: null,
         maxSize: null,
         extensions: null,
-         changeInput: "<i id='upload-icon' data-toggle='tooltip' title='Share Photos' class='icofont icofont-image text-muted'></i>",
+         changeInput: "<i id='upload' data-toggle='tooltip' title='Share Photos' class='icofont icofont-image text-muted'></i>",
         showThumbs: true,
         theme: "dragdropbox",
         templates: {
@@ -159,7 +159,7 @@ $(document).ready(function(){
         }
     });
 
-$('.jFiler-theme-dragdropbox').append("<i class='icofont icofont-ui-user text-muted' id='tagging' title='Tag'></i><i class='fa fa-location-arrow text-muted' id='locate' title='Share location'></i>");
+$('.jFiler-theme-dragdropbox').append("<i class='icofont icofont-user-alt-3 text-muted' id='tag' title='Tag'></i><i class='icofont icofont-location-pin text-muted' id='location' title='Share location'></i>");
 
 });
 

@@ -50,7 +50,7 @@
             ?>
                               <div class="col-md-2">
                                  <div class="form-group">
-                                    <label for="int1">{{ucfirst($name)}} 
+                                    <label for="int1">@if($name == 'bust') {{ucfirst($name)}} / Chest @else {{ucfirst($name)}} @endif
                                        <span class="mytooltip tooltip-effect-2">
                                        <span class="tooltip-item">?</span>
                                        <span class="tooltip-content clearfix">

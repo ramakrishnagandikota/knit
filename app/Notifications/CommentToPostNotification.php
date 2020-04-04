@@ -55,7 +55,7 @@ class CommentToPostNotification extends Notification
     {
         return [
             'timeline' => $this->timeline,
-            'user' => Auth::user(),
+            'commentedBy' => Auth::user(),
             'repliesTime' => Carbon::now()
         ];
     }

@@ -446,14 +446,14 @@ $rgau_cm = App\Models\GaugeConversion::where('id',$product->recommended_row_gaug
                                             <select class="form-control" id="sts-stitch-custom" name="stitch_gauge_in" >
                                                 <option selected value="0">Select value (inches)</option>
                                                 @foreach($gaugeconversion as $gc2)
-                            <option value="{{$gc2->id}}">{{$gc2->row_gauge_inch .' / 1 inches'}}</option>
+                            <option value="{{$gc2->id}}">{{$gc2->stitch_gauge_inch .' / 1 inches'}}</option>
                             @endforeach
                                             </select>
                                         <span class="red hide sts-stitch-custom">Please fill this field.</span>
                                             <select class="form-control" id="cm-stitch-custom" name="stitch_gauge_cm">
                                                 <option selected value="0" >Select value (cm)</option>
                                                  @foreach($gaugeconversion as $gc3)
-                            <option value="{{$gc3->id}}">{{$gc3->rows_10_cm .' / 10cm'}}</option>
+                            <option value="{{$gc3->id}}">{{$gc3->stitches_10_cm .' / 10cm'}}</option>
                             @endforeach
                                             </select>
                                             <span class="hide red cm-stitch-custom">Please fill this field.</span>

@@ -55,7 +55,7 @@ class LikeToPostNotification extends Notification
     {
         return [
             'timeline' => $this->timeline,
-            'user' => Auth::user(),
+            'LikedBy' => Auth::user(),
             'repliesTime' => Carbon::now()
         ];
     }

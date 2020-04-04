@@ -15,13 +15,17 @@ if(Auth::user()->picture){
 <div class="rounded-card user-card">
 <div class="card">
 <div class="img-hover">
-<img class="img-fluid img-radius" src="{{ $picture }}" alt="round-img">
+
+<img class="img-fluid img-radius" id="profile-img-left" src="{{$picture}}" alt="round-img"> 
 <div class="img-overlay img-radius">
-<span>
-<a href="#" class="btn btn-sm btn-primary" data-popup="lightbox"><i class="fa fa-eye"></i></a>
-<a href="" class="btn btn-sm btn-primary"><i class="fa fa-user-plus"></i></a>
-</span>
+    <span class="profile-upload-left">
+        <label for="profile-upload-left">
+            <a class="btn btn-sm btn-primary upload-img-icon"><i class="fa fa-pencil"></i></a>
+            </label>
+    <input id="profile-upload-left" type="file" onchange="addPackage();" >
+        </span>
 </div>
+
 </div>
 <div class="user-content">
 <h4 class=""> {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h4>
@@ -64,11 +68,11 @@ if(Auth::user()->picture){
 <div class="p-relative">
 
 @if($timeline_images->count() > 0)
-<div class="fbphotobox m-10 text-center">
+<div class="fbphotobox m-10 text-center fbphoto"  id="photo-library">
 
 @foreach($timeline_images as $ti)
-<a class="hide">
-  <img class="photo"  fbphotobox-src="{{ $ti->image_path }}" alt="" src="{{ $ti->image_path }}"/>
+<a class="hide" onclick="imagePopup({{$ti->id}})">
+  <img class="photo" data-id="{{$ti->id}}"  fbphotobox-src="{{ $ti->image_path }}" alt="" src="{{ $ti->image_path }}"/>
 </a>
 @endforeach
 
@@ -375,6 +379,15 @@ button, html [type="button"], [type="reset"], [type="submit"]{background-color: 
     .hide{
       display: none;
     }
+.options{color: #222222;border: .5px solid #78909c;border-radius: 2px;margin-left: 28px;float: left;left: 0;position: absolute;font-size: 14px;padding: 1px 2px 2px 2px;}
+    .upload{margin-left: 53px;}
+        .post-new-footer i{margin-left: 20px;}
+        .jFiler-items{margin-top: 20px;}
+        .image-upload img{width: 100%;}
+        .input-group-append .input-group-text, .input-group-prepend .input-group-text{background-color: #faf9f8;color: #0d665c;}
+        .upload-img-icon:hover i{background-color: #0d665c;color: white;transition-delay: .250s;}
+        .nav-tabs .nav-item {margin-bottom: 0px;}
+
 </style>
 
 <script type="text/javascript">
@@ -400,22 +413,6 @@ button, html [type="button"], [type="reset"], [type="submit"]{background-color: 
 
     <script type="text/javascript">
          $(document).ready(function() {
-            $(".fbphotobox img").fbPhotoBox({
-                rightWidth: 360,
-                leftBgColor: "black",
-                rightBgColor: "white",
-                footerBgColor: "black",
-                overlayBgColor: "#222",
-                containerClassName: 'fbphotobox',
-                imageClassName: 'photo',
-                onImageShow: function() {
-                    $(".fbphotobox img").fbPhotoBox("addTags",
-                            [{x:0.3,y:0.3,w:0.3,h:0.3}]
-                    );
-                    $(".fbphotobox-image-content").html('<div class="card-block b-b-theme b-t-theme social-msg"> <a href="#"> <i class="icofont icofont-heart-alt text-muted"> </i> <span class="b-r-theme">Like (20)</span> </a> <a href="#"> <i class="icofont icofont-comment text-muted"> </i> <span class="b-r-theme">Comments (25)</span> </a> </div><div class="card-block user-box"> <div class="p-b-20 m-t-15"> <span class="f-14"><a href="#">Comments (110)</a> </span> <span class="float-right"><a href="#!">See all comments</a></span><hr> </div><div class="media"> <a class="media-left p-r-0" href="#"> <img class="media-object img-radius m-r-20" src="../files/assets/images/avatar-1.jpg" alt="Generic placeholder image"> </a> <div class="media-body b-b-theme social-client-description"> <div class="chat-header">About Marta Williams<span class="text-muted">Jane 04, 2015</span></div><p class="text-muted">Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p></div></div><div class="media"> <a class="media-left p-r-0" href="#"> <img class="media-object img-radius m-r-20" src="../files/assets/images/avatar-2.jpg" alt="Generic placeholder image"> </a> <div class="media-body b-b-theme social-client-description"> <div class="chat-header">About Marta Williams<span class="text-muted">Jane 10, 2015</span></div><p class="text-muted">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p></div></div><div class="media"> <a class="media-left p-r-0" href="#"> <img class="media-object img-radius m-r-20" src="../files/assets/images/avatar-1.jpg" alt="Generic placeholder image"> </a> <div class="media-body"> <form class="form-material right-icon-control"> <div class="form-group form-default"> <textarea class="form-control" required=""></textarea> <span class="form-bar"></span> <label class="float-label">Write something...</label> </div><div class="form-icon "> <button class="btn theme-outline-btn btn-icon waves-effect waves-light"> <i class="fa fa-paper-plane "></i> </button> </div></form> </div></div></div><p><br></p>');
-                }
-            });
-
 
 var x = 3;
 var totalImages = $(".fbphotobox a").length;
@@ -639,8 +636,47 @@ $(document).on('click','#saveDetails',function(){
         $('input.active').val(id);
     });
 
+
+
+
+
 });
 
+
+function addPackage()
+{
+   var file_data = $("#profile-upload-left").prop("files")[0];   
+  var form_data = new FormData();                  
+  form_data.append("file", file_data) 
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });                   
+            $.ajax({
+                url: "{{url('connect/profile-picture')}}",
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: form_data,                     
+                type: 'post',
+                beforeSend : function(){
+                  $(".loader-bg").show();
+                },
+                success : function(res){
+                  if(res == 'error'){
+                    addProductCartOrWishlist('fa-times','error','Unable to upload profile picture.');
+                  }else{
+                    $("#profile-img-left").attr('src',res.path);
+                    setTimeout(function(){ location.reload(); },2000);
+                  } 
+                },
+                complete : function(){
+                  $(".loader-bg").hide();
+                }
+            });
+}
 
 function getSkillset(){
     $(".loader-bg").show();
@@ -665,6 +701,34 @@ function getDetails(){
         $(".loader-bg").hide();
     });
 }
+
+function imagePopup(id){
+
+$("#photo-library .photo").fbPhotoBox({
+rightWidth: 360,
+leftBgColor: "black",
+rightBgColor: "white",
+footerBgColor: "black",
+overlayBgColor: "#222",
+containerClassName: 'fbphotobox',
+imageClassName: 'photo',
+onImageShow: function() {
+$("#photo-library .photo").fbPhotoBox("addTags",
+[{x:0.3,y:0.3,w:0.3,h:0.3}]
+);
+
+$.get('{{url("connect/allCommentsPhotos")}}/'+id,function(res){
+
+    $(".fbphotobox-image-content").html(res);
+    var media = $("#commentsPopupBox > div.media").length;
+    var x = 4;
+    $("#commentsPopupBox > div.media:lt("+x+")").removeClass('hide');
+})
+
+}
+});
+
+    }
 
 function addProductCartOrWishlist(icon,status,msg){
         $.notify({

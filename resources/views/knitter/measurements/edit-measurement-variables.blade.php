@@ -50,7 +50,7 @@
             ?>
                               <div class="col-md-2">
                                  <div class="form-group">
-                                    <label for="int1">{{ucfirst($name)}} 
+                                    <label for="int1"> @if($name == 'bust') {{ucfirst($name)}} / Chest @else {{ucfirst($name)}} @endif
                                        <span class="mytooltip tooltip-effect-2">
                                        <span class="tooltip-item">?</span>
                                        <span class="tooltip-content clearfix">
@@ -352,34 +352,37 @@
       var er = [];
       var cnt = 0;
 
-    /*  $("select").each(function(index,el){
-          if($(this).val() == 0){
-            $("span",this).length
-           //$(this).children().find("span.select2-selection--single").addClass('error'); //.eq(1).addClass('error');
-            //$(this+':nth-child(3)').addClass('error');
-            //er+=cnt+1;
-          //} //<-- Should return all input elements in that specific form.
-          
-       }
-      }); 
-
-      if(er != ""){
-         alert('please fill all measurement inputs.');
-         return false;
-      }
-      alert('done');
-      return false;
-      */
       var m_title = $("#m_title").val();
       var m_date = $("#dropper-default").val();
       var measurement_preference = $("input[name='measurement_preference']:checked").val();
       var user_meas_image = $("input#image").val();
       var ext = $("#ext").val();
 
-      //alert(user_meas_image + ' - ' + ext);
-      //return false;
+
 
       var Data = $("#bodymeasurements").serializeArray();
+
+
+    for (var i = 0; i < Data.length; i++) {
+        var data = Data[i].name;
+        var var_name = $("#"+data).val();
+        
+        if(i > 1){
+          if(var_name == 0){
+            $("."+var_name).html('This field is required.');
+            er+=cnt+1;
+          }else{
+            $("."+var_name).html('');
+          }
+        }
+    }
+
+    //alert(er);
+    if(er != ""){
+      alert('Please fill all the measurement variable values.');
+      return false;
+    }
+
                  Data.push({name: 'type', value: 'update'});
                  Data.push({name: 'm_title', value: m_title});
                  Data.push({name: 'm_date', value: m_date});

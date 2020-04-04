@@ -42,13 +42,23 @@ Route::group(['middleware' => 'web','prefix' => 'connect'], function () {
 	Route::post('UpdateComment','Connect\TimelineController@timeline_UpdateComment');
 	Route::post('savePrivacy','Connect\TimelineController@timeline_savePrivacy');
 
+	Route::get('allCommentsPost/{id}','Connect\TimelineController@timeline_allCommentsPost');
+
+	Route::get('allCommentsPhotos/{id}','Connect\TimelineController@allCommentsPhotos');
+
+	Route::get('deleteImage/{id}','Connect\TimelineController@deleteImage');
+
 	Route::get('showAddPost','Connect\TimelineController@showAddPost');
 	Route::get('editAddPost/{id}','Connect\TimelineController@editAddPost');
 
 	Route::post('imageUpload','Connect\TimelineController@imageUpload');
 	Route::get('users','Connect\TimelineController@users');
 	Route::get('gallery','Connect\ConnectionsController@user_gallery');
+
+	
 	Route::post('profile-picture','Connect\ConnectionsController@profile_picture');
 	/* Connections controller */
+
+	Route::get('notifications/timeline/{id}','Connect\TimelineController@post_notification');
 	
 });

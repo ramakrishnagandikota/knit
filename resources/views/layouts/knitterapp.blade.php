@@ -223,6 +223,7 @@
        @yield('content')
        
         </div>
+
         <div id="sidebar" class="users p-chat-user showChat">
             <div class="had-container">
                 <div class="p-fixed users-main">

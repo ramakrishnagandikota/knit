@@ -25,6 +25,11 @@ use App\Models\UserSettings;
 use App\Models\TimelineImages;
 use App\Models\Timeline;
 use App\Models\Projectimages;
+use Validator;
+use File;
+use Image;
+use Session;
+use Redirect;
 
 class ConnectionsController extends Controller
 {
@@ -360,8 +365,47 @@ class ConnectionsController extends Controller
         return view('connect.connections.gallery',compact('timeline_images','project_images'));
     }
 
+    function clean($string) {
+       $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
+
+       return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+    }
+
     function profile_picture(Request $request){
-        print_r($request->all());
+        $image = $request->file('file');
+            $fname = $this->clean($image->getClientOriginalName()); 
+            $filename = time().'-'.$fname;
+            $ext = $image->getClientOriginalExtension();
+
+         $s3 = \Storage::disk('s3');
+        //exit;
+        $filepath = 'knitfit/'.$filename;
+
+        if($ext == 'pdf'){
+            $pu = $s3->put('/'.$filepath, file_get_contents($image),'public');
+        }else{
+        $ext = $ext;
+        $img = Image::make($image);
+        $height = Image::make($image)->height();
+        $width = Image::make($image)->width();
+        $img->orientate();
+        $img->resize($width, $height, function ($constraint) {
+            //$constraint->aspectRatio();
+        });
+        $img->encode('jpg');
+        $pu = $s3->put('/'.$filepath, $img->__toString(), 'public');
+        }
+
+       if($pu){
+        $user = User::find(Auth::user()->id);
+        $user->picture = 'https://s3.us-east-2.amazonaws.com/knitfitcoall/'.$filepath;
+        $user->save();
+        
+         return response()->json(['path' => 'https://s3.us-east-2.amazonaws.com/knitfitcoall/'.$filepath,'ext' => $ext]);
+     }else{
+        echo 'error';
+     }
+
     }
 
 }

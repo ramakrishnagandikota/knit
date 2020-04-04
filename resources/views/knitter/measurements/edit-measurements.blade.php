@@ -185,7 +185,8 @@
 <!-- Select 2 js -->
 
 
-<script src="{{ asset('resources/assets/select2/select2.min.js') }}"></script>
+<link rel="stylesheet" type="text/css" href="{{asset('resources/assets/select2/select2.min.css')}}">
+<script type="text/javascript" src="{{asset('resources/assets/select2/select2.full.min.js')}}"></script>
 
 
     <!-- Bootstrap date-time-picker js -->
@@ -440,6 +441,8 @@ $("#image").addClass('hide');
 
   function getAllData(){
     var Data = $("#bodymeasurements").serializeArray();
+    
+    
     //alert(JSON.stringify(Data));
     var new_str;
     var obj = JSON.stringify(Data);
@@ -524,6 +527,7 @@ $("#image").addClass('hide');
     $.get('{{url("knitter/get-measurement-variables/")}}/'+id+'/'+mp,function(res){
       $("#allmeasurements").removeClass('hide').html(res);
       setTimeout(function(){ $(".loading").hide(); },1000);
+      $('.js-example-basic-single').select2();
     });
 
    }

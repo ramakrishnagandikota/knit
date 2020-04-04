@@ -5,7 +5,14 @@ if($time->picture){
     $picture = 'https://via.placeholder.com/150?text='.$time->first_name;
 }
 ?>
-
+<?php 
+if($time->username){
+    $username = $time->username;
+}else{
+    $na = explode('@', $time->email);
+    $username = $na[0];
+}
+?>
 <div id="timeline{{$time->id}}">
 <div class="card bg-white p-relative">
 <div class="card-block">
@@ -19,7 +26,14 @@ if($time->picture){
             </a>
         </div>
         <div class="media-body">
-            <div class="chat-header"><b> {{ucfirst($time->first_name)}} {{ucfirst($time->last_name)}} </b> posted</div>
+            <div class="chat-header">
+                @if(Auth::user()->id == $time->user_id)
+                <b><a href="{{url('connect/myprofile')}}"> {{ucfirst($time->first_name)}} {{ucfirst($time->last_name)}}</a> </b>
+                @else
+                <b><a href="{{url('connect/profile/'.$username.'/'.encrypt($time->uid))}}">{{ucfirst($time->first_name)}} {{ucfirst($time->last_name)}} </a></b>
+                @endif
+
+                 posted</div>
             <div class="f-13 text-muted">{{ \Carbon\Carbon::parse($time->created_at)->diffForHumans()}}</div>
         </div>
     </div>
@@ -51,17 +65,17 @@ $images = $time->images;
 ?>
 
 @if($images->count() > 0)
-<div class="fbphotobox m-10 text-center fbphoto{{$time->id}}" id="fbphotobox{{$time->id}}"  id="photo-library{{$time->id}}">
+<div class="fbphotobox m-10 text-center fbphoto{{$time->id}}"  id="photo-library{{$time->id}}" >
 <?php $i=1; ?>
     @foreach($images as $image)
-<a @if($i > 3) class="hide" @endif>
+<a @if($i > 3) class="hide" @endif onclick="imagePopup({{$time->id}})">
     <img class="photo{{$time->id}}" data-id="{{$time->id}}" fbphotobox-src="{{ $image->image_path }}" alt="Dummmy Image<br>Very Coool!" src="{{ $image->image_path }}"/>
 </a>
 
 <?php $i++; ?>
 @endforeach
 @if($i > 6)
-<div style="color: #bbd6bb;font-size: 16px;text-decoration: underline;"><a href="javascript:;" class="show-more" data-id="{{$time->id}}">Show more</a></div>
+<div style="color: #bbd6bb;font-size: 16px;text-decoration: underline;"><a href="javascript:;" class="show-more" onclick="imagePopup({{$time->id}})" data-id="{{$time->id}}">Show more</a></div>
 @endif
 
 </div>
@@ -70,8 +84,24 @@ $images = $time->images;
 <div class="timeline-details">
 <!-- <div class="chat-header">Josephin Doe posted</div> -->
 <p class="text-muted">{{$time->post_content}}</p>
+
 @if($time->tag_friends)
-<p>With {{$time->tag_friends}}</p>
+<p>With
+@php
+$exp = explode(',', $time->tag_friends);
+@endphp
+@for($i=0; $i < count($exp); $i++)
+ <?php  $frie = App\User::where('id',$exp[$i])->first(); ?>
+    @if($i == 0)
+     <b>{{ucfirst($frie->first_name)}} {{ucfirst($frie->last_name)}}</b>
+    @elseif($i == (count($exp) - 1))
+    and <b>{{ucfirst($frie->first_name)}} {{ucfirst($frie->last_name)}}</b>
+    @else
+    <b>{{ucfirst($frie->first_name)}} {{ucfirst($frie->last_name)}}</b>
+    @endif
+@endfor
+
+</p>
 @endif
 @if($time->location)
 <p>At {{$time->location}}</p>
@@ -102,22 +132,24 @@ $likeCount = $time->likes()->where('user_id',Auth::user()->id)->count();
 </div>
 
 
-<div class="card-block user-box">
+<div class="card-block user-box" id="timelineComments{{$time->id}}">
 
 <div id="comments-div{{$time->id}}" class="p-b-20 @if($time->comments->count() == 0) hide @endif">
-    <span class="f-14"><a href="Javascript:;">Comments (<span class="commentCount{{$time->id}}">{{$time->comments()->count()}}</span>)</a>
+    <span class="f-14"><a href="Javascript:;" class="showHidecomments" data-id="{{$time->id}}">Comments (<span class="commentCount{{$time->id}}">{{$time->comments()->count()}}</span>)</a>
     </span>
-    <span class="float-right"><a href="Javascript:;">See all comments</a></span>
+    <span class="float-right"><a href="Javascript:;" class="loadAllComments" data-id="{{$time->id}}">See all comments</a></span>
 </div>
     @if($time->comments->count() > 0)
 @php
-$comments = $time->comments()->leftJoin('users','users.id','timeline_comments.user_id')->select('timeline_comments.*','users.id as uid','users.first_name','users.last_name','users.picture')->where('timeline_comments.status',1)->get();    
+$comments = $time->comments()->leftJoin('users','users.id','timeline_comments.user_id')->select('timeline_comments.*','users.id as uid','users.first_name','users.last_name','users.picture','users.username','users.email')->where('timeline_comments.status',1)->get();    
 @endphp
 
+<?php $i=1; ?>
 @foreach($comments as $comment)
-@component('connect.timeline.comments',['com' => $comment])
+@component('connect.timeline.comments',['com' => $comment,'i' => $i])
 
 @endcomponent
+<?php $i++; ?>
 @endforeach
 @endif
 <div id="showComments{{$time->id}}"></div>
@@ -151,6 +183,4 @@ $comments = $time->comments()->leftJoin('users','users.id','timeline_comments.us
 </div>
 </div>
 </div>
-
-
 

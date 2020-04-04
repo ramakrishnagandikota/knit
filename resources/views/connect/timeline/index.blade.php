@@ -218,7 +218,7 @@
         #post-buttons{position: absolute!important;top: 186px;margin-left: 58px;margin-top: 8px;}
         .upload{margin-left: 46px;}
         .jFiler-theme-dragdropbox{margin-top: 8px;}
-        .post-new-footer i{margin-left: 20px !important;}
+        .post-new-footer i{ *margin-left: 20px !important;}
         .jFiler-items{margin-top: 20px;}
         #post-new-static{position: fixed;bottom: 10px;right: 6px;}
         .hide{
@@ -230,6 +230,9 @@
         .nopm{
             padding: 0px !important;
             margin: 0px !important;
+        }
+        .red{
+            border: 1px solid #bc7c8f !important;
         }
 </style>
 
@@ -247,6 +250,8 @@
 <script type="text/javascript" src="{{ asset('resources/assets/files/bower_components/jquery-ui/js/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('resources/assets/marketplace/js/fbphotobox.js') }}"></script>
 
+<link rel="stylesheet" type="text/css" href="{{asset('resources/assets/select2/select2.min.css')}}">
+<script type="text/javascript" src="{{asset('resources/assets/select2/select2.full.min.js')}}"></script>
 
 <script>
     
@@ -264,6 +269,11 @@ $("#PostModal").modal(options);
 $("#timeline"+id).slideUp();
 $.get("{{url('connect/editAddPost')}}/"+id,function(res){
     $("#modal-data").html(res);
+    $('#mySelect2').select2({
+        placeholder: 'Select your friends for tagging',
+        minimumInputLength: 2,
+        allowClear: true
+    });
 });
 }
 
@@ -276,6 +286,13 @@ function OpenAdd(){
 $("#PostModal").modal("show");
 $.get('{{url("connect/showAddPost")}}',function(res){
     $("#modal-data").html(res);
+
+    $('#mySelect2').select2({
+        placeholder: 'Select your friends for tagging',
+        minimumInputLength: 2,
+        allowClear: true
+    });
+$('#post-new').attr("disabled",true);
 });
 }
 
@@ -303,61 +320,76 @@ $("#postdelId").val(id);
 
 $(document).ready(function() {
 
-    $("fbphotobox img").fbPhotoBox({
-rightWidth: 360,
-leftBgColor: "black",
-rightBgColor: "white",
-footerBgColor: "black",
-overlayBgColor: "#222",
-containerClassName: 'fbphotobox',
-imageClassName: 'photo',
-onImageShow: function() {
-$("fbphotobox img").fbPhotoBox("addTags",
-[{x:0.3,y:0.3,w:0.3,h:0.3}]
-);
-$(".fbphotobox-image-content").html('<div class="card-block b-b-theme b-t-theme social-msg"> <a href="#"> <i class="icofont icofont-heart-alt text-muted"> </i> <span class="b-r-theme">Like (20)</span> </a> <a href="#"> <i class="icofont icofont-comment text-muted"> </i> <span class="b-r-theme">Comments (25)</span> </a> </div><div class="card-block user-box"> <div class="p-b-20 m-t-15"> <span class="f-14"><a href="#">Comments (110)</a> </span> <span class="float-right"><a href="#!">See all comments</a></span><hr> </div><div class="media"> <a class="media-left p-r-0" href="#"> <img class="media-object img-radius m-r-20" src="../files/assets/images/avatar-1.jpg" alt="Generic placeholder image"> </a> <div class="media-body b-b-theme social-client-description"> <div class="chat-header">About Marta Williams<span class="text-muted">Jane 04, 2015</span></div><p class="text-muted">Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p></div></div><div class="media"> <a class="media-left p-r-0" href="#"> <img class="media-object img-radius m-r-20" src="../files/assets/images/avatar-2.jpg" alt="Generic placeholder image"> </a> <div class="media-body b-b-theme social-client-description"> <div class="chat-header">About Marta Williams<span class="text-muted">Jane 10, 2015</span></div><p class="text-muted">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p></div></div><div class="media"> <a class="media-left p-r-0" href="#"> <img class="media-object img-radius m-r-20" src="../files/assets/images/avatar-1.jpg" alt="Generic placeholder image"> </a> <div class="media-body"> <form class="form-material right-icon-control"> <div class="form-group form-default"> <textarea class="form-control" required=""></textarea> <span class="form-bar"></span> <label class="float-label">Write something...</label> </div><div class="form-icon "> <button class="btn theme-outline-btn btn-icon waves-effect waves-light"> <i class="fa fa-paper-plane "></i> </button> </div></form> </div></div></div><p><br></p>');
-}
-});
+//$(".timelineComments > div.media:lt:(4)").removeClass('hide');
 
-
-$(document).on('click','.fbphotobox img',function(){
+$(document).on('click','.deleteImage',function(){
     var id = $(this).attr('data-id');
-    //alert(id);
-
-var photoId = "#fbphotobox"+id;
-
-    $(photoId+" img").fbPhotoBox({
-rightWidth: 360,
-leftBgColor: "black",
-rightBgColor: "white",
-footerBgColor: "black",
-overlayBgColor: "#222",
-containerClassName: 'fbphoto'+id,
-imageClassName: 'photo'+id,
-onImageShow: function() {
-$(photoId+" img").fbPhotoBox("addTags",
-[{x:0.3,y:0.3,w:0.3,h:0.3}]
-);
-$(".fbphotobox-image-content").html('<div class="card-block b-b-theme b-t-theme social-msg"> <a href="#"> <i class="icofont icofont-heart-alt text-muted"> </i> <span class="b-r-theme">Like (20)</span> </a> <a href="#"> <i class="icofont icofont-comment text-muted"> </i> <span class="b-r-theme">Comments (25)</span> </a> </div><div class="card-block user-box"> <div class="p-b-20 m-t-15"> <span class="f-14"><a href="#">Comments (110)</a> </span> <span class="float-right"><a href="#!">See all comments</a></span><hr> </div><div class="media"> <a class="media-left p-r-0" href="#"> <img class="media-object img-radius m-r-20" src="../files/assets/images/avatar-1.jpg" alt="Generic placeholder image"> </a> <div class="media-body b-b-theme social-client-description"> <div class="chat-header">About Marta Williams<span class="text-muted">Jane 04, 2015</span></div><p class="text-muted">Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p></div></div><div class="media"> <a class="media-left p-r-0" href="#"> <img class="media-object img-radius m-r-20" src="../files/assets/images/avatar-2.jpg" alt="Generic placeholder image"> </a> <div class="media-body b-b-theme social-client-description"> <div class="chat-header">About Marta Williams<span class="text-muted">Jane 10, 2015</span></div><p class="text-muted">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p></div></div><div class="media"> <a class="media-left p-r-0" href="#"> <img class="media-object img-radius m-r-20" src="../files/assets/images/avatar-1.jpg" alt="Generic placeholder image"> </a> <div class="media-body"> <form class="form-material right-icon-control"> <div class="form-group form-default"> <textarea class="form-control" required=""></textarea> <span class="form-bar"></span> <label class="float-label">Write something...</label> </div><div class="form-icon "> <button class="btn theme-outline-btn btn-icon waves-effect waves-light"> <i class="fa fa-paper-plane "></i> </button> </div></form> </div></div></div><p><br></p>');
-}
+    if(confirm('Are you sure want to delete this image ?')){
+        $.get('{{url("connect/deleteImage")}}/'+id,function(res){
+            if(res.status == 'success'){
+                $("#image"+id).remove();
+            }else{
+                addProductCartOrWishlist('fa-times','error','Unable to delete image.Try after some time.');
+                setTimeout(function(){ location.reload(); },2000);
+            }
+        });
+    }
 });
 
-
+$(document).on('click','.loadAllComments',function(){
+    var a = 10;
+    var id = $(this).attr('data-id');
+    var hiddenMedia = $("#timelineComments"+id+" > div.media.hide").length;
+    if(hiddenMedia != 0){
+        if(a < hiddenMedia){
+            a = 10;
+        }else{
+            a = hiddenMedia;
+        }
+    $("#timelineComments"+id+" > div.media.hide:lt("+a+")").removeClass('hide');
+    }
 });
 
-
-
-
-
-$(document).on('click','#tagging',function(){
+$(document).on('click','#tag',function(){
     $("#with").toggleClass('hide');
 });
 
-$(document).on('click','#locate',function(){
-    $("#location").toggleClass('hide');
+$(document).on('click','#location',function(){
+    $("#locate").toggleClass('hide');
 });
 
 $(document).on('click','#post-new',function(){
+    var post_content = $("#post_content").val();
+    var post_privacy = $("#post_privacy").val();
+    var locate = $("#locate").hasClass('hide');
+    var share_location = $("#share_location").val();
+    var $with = $("#with").hasClass('hide');
+    var mySelect2 = $("#mySelect2").val();
+    var er = [];
+    var cnt = 0;
+
+    if(post_content == ""){
+        $("#post_content").addClass('red');
+        er+=cnt+1;
+    }else{
+        $("#post_content").removeClass('hide');
+    }
+
+    if(post_privacy == 0){
+        $("#post_privacy").addClass('red');
+        er+=cnt+1;
+    }else{
+        $("Epost_privacy").removeClass('hide');
+    }
+
+
+    if(er != ""){
+        addProductCartOrWishlist('fa-times','error','Please fill all the required fields.'); 
+        return false;
+    }
+
+    
+
     var Data = $("#addPost").serializeArray();
 
     $.ajax({
@@ -384,7 +416,41 @@ $(document).on('click','#post-new',function(){
     }); 
 });
 
+$(document).on('keyup','#post_content',function(){
+    var val = $("#post_content").val();
+
+    if(val != ""){
+        $("#post-new").prop('disabled',false);
+    }else{
+        $("#post-new").prop('disabled',true);
+    }
+});
+
 $(document).on('click','#post-update',function(){
+    var post_content = $("#post_content").val();
+    var post_privacy = $("#post_privacy").val();
+    var er = [];
+    var cnt = 0;
+
+    if(post_content == ""){
+        $("#post_content").addClass('red');
+        er+=cnt+1;
+    }else{
+        $("#post_content").removeClass('hide');
+    }
+
+    if(post_privacy == 0){
+        $("#post_privacy").addClass('red');
+        er+=cnt+1;
+    }else{
+        $("Epost_privacy").removeClass('hide');
+    }
+
+    if(er != ""){
+        addProductCartOrWishlist('fa-times','error','Please fill all the required fields.'); 
+        return false;
+    }
+
     var Data = $("#updatePost").serializeArray();
     var id = $("#timelineid").val();
 
@@ -595,6 +661,22 @@ $(document).on('click','#savePrivacy',function(){
 
 
 
+$(document).on('click','#showMore',function(){
+    var x = 4;
+   // var media = $("#commentsPopupBox > div.media").length;
+    var hidden = $("#commentsPopupBox > div.media.hide").length;
+    //alert(hidden);
+    if(x < hidden){
+        x = 4;
+    }else{
+        x = hidden;
+    }
+
+    $("#commentsPopupBox > div.media.hide:lt("+x+")").removeClass('hide');
+
+});
+
+
 });
 
 
@@ -688,6 +770,33 @@ function addProductCartOrWishlist(icon,status,msg){
             '<a href="{3}" target="{4}" data-notify="url"></a>' +
             '</div>'
         });
+    }
+
+function imagePopup(id){
+
+$("#photo-library"+id+" .photo"+id).fbPhotoBox({
+rightWidth: 360,
+leftBgColor: "black",
+rightBgColor: "white",
+footerBgColor: "black",
+overlayBgColor: "#222",
+containerClassName: 'fbphotobox',
+imageClassName: 'photo'+id,
+onImageShow: function() {
+$("#photo-library"+id+" .photo"+id).fbPhotoBox("addTags",
+[{x:0.3,y:0.3,w:0.3,h:0.3}]
+);
+$.get('{{url("connect/allCommentsPost")}}/'+id,function(res){
+
+    $(".fbphotobox-image-content").html(res);
+    var media = $("#commentsPopupBox > div.media").length;
+    var x = 4;
+    $("#commentsPopupBox > div.media:lt("+x+")").removeClass('hide');
+})
+
+}
+});
+
     }
 
 </script>

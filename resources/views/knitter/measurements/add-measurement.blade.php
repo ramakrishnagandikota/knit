@@ -178,7 +178,8 @@
 <!-- Select 2 js -->
 
 
-<script src="{{ asset('resources/assets/select2/select2.min.js') }}"></script>
+<link rel="stylesheet" type="text/css" href="{{asset('resources/assets/select2/select2.min.css')}}">
+<script type="text/javascript" src="{{asset('resources/assets/select2/select2.full.min.js')}}"></script>
 
 
     <!-- Bootstrap date-time-picker js -->
@@ -385,7 +386,7 @@ $("#image").addClass('hide');
     $(".accordion:first-child").trigger('click');
     $("#submit").prop('disabled',true);
     $("#allmeasurements").removeClass('hide').html(res);
-   
+   $('.js-example-basic-single').select2();
    }
    },
    complete : function(){

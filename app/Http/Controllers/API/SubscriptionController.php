@@ -13,7 +13,8 @@ class SubscriptionController extends Controller
 {
 
 	function sendJsonData($data){
-		return response()->json(['data' => $data]);
+        $sub = (Auth::user()->subscription_type == 1) ? 'Free' : 'Basic';
+		return response()->json(['data' => $data,'user_subscription' => $sub]);
 	}
     
     function index(){

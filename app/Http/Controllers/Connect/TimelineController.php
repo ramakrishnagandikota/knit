@@ -24,6 +24,7 @@ use Redirect;
 use Validator;
 use App\Models\Friends;
 use App\Models\Follow;
+use Illuminate\Contracts\Encryption\DecryptException;
 
 class TimelineController extends Controller
 {
@@ -45,7 +46,7 @@ class TimelineController extends Controller
     function index(){
 
     	$timeline = Timeline::leftJoin('users','users.id','timeline.user_id')
-    	->select('timeline.*','users.id as uid','users.first_name','users.last_name','users.picture')
+    	->select('timeline.*','users.id as uid','users.first_name','users.last_name','users.picture','users.username','users.email')
     	->where('timeline.status',1)
     	->take(5)->orderBy('id','DESC')->get();
     	$friends = Friends::where('user_id',Auth::user()->id)->select('user_id','friend_id')->get();
@@ -60,7 +61,7 @@ class TimelineController extends Controller
     function show_more(Request $request){
     	$id = $request->id;
     	$timeline = Timeline::leftJoin('users','users.id','timeline.user_id')
-    	->select('timeline.*','users.id as uid','users.first_name','users.last_name','users.picture')
+    	->select('timeline.*','users.id as uid','users.first_name','users.last_name','users.picture','users.username','users.email')
     	->where('timeline.status',1)
     	->where('timeline.id','<',$id)
     	->take(2)->orderBy('id','DESC')->get();
@@ -70,10 +71,17 @@ class TimelineController extends Controller
     }
 
     function timeline_addDetails(Request $request){
+        if($request->tag_friends){
+            $tag = implode(',', $request->tag_friends);
+        }else{
+            $tag = '';
+        }
+
+
     	$timeline = new Timeline;
     	$timeline->user_id = Auth::user()->id;
     	$timeline->post_content = $request->post_content;
-    	$timeline->tag_friends = $request->tag_friends;
+    	$timeline->tag_friends = $tag;
     	$timeline->location = $request->location;
     	$timeline->privacy = $request->post_privacy;
     	$timeline->created_at = Carbon::now();
@@ -94,7 +102,7 @@ class TimelineController extends Controller
     	
     		//$id = $request->id;
     	$timeline = Timeline::leftJoin('users','users.id','timeline.user_id')
-    	->select('timeline.*','users.id as uid','users.first_name','users.last_name','users.picture')
+    	->select('timeline.*','users.id as uid','users.first_name','users.last_name','users.picture','users.username','users.email')
     	->where('timeline.status',1)
     	->where('timeline.id','=',$timeline->id)->orderBy('id','DESC')
     	->get();
@@ -107,9 +115,15 @@ class TimelineController extends Controller
     }
 
     function timeline_updateDetails(Request $request){
+        if($request->tag_friends){
+            $tag = implode(',', $request->tag_friends);
+        }else{
+            $tag = '';
+        }
+
     	$timeline = Timeline::find($request->id);
     	$timeline->post_content = $request->post_content;
-    	$timeline->tag_friends = $request->tag_friends;
+    	$timeline->tag_friends = $tag;
     	$timeline->location = $request->location;
     	$timeline->privacy = $request->post_privacy;
     	$timeline->updated_at = Carbon::now();
@@ -130,7 +144,7 @@ class TimelineController extends Controller
     	
     		//$id = $request->id;
     	$timeline = Timeline::leftJoin('users','users.id','timeline.user_id')
-    	->select('timeline.*','users.id as uid','users.first_name','users.last_name','users.picture')
+    	->select('timeline.*','users.id as uid','users.first_name','users.last_name','users.picture','users.username','users.email')
     	->where('timeline.status',1)
     	->where('timeline.id','=',$timeline->id)->orderBy('id','DESC')
     	->get();
@@ -187,12 +201,13 @@ class TimelineController extends Controller
          $timeline->user->notify(new CommentToPostNotification($timeline));
         if($comment){
         	$com = Timelinecomments::leftJoin('users','users.id','timeline_comments.user_id')
-    	->select('timeline_comments.*','users.id as uid','users.first_name','users.last_name','users.picture')
+    	->select('timeline_comments.*','users.id as uid','users.first_name','users.last_name','users.picture','users.username','users.email')
     	->where('timeline_comments.status',1)
     	->where('timeline_comments.timeline_id',$request->timeline_id)
     	->where('user_id',Auth::user()->id)
     	->first();
-    	return view('connect.timeline.comments',compact('com'));
+        $i = 0;
+    	return view('connect.timeline.comments',compact('com','i'));
             //return response()->json(['success' => 'Comment posted successfully.']);
         }else{
             return response()->json(['error' => 'Unable to post comment.']);
@@ -207,10 +222,11 @@ class TimelineController extends Controller
     	$save = Timelinecomments::where('id',$comment_id)->update($array);
     	if($save){
     		$com = Timelinecomments::leftJoin('users','users.id','timeline_comments.user_id')
-    	->select('timeline_comments.*','users.id as uid','users.first_name','users.last_name','users.picture')
+    	->select('timeline_comments.*','users.id as uid','users.first_name','users.last_name','users.picture','users.username','users.email')
     	->where('timeline_comments.id',$comment_id)
     	->first();
-    	return view('connect.timeline.comments',compact('com')); 
+        $i = 0;
+    	return view('connect.timeline.comments',compact('com','i')); 
             //return response()->json(['success' => 'Comment updated successfully.']);
         }else{
             return response()->json(['error' => 'Unable to update comment,Try again after sometime.']);
@@ -276,12 +292,68 @@ class TimelineController extends Controller
     }
 
     function showAddPost(){
-    	return view('connect.timeline.add-post');
+        $friends = Friends::leftJoin('users','users.id','friends.friend_id')
+                   ->where('friends.user_id',Auth::user()->id)
+                   ->select('users.id','users.first_name','users.last_name','users.picture','users.username','users.email')->get();
+    	return view('connect.timeline.add-post',compact('friends'));
     }
 
     function editAddPost(Request $request){
+        $friends = Friends::leftJoin('users','users.id','friends.friend_id')
+                   ->where('friends.user_id',Auth::user()->id)
+                   ->select('users.id','users.first_name','users.last_name','users.picture','users.username','users.email')->get();
     	$timeline = Timeline::where('id',$request->id)->first();
     	$timeline_images = TimelineImages::where('timeline_id',$request->id)->get();
-    	return view('connect.timeline.edit-post',compact('timeline','timeline_images'));
+    	return view('connect.timeline.edit-post',compact('timeline','timeline_images','friends'));
+    }
+
+
+    function timeline_allCommentsPost(Request $request){
+        $id = $request->id;
+        $timeline = Timeline::find($id);
+        $comments = Timelinecomments::leftJoin('users','users.id','timeline_comments.user_id')
+        ->select('users.id as uid','users.first_name','users.last_name','users.picture','timeline_comments.*','users.username','users.email')
+        ->where('timeline_comments.timeline_id',$id)->orderBy('id','DESC')->get();
+        return view('connect.timeline.allcomments-popup',compact('timeline','comments'));
+    }
+
+    function allCommentsPhotos(Request $request){
+        $id = $request->id;
+        $tline_id = TimelineImages::where('id',$id)->select('timeline_id')->first();
+
+        $timeline = Timeline::find($tline_id->timeline_id);
+        $comments = Timelinecomments::leftJoin('users','users.id','timeline_comments.user_id')
+        ->select('users.id as uid','users.first_name','users.last_name','users.picture','timeline_comments.*','users.username','users.email')
+        ->where('timeline_comments.timeline_id',$timeline->id)->orderBy('id','DESC')->get();
+        return view('connect.timeline.allcomments-popup',compact('timeline','comments'));
+    }
+
+    function post_notification(Request $request){
+        $id = $request->id;
+        try {
+            $decrypted = decrypt($id);
+        $timeline = Timeline::leftJoin('users','users.id','timeline.user_id')
+        ->select('timeline.*','users.id as uid','users.first_name','users.last_name','users.picture','users.username','users.email')
+        ->where('timeline.status',1)
+        ->where('timeline.id',$decrypted)
+        ->take(1)->orderBy('id','DESC')->get();
+        $friends = Friends::where('user_id',Auth::user()->id)->select('user_id','friend_id')->get();
+        $follow = Follow::where('user_id',Auth::user()->id)->select('user_id','follow_user_id')->get();
+        } catch (DecryptException $e) {
+            return view('notfound');
+        }
+
+        return view('connect.timeline.notification',compact('timeline','friends','follow'));
+    }
+
+    function deleteImage(Request $request){
+        $id = $request->id;
+        $image = TimelineImages::find($id);
+        $del = $image->delete();
+        if($del){
+            return response()->json(['status' => 'success']);
+        }else{
+            return response()->json(['status' => 'fail']);
+        }
     }
 }
