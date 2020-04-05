@@ -1,3 +1,4 @@
+<?php header('Set-Cookie: cross-site-cookie='.url('/').'; SameSite=None; Secure'); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,10 +45,48 @@
  <link rel="stylesheet" type="text/css" href="{{asset('node_modules/sweetalert2/dist/sweetalert2.min.css')}}">
 
  <script type="text/javascript" src="{{ asset('resources/assets/files/bower_components/jquery/js/jquery.min.js') }}"></script>
- 
+  <script src="{{asset('resources/assets/pusher.min.js')}}"></script>
+
+
+
+ <script>
+ var UserId = '{{Auth::user()->id}}';
+
+   var pusher = new Pusher('7c06140b8071b2413bb7', {
+	    forceTLS: true,
+		cluster : 'ap2'
+  });
+
+  var channel = pusher.subscribe('like-post-'+UserId);
+
+  // Bind a function to a Event (the full Laravel class)
+  channel.bind('App\\Events\\LikeToPost', function(data) {
+	  var da = JSON.stringify(data);
+    //alert(da);
+	  //console.log(data);
+	  if($('#NotificationCount').length > 0){
+		  var NotificationCount = $('#NotificationCount').html();
+		  var Ncount = parseInt(NotificationCount) + 1;
+		  $('#NotificationCount').html(Ncount);
+	  }else{
+		  var Ncount = 1;
+		  var htmls = '<i class="feather icon-bell"></i><span id="NotificationCount" class="badge bg-c-red">'+Ncount+'</span>';
+	      $('#ToogleDiv').html(htmls);
+	  }
+	  //addProductCartOrWishlist('fa-check','Hey','You have got a new Notification.','info');
+
+    var err = eval("(" + da + ")");
+    if(err.userDetails.uid != UserId){
+     notifyMe(err.timeline,err.userDetails.first_name,err.message,err.userDetails.picture);
+    }
+
+  });
+
+
+
+ </script>
 </head>
 <body >
-
 <!-- [ Pre-loader ] start -->
 <div class="loader-bg">
 <div class="loader-bar"></div>
@@ -108,41 +147,17 @@ Photos
 </li>
 
 
-<li class="header-notification" onclick="markAsRead({{count(Auth::user()->unreadNotifications)}});">
+<li class="header-notification"  onclick="markAsRead({{count(Auth::user()->unreadNotifications)}});">
 <div class="dropdown-primary dropdown">
-<div class="dropdown-toggle" data-toggle="dropdown">
+<div class="dropdown-toggle" id="ToogleDiv" data-toggle="dropdown">
 <i class="feather icon-bell"></i>
 @if(count(Auth::user()->unreadNotifications) > 0)
-<span class="badge bg-c-red">{{count(Auth::user()->unreadNotifications)}}</span>
+<span class="badge bg-c-red" id="NotificationCount">{{count(Auth::user()->unreadNotifications)}}</span>
 @endif
 </div>
 <ul id="show-notification" class="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" style="max-height: 400px;overflow-y: scroll;">
-<li>
-<h6>Notifications</h6>
-@if(count(Auth::user()->unreadNotifications) > 0)
-<label class="label label-danger">New</label>
-@endif
-</li>
 
-@if(count(Auth::user()->unreadNotifications) > 0)
-  @foreach(Auth::user()->unreadNotifications  as $notification)
-    @include('notification.'.class_basename($notification->type))
-  @endforeach
-
-
-@else
-
-<li>
-<div class="media">
-<div class="media-body">
-<p class="notification-msg">No new notifications found.</p>
-</div>
-</div>
-</li>
-
-@endif
-
-</ul>
+  </ul>
 </div>
 </li>
 
@@ -219,6 +234,7 @@ if(Auth::user()->picture){
 <div class="main-body">
 <div class="page-wrapper">
 <!-- Page-body start -->
+
 @yield('content')
 </div>
 <!-- Page-body end -->
@@ -318,7 +334,10 @@ if(Auth::user()->picture){
 <label for="profile-upload">
 <img src="{{ asset('resources/assets/files/assets/images/pencil.png') }}">
 </label>
-<input id="file" name="file" type="file" onchange="readprofileURL(this);">
+<input id="file" name="file" type="file"  style="position: absolute;
+    left: 0px;
+    width: 25px;
+    opacity: 0;top:0px;cursor: pointer;display: block;">
 </span>
 </form>
 </div>
@@ -372,6 +391,9 @@ if(Auth::user()->picture){
     border-color: #bc7c8f;
     color: #bc7c8f;
 }
+.header-navbar .navbar-wrapper .navbar-container .badge{
+    width:auto !important;
+}
 </style>
 <!-- Required Jquery -->
 
@@ -401,11 +423,61 @@ if(Auth::user()->picture){
 
 <script type="text/javascript" src="{{asset('node_modules/sweetalert2/dist/sweetalert2.min.js')}}"></script>
 
+<script>
+function notifyMe(timeline,name,body,picture) {
+  // Let's check if the browser supports notifications
+  if (!("Notification" in window)) {
+    alert("This browser does not support desktop notification");
+  }
+
+  // Let's check if the user is okay to get some notification
+  else if (Notification.permission === "granted") {
+    // If it's okay let's create a notification
+  var options = {
+        body: body,
+        icon: picture,
+        dir : "ltr"
+    };
+  var notification = new Notification(name,options);
+  }
+
+  // Otherwise, we need to ask the user for permission
+  // Note, Chrome does not implement the permission static property
+  // So we have to check for NOT 'denied' instead of 'default'
+  else if (Notification.permission !== 'denied') {
+    Notification.requestPermission(function (permission) {
+      // Whatever the user answers, we make sure we store the information
+      if (!('permission' in Notification)) {
+        Notification.permission = permission;
+      }
+
+      // If the user is okay, let's create a notification
+      if (permission === "granted") {
+        var options = {
+              body: body,
+              icon: picture,
+              dir : "ltr"
+          };
+        var notification = new Notification(name,options);
+      }
+    });
+  }
+
+  // At last, if the user already denied any notification, and you
+  // want to be respectful there is no need to bother them any more.
+}
+</script>
 
 <script>
 
 $(function() {
+getAllNotifications();
 
+/*
+setTimeout(function(){
+  checkNotifications();
+},1000);
+*/
 
 $("#uploadPicture").on('submit',(function(e) {
   alert()
@@ -429,13 +501,32 @@ $("#uploadPicture").on('submit',(function(e) {
      });
   }));
 
-
 });
 
+function getAllNotifications(){
+  $.get('{{url("showAllNotifications")}}',function(res){
+   $("#show-notification").html(res);
+  });
+  
+}
+
+function checkNotifications(){
+  var count = $("#NotificationCount").html()
+  if(count > 0){
+    notifyMe('','Hi {{ucfirst(Auth::user()->first_name)}}','Some Notifications waiting for you.',"{{ asset('resources/assets/files/assets/images/logoNew.png') }}");
+  }
+}
+
 function markAsRead(data){
+var length = $("#show-notification li").length;
+if(length > 1){
   if(data > 0){
-      $.get('/connect/markAsRead');
+      $.get('{{url("connect/markAsRead")}}');
+      $("#NotificationCount").remove();
     }
+}else{
+  getAllNotifications();
+}
 }
 
 function readprofileURL(input) {
@@ -451,6 +542,44 @@ function readprofileURL(input) {
     }
 }
 
+
+function addProductCartOrWishlist(icon,status,msg,info){
+        $.notify({
+            icon: 'fa '+icon,
+            title: status+'!',
+            message: msg
+        },{
+            element: 'body',
+            position: null,
+            type: type,
+            allow_dismiss: true,
+            newest_on_top: false,
+            showProgressbar: true,
+            placement: {
+                from: "top",
+                align: "right"
+            },
+            offset: 20,
+            spacing: 10,
+            z_index: 10000,
+            delay: 3000,
+            animate: {
+                enter: 'animated fadeInDown',
+                exit: 'animated fadeOutUp'
+            },
+            icon_type: 'class',
+            template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+            '<span data-notify="icon"></span> ' +
+            '<span data-notify="title">{1}</span> ' +
+            '<span data-notify="message">{2}</span>' +
+            '<div class="progress" data-notify="progressbar">' +
+            '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+            '</div>' +
+            '<a href="{3}" target="{4}" data-notify="url"></a>' +
+            '</div>'
+        });
+    }
 </script>
 @yield('footerscript')
 </html>

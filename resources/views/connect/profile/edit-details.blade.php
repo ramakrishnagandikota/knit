@@ -14,8 +14,9 @@
         <i class="icofont icofont-user"></i>
     </div>
     <div class="form-group form-primary">
-        <input type="text" name="first_name" class="form-control fill" value="{{Auth::user()->first_name}}">
+        <input type="text" id="first_name" name="first_name" class="form-control fill" value="{{Auth::user()->first_name}}">
         <input type="hidden" name="first_name_privacy" id="first_name_privacy" value="only-me">
+        <span class="red first_name"></span>
         <span class="form-bar"></span>
         <label class="float-label">First name</label>
     </div>
@@ -26,7 +27,8 @@
             <i class="icofont icofont-mobile-phone"></i>
     </div>
     <div class="form-group form-primary">
-        <input type="text" name="mobile" class="form-control fill" value="{{Auth::user()->mobile}}">
+        <input type="text" id="mobile" name="mobile" class="form-control fill" value="{{Auth::user()->mobile}}">
+        <span class="red mobile"></span>
         <input type="hidden" name="mobile_privacy" id="mobile_privacy" value="0">
         <span class="form-bar"></span>
         <label class="float-label">Contact Number</label>
@@ -55,7 +57,8 @@
         <i class="icofont icofont-user"></i>
     </div>
     <div class="form-group form-primary">
-        <input type="text" name="last_name" class="form-control fill" value="{{Auth::user()->last_name}}">
+        <input type="text" id="last_name" name="last_name" class="form-control fill" value="{{Auth::user()->last_name}}">
+        <span class="red last_name"></span>
         <input type="hidden" name="last_name_privacy" id="last_name_privacy" value="0">
         <span class="form-bar"></span>
         <label class="float-label">Last name</label>
@@ -67,7 +70,7 @@
         <i class="icofont icofont-ui-message" style="color:black"></i>
 </div>
 <div class="form-group form-primary">
-    <input type="text" name="email" class="form-control fill" value="{{Auth::user()->email}}">
+    <input type="email" readonly name="email" class="form-control fill" value="{{Auth::user()->email}}">
     <input type="hidden" name="email_privacy" id="email_privacy" value="0">
     <span class="form-bar"></span>
     <label class="float-label">E-mail</label>
@@ -79,7 +82,7 @@
         <i class="icofont icofont-globe"></i>
 </div>
 <div class="form-group form-primary">
-    <input type="text" id="ontype-textbox" name="website" class="form-control fill" value="{{Auth::user()->profile->website}}">
+    <input type="url" id="ontype-textbox" name="website" class="form-control fill" value="{{Auth::user()->profile->website}}">
     <span class="form-bar"></span>
     <label class="float-label">Website</label>
 </div>

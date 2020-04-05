@@ -298,6 +298,13 @@ class ConnectionsController extends Controller
     }
 
     function profile_addDetails(Request $request){
+
+        $validator = $request->validate([
+                'first_name' => 'required|alpha|min:2|max:15',
+                'last_name' => 'required|alpha|min:2|max:15',
+                'mobile' => 'required|numeric'
+            ]);
+
         $mobile = Auth::user()->settings->where('name','mobile_privacy')->count();
         $email = Auth::user()->settings->where('name','email_privacy')->count();
         $address = Auth::user()->settings->where('name','address_privacy')->count();

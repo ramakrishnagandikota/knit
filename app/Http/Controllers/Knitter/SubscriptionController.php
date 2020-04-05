@@ -13,6 +13,7 @@ use Session;
 use Auth;
 use App\User;
 use Carbon\Carbon;
+use App\Models\Subscription;
 
 class SubscriptionController extends Controller
 {
@@ -31,10 +32,10 @@ class SubscriptionController extends Controller
 
     public function getExpressCheckout(Request $request)
     {
-
     	$sub_type = $request->get('stype');
         $recurring = ($request->get('mode') === 'recurring') ? true : false;
-        $cart = $this->getCheckoutData($recurring,$sub_type);
+        $newSubscription = $request->subscription;
+        $cart = $this->getCheckoutData($recurring,$sub_type,$newSubscription);
 
         try {
             $response = $this->provider->setExpressCheckout($cart, $recurring);
@@ -47,28 +48,29 @@ class SubscriptionController extends Controller
         }
     }
 
-     protected function getCheckoutData($recurring = false,$sub_type)
+     protected function getCheckoutData($recurring = false,$sub_type,$newSubscription)
     {
         $data = [];
 
         $order_id = Invoice::all()->count() + 1;
 
-        
+$subscription = Subscription::where('id',$newSubscription)->select('name','price_month','offer_price','price_year')->first();
 
         if($sub_type == 'yearly'){
         	if($recurring == true){
         		$r = 'recurring';
         		$stype = 'Yearly';
-    			$amt = '2.99';
+    			$amt = $subscription->price_month;
         	}else{
+        //$sub = Subscription::where('')   
         		$r = '';
         		$stype = 'Yearly';
-    			$amt = '35.88';
+    			$amt = ($subscription->offer_price == 0) ? $subscription->price_year : $subscription->offer_price;
         	}
     		
     	}else{
     		$stype = 'Monthly';
-    		$amt = '2.99';
+    		$amt = $subscription->price_month;
     	}
 
 
@@ -82,38 +84,38 @@ class SubscriptionController extends Controller
                 ],
             ];
 
-            $data['return_url'] = url('knitter/paypal/ec-checkout-success?stype='.$sub_type.'&mode=recurring');
-            $data['cancel_url'] = url('/knitter/subscription/cancel-payment?stype='.$sub_type.'&mode=recurring');
-            $data['subscription_desc'] = $stype.' Subscription '.config('paypal.invoice_prefix').' #'.$order_id;
+            $data['return_url'] = url('knitter/paypal/ec-checkout-success?stype='.$sub_type.'&mode=recurring&subscription='.$newSubscription);
+            $data['cancel_url'] = url('/knitter/subscription/cancel-payment?stype='.$sub_type.'&mode=recurring&subscription='.$newSubscription);
+            $data['subscription_desc'] = $subscription->name.' '.$stype.' Subscription '.config('paypal.invoice_prefix').' #'.$order_id;
 	        }else{
 	        	$data['items'] = [
 	                [
-	                    'name'  => $stype.' Subscription '.config('paypal.invoice_prefix').' #'.$order_id,
+	                    'name'  => $subscription->name.' '.$stype.' Subscription '.config('paypal.invoice_prefix').' #'.$order_id,
 	                    'price' => $amt,
 	                    'qty'   => 1,
 	                ],
 	            ];
 
-	            $data['return_url'] = url('knitter/paypal/ec-checkout-success?stype='.$sub_type);
-	            $data['cancel_url'] = url('/knitter/subscription/cancel-payment?stype='.$sub_type);
+	            $data['return_url'] = url('knitter/paypal/ec-checkout-success?stype='.$sub_type.'&subscription='.$newSubscription);
+	            $data['cancel_url'] = url('/knitter/subscription/cancel-payment?stype='.$sub_type.'&subscription='.$newSubscription);
 	        }
     	}else{
     		$data['items'] = [
                 [
-                    'name'  => $stype.' Subscription '.config('paypal.invoice_prefix').' #'.$order_id,
+                    'name'  => $subscription->name.' '.$stype.' Subscription '.config('paypal.invoice_prefix').' #'.$order_id,
                     'price' => $amt,
                     'qty'   => 1,
                 ],
             ];
 
-            $data['return_url'] = url('knitter/paypal/ec-checkout-success?stype='.$sub_type);
-            $data['cancel_url'] = url('/knitter/subscription/cancel-payment?stype='.$sub_type);
+            $data['return_url'] = url('knitter/paypal/ec-checkout-success?stype='.$sub_type.'&subscription='.$newSubscription);
+            $data['cancel_url'] = url('/knitter/subscription/cancel-payment?stype='.$sub_type.'&subscription='.$newSubscription);
     	}
 
         
 
         $data['invoice_id'] = time().'-'.$order_id;
-        $data['invoice_description'] = $stype." Subscription #$order_id Invoice";
+        $data['invoice_description'] = $subscription->name.' '.$stype." Subscription #$order_id Invoice";
         
 
         $total = 0;
@@ -126,7 +128,7 @@ class SubscriptionController extends Controller
         return $data;
     }
 
-     protected function createInvoice($token,$response,$cart, $status,$recurring,$sub_type,$PayerID)
+     protected function createInvoice($token,$response,$cart, $status,$recurring,$sub_type,$PayerID,$subscription)
     {
 
 
@@ -147,7 +149,7 @@ class SubscriptionController extends Controller
 
         $invoice = new Invoice();
         $invoice->user_id = Auth::user()->id;
-        $invoice->subscription_id = 2;
+        $invoice->subscription_id = $subscription;
         $invoice->sub_type = $s;
         $invoice->invoice_id = $time;
         //$invoice->transaction_id = $transaction_id;
@@ -207,7 +209,7 @@ class SubscriptionController extends Controller
         $user->save();
 
         $user->subscription()->detach();
-        $user->subscription()->attach(['2']);
+        $user->subscription()->attach([$subscription]);
 
         return $invoice;
     }
@@ -263,23 +265,26 @@ class SubscriptionController extends Controller
      public function getExpressCheckoutSuccess(Request $request)
     {
         $recurring = ($request->get('mode') === 'recurring') ? true : false;
+        $subscription = $request->get('subscription');
+        $subscr = Subscription::where('id',$subscription)->select('name','price_month','offer_price','price_year')->first();
+
         if($request->get('stype') === 'yearly'){
         	if($recurring == true){
         		$sub_type = 'yearly';
-        		$amt = '2.99';
+        		$amt = $subscr->price_month;
         	}else{
         		$sub_type = 'yearly';
-        		$amt = '35.88';
+        		$amt = ($subscr->offer_price == 0) ? $subscr->price_year : $subscr->offer_price;
         	}
         		
         	}else{
         		$sub_type = 'monthly';
-        		$amt = '2.99';
+        		$amt = $subscr->price_month;
         	}
         $token = $request->get('token');
         $PayerID = $request->get('PayerID');
 
-        $cart = $this->getCheckoutData($recurring,$sub_type);
+        $cart = $this->getCheckoutData($recurring,$sub_type,$subscription);
 		
 		//print_r($cart);
 		//exit;
@@ -301,14 +306,14 @@ class SubscriptionController extends Controller
 
                 //echo 'yearly recurring';
                 //print_r($response);
-                $invoice = $this->createInvoice($token,$response,$cart, $status,$recurring,$sub_type,$PayerID);
+                $invoice = $this->createInvoice($token,$response,$cart, $status,$recurring,$sub_type,$PayerID,$subscription);
         		}else{
         			//$transaction_id = $response['TRANSACTIONID'];
         			$payment_status = $this->provider->doExpressCheckoutPayment($cart, $token, $PayerID);
                 $status = $payment_status['PAYMENTINFO_0_PAYMENTSTATUS'];
                 //echo 'yearly no recurring';
                 //print_r($payment_status);
-                $invoice = $this->createInvoice($token,$payment_status,$cart, $status,$recurring,$sub_type,$PayerID);
+                $invoice = $this->createInvoice($token,$payment_status,$cart, $status,$recurring,$sub_type,$PayerID,$subscription);
         		}
         	}else{
         		//$transaction_id = $response['TRANSACTIONID'];
@@ -316,7 +321,7 @@ class SubscriptionController extends Controller
                 $status = $payment_status['PAYMENTINFO_0_PAYMENTSTATUS'];
                 //echo 'monthly';
                 //print_r($payment_status);
-                $invoice = $this->createInvoice($token,$payment_status,$cart, $status,$recurring,$sub_type,$PayerID);
+                $invoice = $this->createInvoice($token,$payment_status,$cart, $status,$recurring,$sub_type,$PayerID,$subscription);
         	}
 
             if ($invoice->paid) {
@@ -330,36 +335,39 @@ class SubscriptionController extends Controller
     }
 
     function cancel_payment(Request $request){
-
+        $subscription = $request->get('subscription');
     	$recurring = ($request->get('mode') === 'recurring') ? true : false;
     	$sub_type = ($request->get('stype') === 'yearly') ? 'yearly' : 'monthly';
     	$token = $request->get('token');
+
+        $subscr = Subscription::where('id',$subscription)->select('name','price_month','offer_price','price_year')->first();
+
     	if($sub_type == 'yearly'){
     		if($recurring == true){
-    			$total = '2.99';
-    			$des = 'Yearly Subscription';
+    			$total = $subscr->price_month;
+    			$des = $subscr->name.' Yearly Subscription';
     			$s = 'Yearly';
     			$r = 1;
     		}else{
-    			$total = '35.88';
-    			$des = 'Yearly Subscription';
+    			$total = ($subscr->offer_price == 0) ? $subscr->price_year : $subscr->offer_price;
+    			$des = $subscr->name.'Yearly Subscription';
     			$s = 'Yearly';
     			$r = 0;
     		}
     	}else{
-    		$total = '2.99';
-    		$des = 'Monthly Subscription';
+    		$total = $subscr->price_month;
+    		$des = $subscr->name.'Monthly Subscription';
     		$s = 'Monthly';
     		$r = 0;
     	}
 
-    	$cart = $this->getCheckoutData($recurring,$sub_type);
+    	$cart = $this->getCheckoutData($recurring,$sub_type,$subscription);
     	$time = time();
 
 
         $invoice = new Invoice();
         $invoice->user_id = Auth::user()->id;
-        $invoice->subscription_id = 2;
+        $invoice->subscription_id = $subscription;
         $invoice->sub_type = $s;
         $invoice->invoice_id = $time;
         $invoice->title = $des;

@@ -17,13 +17,8 @@ class Subscription
     public function handle($request, Closure $next)
     {
         if ($request->user() === null) {
-         //return response("Insufficient permissions", 401);
-         if(Auth::check()){
-        return response("Insufficient permissions", 401);
-     }else{
-        return redirect('/login');
-     }
-     }
+         return response("Insufficient permissions", 401);
+        }
 
      $actions = $request->route()->getAction();
 

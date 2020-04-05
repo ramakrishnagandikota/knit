@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,6 +19,9 @@ Route::get('home', function () {
     return view('home');
 });
 
+Route::get('showAllNotifications',function(){
+    return view('notification.Topnotifications');
+});
 
 Route::match(array('GET','POST'),'login',[
 	'uses' => 'Logincontroller@login_page',

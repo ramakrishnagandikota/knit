@@ -353,11 +353,25 @@ $(document).on('change','#projectid',function(){
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           }
       });
-    $(".loading").show();
-    $.post('{{url("knitter/create-project-custom")}}',{id: id},function(res){
+    $.ajax({
+      url : '{{url("knitter/create-project-custom")}}',
+      type : 'POST',
+      data : 'id='+id,
+      beforeSend : function(){
+        $('.loading').show();
+      },
+      success : function(res){
+        if(res){
         $("#loadPatterns").html(res);
         $("#cm-stitch-custom,#cm-row-custom,#sts-ease-prefer-custom,#cm-recom-ease,#cm-stitch-custom-user,#cm-row-custom-user").hide();
-        $(".loading").hide();
+        $('#myModal').modal('hide');
+        }else{
+          alert('Error occured.Please logout & login again.');
+        }
+      },
+      complete : function(){
+      $('.loading').hide();
+      }
     });
 })
 
@@ -369,12 +383,28 @@ $(document).on('click','#saveCustom',function(){
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           }
       });
-
-    $.post('{{url("knitter/create-project-custom")}}',{id: id},function(res){
+    
+    $.ajax({
+      url : '{{url("knitter/create-project-custom")}}',
+      type : 'POST',
+      data : 'id='+id,
+      beforeSend : function(){
+        $('.loading').show();
+      },
+      success : function(res){
+        if(res){
         $("#loadPatterns").html(res);
         $("#cm-stitch-custom,#cm-row-custom,#sts-ease-prefer-custom,#cm-recom-ease,#cm-stitch-custom-user,#cm-row-custom-user").hide();
         $('#myModal').modal('hide');
+        }else{
+          alert('Error occured.Please logout & login again.');
+        }
+      },
+      complete : function(){
+      $('.loading').hide();
+      }
     });
+
 });
 
 $(document).on('click','#saveNonCustom',function(){
@@ -385,11 +415,26 @@ $(document).on('click','#saveNonCustom',function(){
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           }
       });
-
-    $.post('{{url("knitter/create-project-noncustom")}}',{id: id},function(res){
+    
+    $.ajax({
+      url : '{{url("knitter/create-project-noncustom")}}',
+      type : 'POST',
+      data : 'id='+id,
+      beforeSend : function(){
+        $('.loading').show();
+      },
+      success : function(res){
+        if(res){
         $("#loadPatterns").html(res);
         $("#cm-stitch-non-custom,#cm-row-non-custom,#sts-ease-prefer-non-custom").hide();
         $('#nonCustomModal').modal('hide');
+        }else{
+          alert('Error occured.Please logout & login again.');
+        }
+      },
+      complete : function(){
+      $('.loading').hide();
+      }
     });
 });
 
@@ -761,7 +806,7 @@ $(document).on('click','#save',function(e){
         },
         success : function(res){
             if(res.status == 'success'){
-                notify('fa fa-check','success',' ','Project created successfully');
+                addProductCartOrWishlist('fa fa-check','success','Project created successfully','success');
 
     if(type == 'custom'){
       setTimeout(function(){ window.location.assign('{{url("knitter/generate-custom-pattern")}}/'+res.key+'/'+res.slug); },2000);
@@ -772,7 +817,7 @@ $(document).on('click','#save',function(e){
     }
                 
             }else{
-                notify('fa fa-times','error',' ','Unable to create project, Try again after sometime.');
+                addProductCartOrWishlist('fa-times','error','Unable to create project, Try again after sometime.','danger');
             }
         },
         complete : function(){

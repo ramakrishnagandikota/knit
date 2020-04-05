@@ -650,6 +650,7 @@
       color: red;
   }
   </style>
+
   <script>
 $(function(){
     var subscribed = localStorage.getItem('status');

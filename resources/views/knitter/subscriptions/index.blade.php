@@ -66,7 +66,7 @@
                                 @if(Auth::user()->subscription_type == 2)
                                 <button type="button" class="btn theme-outline-btn btn-md">Your subscription</button>
                                 @else
-                                <button type="button" class="btn theme-outline-btn btn-md" data-toggle="modal" data-target="#subscribeModal">Upgrade</button>
+                                <button type="button" class="btn theme-outline-btn btn-md SubscriptionType" data-id="2" data-toggle="modal" data-target="#subscribeModal">Upgrade</button>
                                 @endif
                             </div>
                         </div>
@@ -118,10 +118,11 @@
             <hr>
         </div>
         <div class="modal-body p-30">
+          <input type="hidden" id="subscription" value="">
           <div class="row">
               <div class="col-lg-6">
                 <div class="checkbox-color checkbox-primary">
-                    <input id="checkbox18" class="checkme" type="checkbox" onchange="valueChanged()">
+                    <input id="checkbox18" class="checkme" type="checkbox" onchange="valueChanged()" >
                     <label for="checkbox18">
                         Yearly subscription
                     </label>
@@ -140,6 +141,7 @@
                 <div class="col-md-12">
                     <div class="form-radio">
                     <div class="radio radio-inline">
+                      
                         <label>
                             <input type="radio" name="radio" id="recurring" checked="checked">
                             <i class="helper"></i><span class="radio-text">Recurring payment monthly</span>
@@ -245,6 +247,11 @@ h6{margin-bottom: 20px;}
 
 $(function(){
 
+  $(document).on('click','.SubscriptionType',function(){
+    var id = $(this).attr('data-id');
+    $("#subscription").val(id);
+  });
+
 	$(document).on('click','#continue',function(){
 	if($('#checkbox18').is(":checked")) {
         var sub_type = 'yearly';
@@ -258,7 +265,9 @@ $(function(){
         var mode = 'no'
     }
 
-   var url = '{{url("knitter/paypal/ec-checkout/")}}?stype='+sub_type+'&mode='+mode;
+    var subscription = $("#subscription").val();
+
+   var url = '{{url("knitter/paypal/ec-checkout/")}}?stype='+sub_type+'&mode='+mode+'&subscription='+subscription;
    window.location.assign(url);
 });
 

@@ -1,5 +1,5 @@
 <?php 
-
+use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'web','prefix' => 'connect'], function () {
 	/* Timeline controller */
 	Route::get('/','Connect\TimelineController@index');
@@ -60,5 +60,4 @@ Route::group(['middleware' => 'web','prefix' => 'connect'], function () {
 	/* Connections controller */
 
 	Route::get('notifications/timeline/{id}','Connect\TimelineController@post_notification');
-	
 });

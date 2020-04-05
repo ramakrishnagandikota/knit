@@ -24,6 +24,7 @@ use App\Models\Userprofile;
 use App\Models\UserSettings;
 use App\Traits\PostLikableTrait;
 use App\Models\Todo;
+use App\Models\Timelinelikes;
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 
 class User extends Authenticatable implements MustVerifyEmailContract
@@ -161,6 +162,10 @@ class User extends Authenticatable implements MustVerifyEmailContract
 
    function todo(){
     return $this->hasMany(Todo::class);
+   }
+
+   function likes(){
+    return $this->hasMany(Timelinelikes::class);
    }
     
 }

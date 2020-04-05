@@ -25,6 +25,7 @@ use Validator;
 use App\Models\Friends;
 use App\Models\Follow;
 use Illuminate\Contracts\Encryption\DecryptException;
+use App\Events\LikeToPost;
 
 class TimelineController extends Controller
 {
@@ -165,6 +166,10 @@ class TimelineController extends Controller
     	 $timeline  = Timeline::where('id',$request->timeline_id)->first();
          $like = $timeline->addLike($request);
          $timeline->user->notify(new LikeToPostNotification($timeline));
+         
+         $userDetails = DB::table('users')->leftJoin('timeline_likes','users.id','timeline_likes.user_id')->select('users.id as uid','users.first_name','users.picture','timeline_likes.timeline_id','timeline_likes.user_id')->where('timeline_likes.id',$like->id)->first();
+
+		 event(new LikeToPost($timeline->user_id,$userDetails));
         if($like){
             return response()->json(['success' => 'Post liked successfully.']);
         }else{

@@ -125,7 +125,7 @@
 								<input type="hidden" name="s_for"  id="s_for" value="month">
 							</form>
 							@if(Auth::user()->hasSubscription('Premium'))
-							<a class="select"  href="#">Dsiables</a>
+							<a class="select"  href="#">Disabled</a>
 							@else
 							<a class="select subs" data-id="subscriptionmonthly2" href="{{url('paypal/ec-checkout?mode=recurring')}}">Sign Up</a>
 							@endif
@@ -160,7 +160,7 @@
 								<input type="hidden" name="s_for"  id="s_for" value="year">
 							</form>
 							@if(Auth::user()->hasSubscription('Premium'))
-							<a class="select"  href="#">Dsiables</a>
+							<a class="select"  href="#">Disabled</a>
 							@else
 							<a class="select subs" data-id="subscriptionyearly2" href="#">Sign Up</a>
 							@endif
@@ -236,7 +236,7 @@
 							@if(Auth::user()->hasSubscription('Premium'))
 							<a class="select"  href="#">Selected</a>
 							@else
-							<a class="select subs" data-id="subscriptionmonthly3" href="#">Sign Up</a>
+							<a class="select subs" data-id="subscriptionmonthly3" href="javascript:;">Sign Up</a>
 							@endif
 						</footer>
 					</li>
@@ -1102,6 +1102,9 @@ $(document).on('click','.subs',function(){
 	var Data = $(formId).serializeArray();
 
 	var p_type = $(formId+"> input[name='p_type']:checked").val();
+
+	alert(p_type);
+	return false;
 
 	if(p_type == 'recurring'){
 		var URL = '{{url("paypal/ec-checkout?mode=recurring")}}';

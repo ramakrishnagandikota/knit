@@ -379,6 +379,11 @@ button, html [type="button"], [type="reset"], [type="submit"]{background-color: 
     .hide{
       display: none;
     }
+    .red{
+      color: #bc7c8f;
+    font-weight: bold;
+    font-size: 12px;
+    }
 .options{color: #222222;border: .5px solid #78909c;border-radius: 2px;margin-left: 28px;float: left;left: 0;position: absolute;font-size: 14px;padding: 1px 2px 2px 2px;}
     .upload{margin-left: 53px;}
         .post-new-footer i{margin-left: 20px;}
@@ -590,6 +595,8 @@ $(document).on('click','#editDetails',function(){
     });
 });
 
+
+
 $(document).on('click','#saveDetails',function(){
         var Data = $("#updateDetails").serializeArray();
 
@@ -616,7 +623,23 @@ $(document).on('click','#saveDetails',function(){
             },
             complete : function(){
                 $(".loader-bg").hide();
-            }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+              var err = eval("(" + jqXHR.responseText + ")");
+
+              if(err.errors.first_name){
+                  $('.first_name').html(err.errors.first_name);
+              }
+
+              if(err.errors.last_name){
+                  $('.last_name').html(err.errors.last_name);
+              }
+
+              if(err.errors.mobile){
+                  $('.mobile').html(err.errors.mobile);
+              }
+
+              }
         });
  
     });

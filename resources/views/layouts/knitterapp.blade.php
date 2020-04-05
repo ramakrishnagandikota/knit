@@ -33,13 +33,56 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('resources/assets/files/assets/icon/icofont/css/icofont.css')}}">
     <!-- Font Awesome -->
     <link rel="stylesheet" type="text/css" href="{{ asset('resources/assets/files/assets/icon/font-awesome/css/font-awesome.min.css')}}">
-     <link rel="stylesheet" type="text/css" href="{{ asset('resources/assets/files/assets/icon/simple-line-icons/css/simple-line-icons.css')}}">
+     <!-- <link rel="stylesheet" type="text/css" href="{{ asset('resources/assets/files/assets/icon/simple-line-icons/css/simple-line-icons.css')}}"> -->
     <!-- Style')}} -->
     <link rel="stylesheet" type="text/css" href="{{ asset('resources/assets/files/assets/css/style.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('resources/assets/files/assets/css/pages.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('node_modules/sweetalert2/dist/sweetalert2.min.css')}}">
+
+    <script type="text/javascript" src="{{ asset('resources/assets/files/bower_components/jquery/js/jquery.min.js')}}"></script>
+
+
+    <script src="{{asset('resources/assets/pusher.min.js')}}"></script>
+
+
+
+ <script>
+ var UserId = '{{Auth::user()->id}}';
+
+   var pusher = new Pusher('7c06140b8071b2413bb7', {
+        forceTLS: true,
+        cluster : 'ap2'
+  });
+
+  var channel = pusher.subscribe('like-post-'+UserId);
+
+  // Bind a function to a Event (the full Laravel class)
+  channel.bind('App\\Events\\LikeToPost', function(data) {
+      var da = JSON.stringify(data);
+    //alert(da);
+      //console.log(data);
+      if($('#NotificationCount').length > 0){
+          var NotificationCount = $('#NotificationCount').html();
+          var Ncount = parseInt(NotificationCount) + 1;
+          $('#NotificationCount').html(Ncount);
+      }else{
+          var Ncount = 1;
+          var htmls = '<i class="feather icon-bell"></i><span id="NotificationCount" class="badge bg-c-red">'+Ncount+'</span>';
+          $('#ToogleDiv').html(htmls);
+      }
+      //addProductCartOrWishlist('fa-check','Hey','You have got a new Notification.','info');
+
+    var err = eval("(" + da + ")");
+    if(err.userDetails.uid != UserId){
+     notifyMe(err.timeline,err.userDetails.first_name,err.message,err.userDetails.picture);
+    }
+
+  });
+
+
+
+ </script>
 <style>
-    .img-radius{border-radius: 5px !important}
     [type=radio] { 
   position: absolute;
   opacity: 0;
@@ -126,55 +169,33 @@
                                Subscription
                             </a>
                         </li>
-                        <li class="header-notification">
-                            <div class="dropdown-primary dropdown">
-                                <div class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="feather icon-bell"></i>
-                                   <!--  <span class="badge bg-c-red">5</span> -->
-                                </div>
-                                <ul class="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                                    <li>
-                                        <h6>Notifications</h6>
-                                        <label class="label label-danger">New</label>
-                                    </li>
-                                    <li>
-                                        <div class="media">
-                                            <img class="img-radius" src="{{ asset('resources/assets/files/assets/images/avatar-4.jpg')}}" alt="Generic placeholder image">
-                                            <div class="media-body">
-                                                <h5 class="notification-user">John Doe</h5>
-                                                <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                                <span class="notification-time">30 minutes ago</span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="media">
-                                            <img class="img-radius" src="{{ asset('resources/assets/files/assets/images/avatar-3.jpg')}}" alt="Generic placeholder image">
-                                            <div class="media-body">
-                                                <h5 class="notification-user">Joseph William</h5>
-                                                <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                                <span class="notification-time">30 minutes ago</span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="media">
-                                            <img class="img-radius" src="{{ asset('resources/assets/files/assets/images/avatar-4.jpg')}}" alt="Generic placeholder image">
-                                            <div class="media-body">
-                                                <h5 class="notification-user">Sara Soudein</h5>
-                                                <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                                <span class="notification-time">30 minutes ago</span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
+                        
+<li class="header-notification"  onclick="markAsRead({{count(Auth::user()->unreadNotifications)}});">
+<div class="dropdown-primary dropdown">
+<div class="dropdown-toggle" data-toggle="dropdown">
+<i class="feather icon-bell"></i>
+@if(count(Auth::user()->unreadNotifications) > 0)
+<span class="badge bg-c-red">{{count(Auth::user()->unreadNotifications)}}</span>
+@endif
+</div>
+<ul id="show-notification" class="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" style="max-height: 400px;overflow-y: scroll;">
+
+  </ul>
+</div>
+</li>
+
+@php 
+if(Auth::user()->picture){
+  $pic = Auth::user()->picture;
+}else{
+  $pic = 'https://via.placeholder.com/150?text='.Auth::user()->first_name;
+}
+@endphp
                         
                         <li class="user-profile header-notification">
                             <div class="dropdown-primary dropdown">
                                 <div class="dropdown-toggle" data-toggle="dropdown">
-                                    <img src="{{ asset('resources/assets/no-user-image-square.jpg')}}" class="img-radius" alt="User-Profile-Image">
+                                    <img src="{{ $pic }}" class="img-radius" alt="User-Profile-Image">
                                     <span>{{Auth::user()->first_name}}</span>
                                     <i class="feather icon-chevron-down"></i>
                                 </div>
@@ -305,7 +326,9 @@
     padding: 0px;
   
 }
-
+.header-navbar .navbar-wrapper .navbar-container .badge{
+    width:auto !important;
+}
 /* sweet alert customizes css */
   .swal2-icon.swal2-success [class^=swal2-success-line]{
 	  background-color: #0d665c !important;
@@ -349,7 +372,7 @@
      var PAGE = '';
  </script>
 <!-- Required Jquery -->
-<script type="text/javascript" src="{{ asset('resources/assets/files/bower_components/jquery/js/jquery.min.js')}}"></script>
+
 <script type="text/javascript" src="{{ asset('resources/assets/files/bower_components/jquery-ui/js/jquery-ui.min.js')}}"></script>
 <script type="text/javascript" src="{{ asset('resources/assets/files/bower_components/popper.js/js/popper.min.js')}}"></script>
 <script type="text/javascript" src="{{ asset('resources/assets/files/bower_components/bootstrap/js/bootstrap.min.js')}}"></script>
@@ -372,6 +395,50 @@
 <link rel="stylesheet" type="text/css" href="{{asset('resources/assets/select2/animate.css')}}">
 <script type="text/javascript" src="{{asset('resources/assets/assets/bootstrap-notify/bootstrap-notify.min.js')}}"></script>
 
+<script>
+function notifyMe(timeline,name,body,picture) {
+  // Let's check if the browser supports notifications
+  if (!("Notification" in window)) {
+    alert("This browser does not support desktop notification");
+  }
+
+  // Let's check if the user is okay to get some notification
+  else if (Notification.permission === "granted") {
+    // If it's okay let's create a notification
+  var options = {
+        body: body,
+        icon: picture,
+        dir : "ltr"
+    };
+  var notification = new Notification(name,options);
+  }
+
+  // Otherwise, we need to ask the user for permission
+  // Note, Chrome does not implement the permission static property
+  // So we have to check for NOT 'denied' instead of 'default'
+  else if (Notification.permission !== 'denied') {
+    Notification.requestPermission(function (permission) {
+      // Whatever the user answers, we make sure we store the information
+      if (!('permission' in Notification)) {
+        Notification.permission = permission;
+      }
+
+      // If the user is okay, let's create a notification
+      if (permission === "granted") {
+        var options = {
+              body: body,
+              icon: picture,
+              dir : "ltr"
+          };
+        var notification = new Notification(name,options);
+      }
+    });
+  }
+
+  // At last, if the user already denied any notification, and you
+  // want to be respectful there is no need to bother them any more.
+}
+</script>
 
 <style type="text/css">
     [data-notify="progressbar"] {
@@ -390,7 +457,30 @@ font-size: 12px;
 }
 </style>
 
+<script type="text/javascript">
+    $(function(){
+        getAllNotifications();
+    });
 
+
+function getAllNotifications(){
+  $.get('{{url("showAllNotifications")}}',function(res){
+    $("#show-notification").html(res);
+  });
+}
+
+function markAsRead(data){
+var length = $("#show-notification li").length;
+if(length > 1){
+  if(data > 0){
+      $.get('{{url("connect/markAsRead")}}');
+      $("#NotificationCount").remove();
+    }
+}else{
+  getAllNotifications();
+}
+}
+</script>
 @yield('footerscript')
 
 
